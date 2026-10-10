@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Compass,
@@ -23,8 +23,20 @@ import {
   Flame,
   Award,
   TrendingDown,
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  Check,
+  HelpCircle,
 } from 'lucide-react';
-import { RESTAURANT_PROBLEMS, RESTAURANT_SOLUTIONS, SIX_MONTH_GROWTH_PLAN } from '../data/restaurantData';
+import {
+  RESTAURANT_PROBLEMS,
+  RESTAURANT_SOLUTIONS,
+  SIX_MONTH_GROWTH_PLAN,
+  PROBLEM_CATEGORIES,
+  RestaurantProblem,
+} from '../data/restaurantData';
+import { useToast } from '../context/ToastContext';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -40,6 +52,78 @@ export const Home: React.FC = () => {
   const aggregatorCommissions = deliverySales * 0.23; // avg 23%
   const recoverableDirectMargin = aggregatorCommissions * 0.35; // 35% converted to direct
   const totalMonthlyPotentialProfit = foodCostOverspend + recoverableDirectMargin;
+
+  const { showToast } = useToast();
+
+  // Problem Section State on Home (matching Solutions page architecture)
+  const [selectedProbCategory, setSelectedProbCategory] = useState<string>('All');
+  const [probSearchQuery, setProbSearchQuery] = useState<string>('');
+  const [expandedProbId, setExpandedProbId] = useState<string | null>('prob-food-costing');
+  const [completedProbSteps, setCompletedProbSteps] = useState<{ [id: string]: number[] }>({});
+  const [copiedProbId, setCopiedProbId] = useState<string | null>(null);
+
+  // Solutions Section State on Home (matching Solutions page architecture)
+  const [expandedSolId, setExpandedSolId] = useState<string | null>('sol-portion-control');
+  const [completedSolItems, setCompletedSolItems] = useState<Record<string, boolean>>({});
+  const [copiedSolId, setCopiedSolId] = useState<string | null>(null);
+
+  const filteredHomeProblems = useMemo(() => {
+    return RESTAURANT_PROBLEMS.filter((prob) => {
+      if (selectedProbCategory !== 'All' && prob.category.toLowerCase() !== selectedProbCategory.toLowerCase()) {
+        return false;
+      }
+      if (probSearchQuery.trim()) {
+        const q = probSearchQuery.toLowerCase();
+        return (
+          prob.title.toLowerCase().includes(q) ||
+          prob.shortDesc.toLowerCase().includes(q) ||
+          prob.category.toLowerCase().includes(q) ||
+          prob.rootCauses.some((c) => c.toLowerCase().includes(q))
+        );
+      }
+      return true;
+    }).slice(0, 4);
+  }, [selectedProbCategory, probSearchQuery]);
+
+  const toggleProbStep = (problemId: string, stepIndex: number) => {
+    setCompletedProbSteps((prev) => {
+      const current = prev[problemId] || [];
+      const updated = current.includes(stepIndex)
+        ? current.filter((idx) => idx !== stepIndex)
+        : [...current, stepIndex];
+      return { ...prev, [problemId]: updated };
+    });
+  };
+
+  const handleCopyProbPlan = (prob: RestaurantProblem) => {
+    const text = `ScaleTrix Action Plan for: ${prob.title}\n` +
+      `Estimated Margin Leak: ${prob.marginLeakPercent} (${prob.estimatedMonthlyLoss}/month)\n\n` +
+      `Root Causes:\n${prob.rootCauses.map((r, i) => `${i + 1}. ${r}`).join('\n')}\n\n` +
+      `Corrective SOP Steps:\n${prob.actionPlan.map((a, i) => `[ ] ${i + 1}. ${a}`).join('\n')}\n\n` +
+      `Recommended Diagnostic Tool: ${prob.recommendedToolName || 'ScaleTrix Business Tools'}`;
+
+    navigator.clipboard.writeText(text);
+    setCopiedProbId(prob.id);
+    showToast('Action plan & SOP checklist copied to clipboard!', 'success');
+    setTimeout(() => setCopiedProbId(null), 2500);
+  };
+
+  const toggleSolChecklist = (solId: string, itemIdx: number) => {
+    const key = `${solId}-${itemIdx}`;
+    setCompletedSolItems((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleCopySolChecklist = (sol: (typeof RESTAURANT_SOLUTIONS)[0]) => {
+    const text = `ScaleTrix SOP Checklist: ${sol.title}\nCategory: ${sol.category}\nEstimated Impact: ${sol.estimatedRoi}\n\n` +
+      `Key Steps:\n${sol.keySteps.map((s, i) => `${i + 1}. ${s.title}: ${s.desc}`).join('\n')}\n\n` +
+      `Checklist Items:\n${sol.checklistItems.map((c, i) => `[ ] ${i + 1}. ${c}`).join('\n')}\n\n` +
+      `Pro Tip: ${sol.proTip}`;
+
+    navigator.clipboard.writeText(text);
+    setCopiedSolId(sol.id);
+    showToast('Solution SOP checklist copied to clipboard!', 'success');
+    setTimeout(() => setCopiedSolId(null), 2500);
+  };
 
   const restaurantFormats = [
     {
@@ -367,115 +451,320 @@ export const Home: React.FC = () => {
       {/* 3. CORE PROBLEM CATEGORIES (18 CATEGORIES OVERVIEW - MATCHING SOLUTIONS STYLE) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-2 max-w-2xl">
+          <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-lime-300 text-xs font-bold uppercase tracking-wider border border-forest-200 dark:border-forest-700">
               <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
-              <span>18 Root-Cause Problem Breakdowns</span>
+              <span>Operational & Financial Diagnostic Library</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-forest-950 dark:text-cream-50 font-display">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-forest-950 dark:text-cream-50 leading-tight">
               Where Small Restaurants <br className="hidden sm:inline" />
               <span className="italic font-normal text-forest-700 dark:text-lime-400">Silently Bleed Profit</span>
             </h2>
-            <p className="text-sm text-slate-600 dark:text-cream-300 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-cream-200 leading-relaxed font-normal">
               Most restaurant owners work 14-hour days without realizing where the cash is leaking.
               Explore research-backed breakdowns across the full operational spectrum with step-by-step corrective SOPs.
             </p>
           </div>
           <Link
             to="/problems"
-            className="inline-flex items-center gap-2 text-sm font-bold text-forest-800 dark:text-lime-400 hover:underline shrink-0"
+            className="inline-flex items-center gap-2 text-sm font-bold text-forest-800 dark:text-lime-400 hover:underline shrink-0 pb-1"
           >
             <span>View All 18 Problem Playbooks</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        {/* Problems Cards Grid (Matching Solutions Style Cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {RESTAURANT_PROBLEMS.slice(0, 6).map((prob) => (
-            <div
-              key={prob.id}
-              className="bg-white/95 dark:bg-forest-900/90 rounded-3xl border border-cream-200 dark:border-forest-800 overflow-hidden shadow-xs hover:shadow-md transition duration-200 group flex flex-col justify-between"
+                {/* Filter & Search Bar (Matching Solutions Style) */}
+        <div className="bg-white/80 dark:bg-forest-900/80 backdrop-blur-md rounded-2xl p-5 border border-cream-200 dark:border-forest-800 shadow-sm space-y-4">
+          <div className="relative">
+            <Search className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-cream-400" />
+            <input
+              type="text"
+              value={probSearchQuery}
+              onChange={(e) => setProbSearchQuery(e.target.value)}
+              placeholder="Search problems by keyword (e.g. food cost, recipe, delivery commission, chef, wastage)..."
+              className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-forest-950 dark:text-cream-50 placeholder-slate-400 dark:placeholder-cream-500 focus:outline-none focus:ring-2 focus:ring-lime-500 text-sm font-medium"
+            />
+            {probSearchQuery && (
+              <button
+                type="button"
+                onClick={() => setProbSearchQuery('')}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600 dark:hover:text-cream-200 cursor-pointer"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          {/* Horizontal Scrollable Category Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
+            {PROBLEM_CATEGORIES.map((cat) => {
+              const active = selectedProbCategory.toLowerCase() === cat.toLowerCase();
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedProbCategory(cat)}
+                  className={'px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition cursor-pointer ' + (
+                    active
+                      ? 'bg-forest-800 text-cream-50 dark:bg-lime-500 dark:text-forest-950 shadow-xs'
+                      : 'bg-cream-100 dark:bg-forest-800/60 text-slate-700 dark:text-cream-200 hover:bg-cream-200 dark:hover:bg-forest-700'
+                  )}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Results Counter & Action Prompt */}
+        <div className="flex items-center justify-between">
+          <p className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-cream-400">
+            Showing <span className="font-bold text-forest-800 dark:text-lime-300">{filteredHomeProblems.length}</span> battle-tested restaurant problem breakdowns
+          </p>
+          <Link
+            to="/problem-finder"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-forest-700 dark:text-lime-400 hover:underline"
+          >
+            <Compass className="w-3.5 h-3.5" />
+            Not sure what is leaking? Take the 3-minute quiz
+          </Link>
+        </div>
+
+        {/* Problems Cards (Full-Width Solutions-Style Layout) */}
+        {filteredHomeProblems.length === 0 ? (
+          <div className="text-center py-16 bg-white/90 dark:bg-forest-900/60 rounded-3xl border border-cream-200 dark:border-forest-800 space-y-3">
+            <HelpCircle className="w-10 h-10 text-slate-400 mx-auto" />
+            <h3 className="text-lg font-bold text-forest-950 dark:text-cream-50">No Matching Problems Found</h3>
+            <p className="text-xs text-slate-500 dark:text-cream-300">Try adjusting your search keyword or selected category filter.</p>
+            <button
+              onClick={() => {
+                setProbSearchQuery('');
+                setSelectedProbCategory('All');
+              }}
+              className="px-4 py-2 rounded-xl bg-forest-800 text-cream-50 text-xs font-bold hover:bg-forest-900 transition cursor-pointer"
             >
-              <div>
-                {/* Visual Image Header */}
-                {prob.imageUrl && (
-                  <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-forest-950">
-                    <img
-                      src={prob.imageUrl}
-                      alt={prob.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/40 to-transparent" />
-                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white">
-                      <span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-forest-900/90 text-lime-300 border border-forest-700 backdrop-blur-sm">
-                        {prob.category}
-                      </span>
-                      <span className={`text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1 ${
-                        prob.impactLevel === 'Critical'
-                          ? 'bg-rose-600 text-white'
-                          : prob.impactLevel === 'High'
-                          ? 'bg-amber-600 text-white'
-                          : 'bg-emerald-600 text-white'
-                      }`}>
-                        <AlertTriangle className="w-3 h-3" />
-                        {prob.impactLevel} Leak
-                      </span>
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {filteredHomeProblems.map((prob) => {
+              const isExpanded = expandedProbId === prob.id;
+              const completedForThisProblem = completedProbSteps[prob.id] || [];
+              return (
+                <div
+                  key={prob.id}
+                  className="bg-white/95 dark:bg-forest-900/90 rounded-3xl border border-cream-200 dark:border-forest-800 overflow-hidden shadow-xs hover:shadow-md transition duration-200 group"
+                >
+                  {/* Visual Image Header */}
+                  {prob.imageUrl && (
+                    <div className="relative h-44 sm:h-52 w-full overflow-hidden bg-forest-950">
+                      <img
+                        src={prob.imageUrl}
+                        alt={prob.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/40 to-transparent" />
+                      <div className="absolute bottom-3 left-6 right-6 flex items-center justify-between text-white">
+                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-forest-900/90 text-lime-300 border border-forest-700 backdrop-blur-sm">
+                          {prob.category}
+                        </span>
+                        <span className={'text-xs font-extrabold px-3 py-1 rounded-full shadow-sm flex items-center gap-1 ' + (
+                          prob.impactLevel === 'Critical'
+                            ? 'bg-rose-600 text-white'
+                            : prob.impactLevel === 'High'
+                            ? 'bg-amber-600 text-white'
+                            : 'bg-emerald-600 text-white'
+                        )}>
+                          <AlertTriangle className="w-3.5 h-3.5" />
+                          {prob.impactLevel} Leak
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Content Area */}
-                <div className="p-6 space-y-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-lime-300">
-                      {prob.category}
-                    </span>
-                    <span className="text-xs font-semibold text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-rose-900/60 flex items-center gap-1">
-                      <TrendingDown className="w-3 h-3" />
-                      {prob.marginLeakPercent}
-                    </span>
-                  </div>
+                  {/* Header Card Summary */}
+                  <div className="p-6 sm:p-7">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-lime-300">
+                          {prob.category}
+                        </span>
+                        <span className="text-xs font-semibold text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-1 rounded-full border border-rose-200 dark:border-rose-900/60 flex items-center gap-1">
+                          <TrendingDown className="w-3.5 h-3.5" />
+                          Margin Leak: {prob.marginLeakPercent}
+                        </span>
+                      </div>
 
-                  <h3 className="text-lg font-bold font-display text-forest-950 dark:text-cream-50 leading-snug group-hover:text-forest-700 dark:group-hover:text-lime-400 transition-colors">
-                    {prob.title}
-                  </h3>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-900/60">
+                        <span>Monthly Loss:</span>
+                        <span className="font-extrabold">{prob.estimatedMonthlyLoss}</span>
+                      </div>
+                    </div>
 
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-cream-200/90 leading-relaxed line-clamp-2">
-                    {prob.shortDesc}
-                  </p>
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-forest-950 dark:text-cream-50 leading-snug">
+                      {prob.title}
+                    </h3>
 
-                  {/* Financial Loss Callout */}
-                  <div className="p-3 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-900/50 flex justify-between items-center text-xs">
-                    <span className="text-slate-500 dark:text-rose-300 font-medium">Estimated Monthly Loss:</span>
-                    <span className="font-black text-rose-700 dark:text-rose-400">{prob.estimatedMonthlyLoss}</span>
+                    <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-cream-200 leading-relaxed font-normal">
+                      {prob.shortDesc}
+                    </p>
+
+                    {/* SOP Action Bar */}
+                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-cream-100 dark:border-forest-800/80">
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setExpandedProbId(isExpanded ? null : prob.id)}
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-forest-800 text-cream-50 dark:bg-lime-400 dark:text-forest-950 hover:bg-forest-900 dark:hover:bg-lime-300 transition cursor-pointer shadow-xs"
+                        >
+                          {isExpanded ? (
+                            <>
+                              Hide Implementation SOP <ChevronUp className="w-4 h-4" />
+                            </>
+                          ) : (
+                            <>
+                              View Step-by-Step SOP ({prob.actionPlan.length} Steps) <ChevronDown className="w-4 h-4" />
+                            </>
+                          )}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleCopyProbPlan(prob)}
+                          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-cream-100 dark:bg-forest-800 text-slate-700 dark:text-cream-200 hover:bg-cream-200 dark:hover:bg-forest-700 transition cursor-pointer"
+                          title="Copy SOP to clipboard"
+                        >
+                          {copiedProbId === prob.id ? (
+                            <>
+                              <Check className="w-4 h-4 text-emerald-600" />
+                              <span>Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-4 h-4 text-slate-500" />
+                              <span>Copy SOP</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {prob.recommendedToolPath && (
+                        <Link
+                          to={prob.recommendedToolPath}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-forest-800 dark:text-lime-400 hover:text-forest-950 dark:hover:text-lime-300"
+                        >
+                          <Calculator className="w-3.5 h-3.5" />
+                          <span>Launch {prob.recommendedToolName || 'Calculator'} →</span>
+                        </Link>
+                      )}
+                    </div>
+
+                    {/* Expandable SOP Checklist & Root Causes Drawer */}
+                    {isExpanded && (
+                      <div className="mt-6 pt-6 border-t border-cream-200 dark:border-forest-800 space-y-6 animate-fadeIn">
+                        
+                        {/* 1. Why This Happens In Indian Kitchens */}
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-forest-900 dark:text-lime-300 flex items-center gap-2">
+                            <AlertTriangle className="w-4 h-4 text-amber-500" />
+                            Why This Happens in Indian Kitchens
+                          </h4>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            {prob.rootCauses.map((cause, idx) => (
+                              <div
+                                key={idx}
+                                className="p-3 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-800 text-xs text-slate-700 dark:text-cream-200 flex items-start gap-2"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5" />
+                                <span className="leading-relaxed">{cause}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* 2. Immediate Corrective SOP Checklist */}
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-forest-900 dark:text-lime-300 flex items-center gap-2">
+                              <CheckCircle2 className="w-4 h-4 text-lime-600 dark:text-lime-400" />
+                              Immediate Corrective Action Plan ({completedForThisProblem.length}/{prob.actionPlan.length} Completed)
+                            </h4>
+                            <span className="text-[11px] text-slate-500 dark:text-cream-400 font-medium">
+                              Click checkboxes to mark progress
+                            </span>
+                          </div>
+
+                          <div className="space-y-2">
+                            {prob.actionPlan.map((step, idx) => {
+                              const isChecked = completedForThisProblem.includes(idx);
+                              return (
+                                <div
+                                  key={idx}
+                                  onClick={() => toggleProbStep(prob.id, idx)}
+                                  className={'p-3.5 rounded-xl border transition flex items-start gap-3 cursor-pointer ' + (
+                                    isChecked
+                                      ? 'bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800 text-slate-600 dark:text-cream-300 line-through'
+                                      : 'bg-cream-50 dark:bg-forest-950 border-cream-200 dark:border-forest-800 hover:border-forest-300 text-slate-800 dark:text-cream-100'
+                                  )}
+                                >
+                                  <div className={'w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 border transition ' + (
+                                    isChecked
+                                      ? 'bg-emerald-600 border-emerald-600 text-white'
+                                      : 'border-cream-300 dark:border-forest-700 bg-white dark:bg-forest-900 text-transparent'
+                                  )}>
+                                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                  </div>
+                                  <div className="text-xs sm:text-sm leading-relaxed">
+                                    <span className="font-bold mr-1.5 text-forest-800 dark:text-lime-300 not-italic">
+                                      Step {idx + 1}:
+                                    </span>
+                                    <span>{step}</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Direct Navigation Quick CTA */}
+                        <div className="p-4 rounded-2xl bg-forest-900 text-cream-50 flex flex-wrap items-center justify-between gap-3">
+                          <div className="text-xs">
+                            <span className="font-bold text-lime-300 block">Want to fix this permanently?</span>
+                            <span className="text-cream-200">Track this milestone inside your 6-month growth roadmap.</span>
+                          </div>
+                          <Link
+                            to="/growth-planner"
+                            className="px-4 py-2 rounded-xl bg-lime-400 hover:bg-lime-300 text-forest-950 text-xs font-black transition cursor-pointer"
+                          >
+                            Add to Growth Planner →
+                          </Link>
+                        </div>
+
+                      </div>
+                    )}
+
                   </div>
                 </div>
-              </div>
+              );
+            })}
+          </div>
+        )}
 
-              {/* Bottom Action Footer */}
-              <div className="p-6 pt-0 flex items-center justify-between border-t border-cream-100 dark:border-forest-800/80 mt-2">
-                <Link
-                  to={`/problems?search=${encodeURIComponent(prob.title)}`}
-                  className="text-xs font-bold text-forest-800 dark:text-lime-400 hover:text-forest-950 dark:hover:text-lime-300 flex items-center gap-1"
-                >
-                  <span>View Corrective SOP</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-
-                {prob.recommendedToolPath && (
-                  <Link
-                    to={prob.recommendedToolPath}
-                    className="text-[11px] px-2.5 py-1 rounded-xl bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-cream-200 font-bold hover:bg-forest-200 dark:hover:bg-forest-700 transition"
-                  >
-                    Launch Tool →
-                  </Link>
-                )}
-              </div>
-            </div>
-          ))}
+        {/* View All Button */}
+        <div className="text-center pt-2">
+          <Link
+            to="/problems"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-forest-800 hover:bg-forest-900 dark:bg-lime-500 dark:hover:bg-lime-400 text-cream-50 dark:text-forest-950 font-bold text-sm shadow-md transition cursor-pointer"
+          >
+            <span>Explore All 18 Problem Playbooks & SOPs</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
+
       </section>
 
       {/* 4. FEATURED PRACTICAL SOLUTIONS WITH IMAGERY */}
@@ -493,59 +782,191 @@ export const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {RESTAURANT_SOLUTIONS.slice(0, 3).map((sol) => (
-              <div
-                key={sol.id}
-                className="bg-forest-950/80 rounded-3xl overflow-hidden border border-forest-800 flex flex-col justify-between space-y-5 hover:border-lime-500/50 transition-colors group"
-              >
-                <div>
+          <div className="space-y-6 max-w-5xl mx-auto">
+            {RESTAURANT_SOLUTIONS.slice(0, 3).map((sol) => {
+              const isExpanded = expandedSolId === sol.id;
+              return (
+                <div
+                  key={sol.id}
+                  className="bg-forest-950/90 rounded-3xl overflow-hidden border border-forest-800 hover:border-lime-500/50 transition duration-200 group"
+                >
+                  {/* Visual Image Header */}
                   {sol.imageUrl && (
-                    <div className="relative h-44 overflow-hidden bg-forest-950">
+                    <div className="relative h-44 sm:h-52 w-full overflow-hidden bg-forest-950">
                       <img
                         src={sol.imageUrl}
                         alt={sol.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/30 to-transparent" />
-                      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-forest-900 text-lime-300 border border-forest-700">
+                      <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/40 to-transparent" />
+                      <div className="absolute bottom-3 left-6 right-6 flex items-center justify-between text-white">
+                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-forest-900/90 text-lime-300 border border-forest-700 backdrop-blur-sm">
                           {sol.category}
                         </span>
-                        <span className="text-xs text-cream-400 flex items-center gap-1 font-semibold">
-                          <Clock className="w-3.5 h-3.5" />
-                          {sol.readTime}
+                        <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-lime-400 text-forest-950 shadow-sm flex items-center gap-1">
+                          <TrendingUp className="w-3.5 h-3.5" />
+                          ROI: {sol.estimatedRoi}
                         </span>
                       </div>
                     </div>
                   )}
 
-                  <div className="p-6 space-y-3">
-                    <h3 className="text-lg font-bold text-cream-50 leading-snug">
+                  <div className="p-6 sm:p-7">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-forest-800 text-lime-300">
+                          {sol.category}
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-xs font-medium text-cream-400">
+                          <Clock className="w-3.5 h-3.5" /> {sol.readTime}
+                        </span>
+                        <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-950/60 text-emerald-300">
+                          {sol.difficulty}
+                        </span>
+                      </div>
+
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lime-950/60 text-lime-300 text-xs font-bold border border-lime-800/80">
+                        <TrendingUp className="w-3.5 h-3.5 text-lime-400" />
+                        ROI: {sol.estimatedRoi}
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-cream-50 leading-snug">
                       {sol.title}
                     </h3>
-                    <p className="text-xs text-cream-300 leading-relaxed line-clamp-2">
+                    <p className="mt-2 text-sm sm:text-base text-cream-200 leading-relaxed font-normal">
                       {sol.summary}
                     </p>
 
-                    <div className="p-3 rounded-2xl bg-forest-900/80 border border-forest-800 text-xs space-y-1">
-                      <span className="text-[10px] uppercase font-bold text-lime-400">Estimated Payoff</span>
-                      <p className="font-extrabold text-cream-100">{sol.estimatedRoi}</p>
+                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-forest-800/80">
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setExpandedSolId(isExpanded ? null : sol.id)}
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-lime-400 text-forest-950 hover:bg-lime-300 transition cursor-pointer shadow-xs"
+                        >
+                          {isExpanded ? (
+                            <>
+                              Hide Implementation SOP <ChevronUp className="w-4 h-4" />
+                            </>
+                          ) : (
+                            <>
+                              View Step-by-Step SOP ({sol.keySteps.length} Steps) <ChevronDown className="w-4 h-4" />
+                            </>
+                          )}
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleCopySolChecklist(sol)}
+                          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-forest-800 text-cream-200 hover:bg-forest-700 transition cursor-pointer"
+                          title="Copy SOP to clipboard"
+                        >
+                          {copiedSolId === sol.id ? (
+                            <>
+                              <Check className="w-4 h-4 text-emerald-400" />
+                              <span>Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-4 h-4 text-cream-300" />
+                              <span>Copy SOP</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      <Link
+                        to="/solutions"
+                        className="text-xs font-bold text-lime-400 hover:underline inline-flex items-center gap-1"
+                      >
+                        <span>View Full Solutions Page</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
                     </div>
+
+                    {/* Expandable Solutions SOP Drawer */}
+                    {isExpanded && (
+                      <div className="mt-6 pt-6 border-t border-forest-800 space-y-6 animate-fadeIn">
+                        {/* Key Execution Steps */}
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-lime-300 flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 text-lime-400" />
+                            Core Implementation Steps
+                          </h4>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            {sol.keySteps.map((step, sIdx) => (
+                              <div
+                                key={sIdx}
+                                className="p-3.5 rounded-xl bg-forest-900 border border-forest-800 text-xs space-y-1"
+                              >
+                                <span className="font-bold text-lime-300 block">
+                                  {sIdx + 1}. {step.title}
+                                </span>
+                                <p className="text-cream-300 leading-relaxed text-[11px]">{step.desc}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Interactive Checklist */}
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-lime-300 flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-lime-400" />
+                            Action Checklist Items
+                          </h4>
+                          <div className="space-y-2">
+                            {sol.checklistItems.map((cItem, cIdx) => {
+                              const isChecked = !!completedSolItems[`${sol.id}-${cIdx}`];
+                              return (
+                                <div
+                                  key={cIdx}
+                                  onClick={() => toggleSolChecklist(sol.id, cIdx)}
+                                  className={'p-3.5 rounded-xl border transition flex items-start gap-3 cursor-pointer ' + (
+                                    isChecked
+                                      ? 'bg-emerald-950/40 border-emerald-800 text-cream-400 line-through'
+                                      : 'bg-forest-900 border-forest-800 hover:border-forest-700 text-cream-100'
+                                  )}
+                                >
+                                  <div
+                                    className={'w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 border transition ' + (
+                                      isChecked
+                                        ? 'bg-emerald-500 border-emerald-500 text-forest-950'
+                                        : 'border-forest-700 bg-forest-950 text-transparent'
+                                    )}
+                                  >
+                                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                  </div>
+                                  <span className="text-xs sm:text-sm leading-relaxed">{cItem}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Pro Tip Box */}
+                        <div className="p-4 rounded-2xl bg-forest-900 border border-forest-700/80 text-xs text-cream-200">
+                          <span className="font-bold text-lime-300 block mb-1">💡 Field Pro-Tip:</span>
+                          <p>{sol.proTip}</p>
+                        </div>
+                      </div>
+                    )}
+
                   </div>
                 </div>
+              );
+            })}
+          </div>
 
-                <div className="p-6 pt-0">
-                  <Link
-                    to="/solutions"
-                    className="w-full py-3 rounded-xl bg-forest-800 hover:bg-forest-700 text-lime-300 font-bold text-xs text-center border border-forest-700 transition block"
-                  >
-                    View Full Step-by-Step SOP →
-                  </Link>
-                </div>
-              </div>
-            ))}
+          <div className="text-center pt-2">
+            <Link
+              to="/solutions"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-lime-400 hover:bg-lime-300 text-forest-950 font-bold text-sm shadow-lg transition cursor-pointer"
+            >
+              <span>Explore All 9 Restaurant Solutions & SOPs</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
