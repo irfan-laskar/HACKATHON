@@ -10,11 +10,11 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased font-sans selection:bg-brand-500 selection:text-white transition-colors duration-200;
+    @apply bg-cream-50/70 text-slate-800 dark:bg-forest-950 dark:text-cream-100 antialiased font-sans selection:bg-lime-500 selection:text-forest-950 transition-colors duration-200;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display text-slate-900 dark:text-slate-100 tracking-tight;
+    @apply font-display text-forest-950 dark:text-cream-50 tracking-tight;
   }
 }
 
@@ -24,114 +24,48 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f9f6ed;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #c4d9cd;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #62a87e;
 }
 
 /* Custom scrollbars - Dark */
 .dark ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #091c12;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #1e472f;
   border-radius: 4px;
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #2c7047;
 }
 
 /* Glassmorphism utilities */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(253, 252, 247, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(223, 239, 229, 0.8);
 }
 
 .dark .glass-panel {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(14, 42, 27, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.6);
+  border: 1px solid rgba(44, 112, 71, 0.35);
 }
 
-.glass-dark {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+/* Custom shadow tokens */
+.shadow-forest {
+  box-shadow: 0 10px 25px -5px rgba(20, 51, 33, 0.12), 0 8px 10px -6px rgba(20, 51, 33, 0.08);
 }
 
-/* Typography styles for articles */
-.prose-educational {
-  color: #334155;
-  line-height: 1.75;
-}
-.dark .prose-educational {
-  color: #cbd5e1;
-}
-
-.prose-educational h2 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-top: 2rem;
-  margin-bottom: 0.85rem;
-  color: #0f172a;
-}
-.dark .prose-educational h2 {
-  color: #f8fafc;
-}
-
-.prose-educational h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 1.5rem;
-  margin-bottom: 0.65rem;
-  color: #1e293b;
-}
-.dark .prose-educational h3 {
-  color: #f1f5f9;
-}
-
-.prose-educational p {
-  margin-bottom: 1.15rem;
-  font-size: 1.05rem;
-}
-
-.prose-educational ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 1.25rem;
-}
-
-.prose-educational ol {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin-bottom: 1.25rem;
-}
-
-.prose-educational li {
-  margin-bottom: 0.5rem;
-}
-
-.prose-educational blockquote {
-  border-left: 4px solid #0284c7;
-  padding-left: 1rem;
-  margin: 1.5rem 0;
-  font-style: italic;
-  color: #475569;
-  background: #f0f7ff;
-  border-radius: 0 0.5rem 0.5rem 0;
-  padding: 0.75rem 1.25rem;
-}
-.dark .prose-educational blockquote {
-  color: #94a3b8;
-  background: rgba(15, 23, 42, 0.8);
-  border-left-color: #38a9f8;
+.shadow-lime {
+  box-shadow: 0 10px 25px -5px rgba(132, 204, 22, 0.25);
 }

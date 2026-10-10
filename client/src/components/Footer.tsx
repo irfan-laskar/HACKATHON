@@ -1,131 +1,146 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Compass, Heart, Shield, BookOpen, ExternalLink } from 'lucide-react';
+import {
+  UtensilsCrossed,
+  Shield,
+  Heart,
+  Calculator,
+  Compass,
+  AlertTriangle,
+  Lightbulb,
+  CalendarCheck2,
+  BookOpen,
+} from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-900 dark:bg-slate-950 text-slate-400 border-t border-slate-800 dark:border-slate-900 pt-16 pb-12 mt-20 transition-colors">
+    <footer className="bg-forest-950 text-cream-200 border-t border-forest-900 pt-16 pb-12 mt-20 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800 dark:border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-forest-900">
+          
           {/* Brand info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-                <Compass className="w-5 h-5 text-white" />
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-forest-800 flex items-center justify-center text-lime-400 shadow-md">
+                <UtensilsCrossed className="w-5 h-5" />
               </div>
-              <span className="text-xl font-display font-extrabold text-white tracking-tight">
-                Scale<span className="text-sky-400">trix</span>
+              <span className="text-2xl font-display font-black text-cream-50 tracking-tight">
+                Scale<span className="text-lime-400">trix</span>
               </span>
             </Link>
-            <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-              The premier open educational knowledge hub and creator video platform for marketing,
-              commercial photography, GST, legal compliance, and bootstrapped business growth.
+            <p className="text-sm text-cream-300 max-w-sm leading-relaxed">
+              Empowering independent restaurant owners, cloud kitchens, and food entrepreneurs across
+              India to calculate real food costs, escape delivery commission traps, and build durable,
+              profitable culinary businesses.
             </p>
-            <div className="flex items-center gap-3 text-xs text-slate-400 pt-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                <Shield className="w-3.5 h-3.5 text-emerald-400" />
-                Verified Educational Resources
+            <div className="flex flex-wrap items-center gap-2 pt-2 text-xs">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900 text-lime-300 border border-forest-800">
+                <Shield className="w-3.5 h-3.5 text-lime-400" />
+                Zero Fluff • Real Unit Economics
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-900 text-cream-300 border border-forest-800">
+                ₹ INR Indian F&B Benchmarks
               </span>
             </div>
           </div>
 
-          {/* Column 1: Marketing Hub */}
+          {/* Quick Pillars */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
-              Marketing Hub
+            <h4 className="text-xs font-bold text-lime-400 uppercase tracking-wider mb-4">
+              Diagnostic & Tools
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-sm text-cream-300">
               <li>
-                <Link to="/knowledge-hub" className="hover:text-white transition">
-                  4Ps & 7Ps Framework
+                <Link to="/problem-finder" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-lime-400" />
+                  Problem Finder
                 </Link>
               </li>
               <li>
-                <Link to="/knowledge-hub" className="hover:text-white transition">
-                  STP & Buyer Personas
+                <Link to="/tools?tab=food-cost" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
+                  Food-Cost Calculator
                 </Link>
               </li>
               <li>
-                <Link to="/knowledge-hub" className="hover:text-white transition">
-                  SEO & Keyword Research
+                <Link to="/tools?tab=menu-pricing" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
+                  Menu Pricing Calculator
                 </Link>
               </li>
               <li>
-                <Link to="/knowledge-hub" className="hover:text-white transition">
-                  WhatsApp Funnels
+                <Link to="/tools?tab=profit-tracker" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
+                  Monthly Profit Tracker
                 </Link>
               </li>
               <li>
-                <Link to="/knowledge-hub" className="hover:text-white transition">
-                  Organic vs Paid Ads
+                <Link to="/tools?tab=inventory" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
+                  Pantry Inventory Tracker
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 2: Business Academy */}
+          {/* Core Frameworks */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
-              Startup Academy
+            <h4 className="text-xs font-bold text-lime-400 uppercase tracking-wider mb-4">
+              Solutions & Strategy
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-sm text-cream-300">
               <li>
-                <Link to="/startup-academy" className="hover:text-white transition">
-                  12-Step Business Roadmap
+                <Link to="/problems" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                  18 Problem Library
                 </Link>
               </li>
               <li>
-                <Link to="/startup-academy" className="hover:text-white transition">
-                  Home Bakery & Food Setup
+                <Link to="/solutions" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <Lightbulb className="w-3.5 h-3.5 text-lime-400" />
+                  Practical Guides
                 </Link>
               </li>
               <li>
-                <Link to="/startup-academy" className="hover:text-white transition">
-                  Google Maps Local SEO
+                <Link to="/growth-planner" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <CalendarCheck2 className="w-3.5 h-3.5 text-lime-400" />
+                  6-Month Action Plan
                 </Link>
               </li>
               <li>
-                <Link to="/legal-compliance" className="hover:text-white transition">
-                  Udyam MSME Registration
-                </Link>
-              </li>
-              <li>
-                <Link to="/legal-compliance" className="hover:text-white transition">
-                  GST Invoicing Guide
+                <Link to="/dashboard" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <UtensilsCrossed className="w-3.5 h-3.5 text-lime-400" />
+                  Restaurant Dashboard
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Visuals & Creator */}
+          {/* Knowledge & Mission */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
-              Creators & Visuals
+            <h4 className="text-xs font-bold text-lime-400 uppercase tracking-wider mb-4">
+              Learning & About
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-sm text-cream-300">
               <li>
-                <Link to="/branding-photography" className="hover:text-white transition">
-                  Smartphone Photography
+                <Link to="/learning-hub" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5 text-lime-400" />
+                  FSSAI & GST Playbook
                 </Link>
               </li>
               <li>
-                <Link to="/branding-photography" className="hover:text-white transition">
-                  DIY Lighting Setups
+                <Link to="/learning-hub" className="hover:text-cream-50 transition">
+                  Cloud Kitchen Unit Economics
                 </Link>
               </li>
               <li>
-                <Link to="/influencer-collab" className="hover:text-white transition">
-                  Influencer Pitch Scripts
+                <Link to="/about" className="hover:text-cream-50 transition">
+                  Our Mission for Indian F&B
                 </Link>
               </li>
               <li>
-                <Link to="/videos" className="hover:text-white transition">
-                  Educational Videos
-                </Link>
-              </li>
-              <li>
-                <Link to="/creator/dashboard" className="hover:text-white transition">
-                  Creator Studio
+                <Link to="/about#contact" className="hover:text-cream-50 transition">
+                  Contact & Mentorship
                 </Link>
               </li>
             </ul>
@@ -133,34 +148,24 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Legal Disclaimer Box */}
-        <div className="my-8 p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs text-slate-400 leading-relaxed">
-          <p className="font-semibold text-slate-300 mb-1 flex items-center gap-1.5">
-            <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-            Educational Compliance Disclaimer
+        <div className="my-8 p-4 rounded-2xl bg-forest-900/60 border border-forest-800 text-xs text-cream-300/90 leading-relaxed">
+          <p className="font-semibold text-lime-300 mb-1 flex items-center gap-1.5">
+            <Shield className="w-3.5 h-3.5 text-lime-400" />
+            Transparent Educational Disclaimer
           </p>
-          The regulatory, tax, and legal guides provided on Scaletrix (including GST, Udyam MSME, and
-          business structures) are prepared strictly for educational purposes. Regulatory thresholds and
-          statutory provisions change periodically. Always verify with official portals (e.g. gst.gov.in,
-          udyamregistration.gov.in) and consult a practicing Chartered Accountant or legal counsel before
-          executing formal transactions.
+          Scaletrix is an independent educational and strategic modeling platform. We do not make guaranteed
+          income promises, fake testimonial claims, or commercial aggregator promotions. Profit improvements depend
+          strictly upon execution of kitchen SOPs, menu discipline, and localized neighborhood demand. Always verify
+          statutory food safety (FSSAI) and taxation (GST) compliance with licensed professionals.
         </div>
 
         {/* Copyright bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} Scaletrix Platform. Designed for modern entrepreneurs.</p>
-          <div className="flex items-center gap-6">
-            <Link to="/knowledge-hub" className="hover:text-slate-300 transition">
-              Knowledge Hub
-            </Link>
-            <Link to="/videos" className="hover:text-slate-300 transition">
-              Watch Videos
-            </Link>
-            <Link to="/legal-compliance" className="hover:text-slate-300 transition">
-              Legal Guides
-            </Link>
-            <span className="flex items-center gap-1 text-slate-400">
-              Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> for creators
-            </span>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream-400">
+          <p>© {new Date().getFullYear()} Scaletrix Platform. Crafted for India's independent restaurant pioneers.</p>
+          <div className="flex items-center gap-2">
+            <span>Built with precision</span>
+            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" />
+            <span>for restaurant entrepreneurs</span>
           </div>
         </div>
       </div>
