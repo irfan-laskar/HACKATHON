@@ -91,7 +91,7 @@ export const Home: React.FC = () => {
 
               <h1 className="text-4xl sm:text-6xl font-black font-display text-forest-950 dark:text-cream-50 tracking-tight leading-[1.12]">
                 Your Restaurant <br className="hidden sm:inline" />
-                <span className="text-forest-700 dark:text-lime-400 underline decoration-lime-400/60 dark:decoration-lime-500/80 underline-offset-8">
+                <span className="italic font-normal text-forest-700 dark:text-lime-400 underline decoration-lime-400/60 dark:decoration-lime-500/80 underline-offset-8">
                   Deserves to Grow
                 </span>
               </h1>
@@ -631,7 +631,7 @@ export const Home: React.FC = () => {
             </span>
             <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight leading-tight text-white !text-white">
               Stop Guessing Your Numbers. <br />
-              <span className="text-[#AEC4D4] !text-[#AEC4D4]">Run a Real Business.</span>
+              <span className="italic font-normal text-[#AEC4D4] !text-[#AEC4D4]">Run a Real Business.</span>
             </h2>
             <p className="text-sm sm:text-base text-cream-100 font-medium leading-relaxed max-w-xl mx-auto">
               Join hundreds of small restaurant owners, dhabas, and cloud kitchens who turned their busy kitchens into profitable businesses with Scaletrix.

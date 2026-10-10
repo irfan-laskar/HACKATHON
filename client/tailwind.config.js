@@ -136,8 +136,41 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Outfit', 'Inter', 'sans-serif']
+        sans: [
+          '"Helvetica Neue"',
+          'Helvetica',
+          'Arial',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'sans-serif'
+        ],
+        helvetica: [
+          '"Helvetica Neue"',
+          'Helvetica',
+          'Arial',
+          'sans-serif'
+        ],
+        display: [
+          '"Apoc Revelations"',
+          '"Instrument Serif"',
+          '"Cormorant Garamond"',
+          'Georgia',
+          'serif'
+        ],
+        serif: [
+          '"Apoc Revelations"',
+          '"Instrument Serif"',
+          '"Cormorant Garamond"',
+          'Georgia',
+          'serif'
+        ],
+        apoc: [
+          '"Apoc Revelations"',
+          '"Instrument Serif"',
+          '"Cormorant Garamond"',
+          'Georgia',
+          'serif'
+        ],
       }
     },
   },
