@@ -16,6 +16,18 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display text-forest-950 dark:text-cream-50 tracking-tight;
   }
+
+  /* Universal high-contrast rule: Headings inside dark sections, banners, or footers MUST be light/white */
+  footer h1, footer h2, footer h3, footer h4, footer h5, footer h6,
+  [class*="bg-forest-950"] h1, [class*="bg-forest-950"] h2, [class*="bg-forest-950"] h3, [class*="bg-forest-950"] h4,
+  [class*="bg-forest-900"] h1, [class*="bg-forest-900"] h2, [class*="bg-forest-900"] h3, [class*="bg-forest-900"] h4,
+  [class*="bg-forest-800"] h1, [class*="bg-forest-800"] h2, [class*="bg-forest-800"] h3, [class*="bg-forest-800"] h4,
+  [class*="from-forest-9"] h1, [class*="from-forest-9"] h2, [class*="from-forest-9"] h3, [class*="from-forest-9"] h4,
+  [class*="from-forest-8"] h1, [class*="from-forest-8"] h2, [class*="from-forest-8"] h3, [class*="from-forest-8"] h4,
+  [class*="brightness-"] h1, [class*="brightness-"] h2, [class*="brightness-"] h3, [class*="brightness-"] h4,
+  .dark-surface h1, .dark-surface h2, .dark-surface h3, .dark-surface h4 {
+    color: #F5EFE1;
+  }
 }
 
 /* Custom scrollbars - Light */

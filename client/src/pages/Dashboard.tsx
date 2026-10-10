@@ -515,23 +515,23 @@ export const Dashboard: React.FC = () => {
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lime-400/20 text-lime-300 text-xs font-bold uppercase tracking-wider mb-2 border border-lime-400/30">
                 <Sliders className="w-3.5 h-3.5" /> Interactive Unit Economics Simulator
               </div>
-              <h3 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white !text-white">
                 Simulate Your Potential Monthly Profit Recovery
               </h3>
-              <p className="text-xs sm:text-sm text-cream-200 mt-1 max-w-2xl">
+              <p className="text-xs sm:text-sm text-cream-100 font-medium mt-1 max-w-2xl">
                 See what happens to your monthly cash in hand if you standardize recipes to lower food cost, or convert online delivery customers to direct WhatsApp ordering.
               </p>
             </div>
 
             {/* Simulated Take Home Display */}
-            <div className="bg-forest-950/80 p-5 rounded-2xl border border-lime-400/30 text-center sm:text-right shrink-0">
-              <span className="text-xs uppercase font-extrabold text-lime-400 block">
+            <div className="bg-forest-950/90 p-5 rounded-2xl border border-[#E5D3AF]/40 text-center sm:text-right shrink-0 shadow-md">
+              <span className="text-xs uppercase font-extrabold text-[#AEC4D4] block">
                 Additional Monthly Cash Recovered
               </span>
-              <span className="text-3xl sm:text-4xl font-display font-black text-lime-300 block mt-0.5">
+              <span className="text-3xl sm:text-4xl font-display font-black text-[#E5D3AF] block mt-0.5">
                 +₹{simulationResults.totalExtraMonthlyProfit.toLocaleString('en-IN')}
               </span>
-              <span className="text-[11px] text-cream-300 block mt-1">
+              <span className="text-[11px] text-cream-200 block mt-1 font-medium">
                 Lifts Net Margin from {netMarginPct}% to {simulationResults.newNetMarginPct}%
               </span>
             </div>

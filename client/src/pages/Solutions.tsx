@@ -385,26 +385,26 @@ export const Solutions: React.FC = () => {
         </div>
 
         {/* Bottom Banner */}
-        <div className="mt-16 bg-gradient-to-r from-forest-900 via-forest-800 to-forest-900 dark:from-forest-900 dark:to-forest-950 rounded-3xl p-8 sm:p-10 text-cream-50 text-center relative overflow-hidden shadow-lg">
+        <div className="mt-16 bg-gradient-to-r from-forest-900 via-forest-800 to-forest-900 dark:from-forest-900 dark:to-forest-950 rounded-3xl p-8 sm:p-10 text-cream-50 text-center relative overflow-hidden shadow-lg border border-forest-700/60">
           <div className="max-w-2xl mx-auto space-y-4">
-            <h3 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight">
+            <h3 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight text-white !text-white">
               Need a Tailored Diagnosis for Your Outlet?
             </h3>
-            <p className="text-sm sm:text-base text-cream-200">
+            <p className="text-sm sm:text-base text-cream-100 font-medium">
               Answer 5 quick questions about your food cost, seating, and delivery share to uncover your exact margin leaks and prioritized solution steps.
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-3">
               <Link
                 to="/problem-finder"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-lime-400 text-forest-950 font-bold hover:bg-lime-300 transition shadow-md"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#AEC4D4] text-[#220306] font-extrabold hover:bg-[#cde0ee] transition shadow-md cursor-pointer"
               >
-                <Compass className="w-4 h-4" /> Start Restaurant Problem Finder
+                <Compass className="w-4 h-4" /> <span>Start Restaurant Problem Finder</span>
               </Link>
               <Link
                 to="/tools"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-forest-700/80 text-cream-50 font-bold hover:bg-forest-700 transition border border-forest-600"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#790D16] text-white font-bold hover:bg-[#91111c] transition border border-[#E5D3AF]/40 shadow-sm cursor-pointer"
               >
-                <Calculator className="w-4 h-4" /> Open Business Calculators
+                <Calculator className="w-4 h-4" /> <span>Open Business Calculators</span>
               </Link>
             </div>
           </div>

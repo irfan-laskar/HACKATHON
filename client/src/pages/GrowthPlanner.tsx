@@ -230,7 +230,7 @@ export const GrowthPlanner: React.FC = () => {
                 )}
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-display font-black text-cream-50">
+              <h2 className="text-xl sm:text-2xl font-display font-black text-white !text-white">
                 {isSubscribed
                   ? 'Your Complete 180-Day Turnaround Blueprint is Active'
                   : 'Execute Month 1 Free — Continue Your 6-Month Plan for ₹29/month'}

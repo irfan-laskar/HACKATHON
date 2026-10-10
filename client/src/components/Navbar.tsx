@@ -55,9 +55,9 @@ export const Navbar: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xl sm:text-2xl font-display font-black tracking-tight text-forest-950 dark:text-cream-50 flex items-center gap-1">
-                  Scale<span className="text-lime-600 dark:text-lime-400">trix</span>
+                  Scale<span className="text-[#790D16] dark:text-[#AEC4D4]">trix</span>
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-forest-600 dark:text-lime-400 -mt-1 hidden sm:block">
+                <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#790D16] dark:text-[#AEC4D4] -mt-1 hidden sm:block">
                   Restaurant Growth OS
                 </span>
               </div>
@@ -75,13 +75,13 @@ export const Navbar: React.FC = () => {
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition relative ${
                       active
                         ? 'text-forest-900 dark:text-lime-300 bg-forest-100/70 dark:bg-forest-800/60 shadow-xs'
-                        : 'text-slate-600 dark:text-cream-300 hover:text-forest-900 dark:hover:text-cream-50 hover:bg-cream-100/80 dark:hover:bg-forest-900/60'
+                        : 'text-slate-700 dark:text-cream-200 hover:text-forest-900 dark:hover:text-cream-50 hover:bg-cream-100/80 dark:hover:bg-forest-900/60'
                     }`}
                   >
                     <Icon className={`w-4 h-4 ${active ? 'text-forest-700 dark:text-lime-400' : 'text-slate-400 dark:text-cream-400'}`} />
                     <span>{link.name}</span>
                     {link.badge && (
-                      <span className="ml-1 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-lime-200 dark:bg-lime-900/60 text-forest-900 dark:text-lime-300">
+                      <span className="ml-1 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#AEC4D4] text-[#220306] dark:bg-[#AEC4D4]/30 dark:text-[#AEC4D4] shadow-2xs">
                         {link.badge}
                       </span>
                     )}
@@ -97,7 +97,7 @@ export const Navbar: React.FC = () => {
                 type="button"
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-forest-800 dark:text-lime-300 flex items-center justify-center transition border border-cream-200 dark:border-forest-700"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-forest-800 dark:text-lime-300 flex items-center justify-center transition border border-cream-200 dark:border-forest-700 cursor-pointer"
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-forest-700" />}
               </button>
@@ -106,10 +106,10 @@ export const Navbar: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/problem-finder')}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-forest-800 hover:bg-forest-900 dark:bg-lime-500 dark:hover:bg-lime-400 text-cream-50 dark:text-forest-950 font-bold text-xs shadow-md transition-all hover:scale-[1.02]"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white dark:bg-[#AEC4D4] dark:hover:bg-[#cde0ee] dark:text-[#220306] font-extrabold text-xs shadow-md transition-all hover:scale-[1.02] shrink-0 whitespace-nowrap cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 text-lime-400 dark:text-forest-950" />
-                <span>Problem Finder</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#E5D3AF] dark:text-[#220306]" />
+                <span className="text-white dark:text-[#220306] font-extrabold">Problem Finder</span>
               </button>
 
               {/* Mobile menu hamburger toggle */}

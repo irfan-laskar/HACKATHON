@@ -622,29 +622,31 @@ export const Home: React.FC = () => {
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80"
             alt="Warm Indian Diner Ambience"
-            className="absolute inset-0 w-full h-full object-cover brightness-[0.25]"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.20]"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#220306]/95 via-[#3a0509]/85 to-[#220306]/80" />
           <div className="relative p-8 sm:p-14 text-center text-cream-50 max-w-3xl mx-auto space-y-6">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-lime-400">
+            <span className="inline-block text-xs font-black uppercase tracking-widest text-[#E5D3AF] bg-[#790D16]/85 px-4 py-1.5 rounded-full border border-[#E5D3AF]/40 shadow-xs">
               Start Your Margin Recovery Today
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight leading-tight text-white !text-white">
               Stop Guessing Your Numbers. <br />
-              <span className="text-lime-300">Run a Real Business.</span>
+              <span className="text-[#AEC4D4] !text-[#AEC4D4]">Run a Real Business.</span>
             </h2>
-            <p className="text-sm sm:text-base text-cream-200 leading-relaxed max-w-xl mx-auto">
+            <p className="text-sm sm:text-base text-cream-100 font-medium leading-relaxed max-w-xl mx-auto">
               Join hundreds of small restaurant owners, dhabas, and cloud kitchens who turned their busy kitchens into profitable businesses with Scaletrix.
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-4">
               <Link
                 to="/problem-finder"
-                className="px-8 py-3.5 rounded-xl bg-lime-400 text-forest-950 font-extrabold text-sm hover:bg-lime-300 transition shadow-lg"
+                className="px-8 py-3.5 rounded-xl bg-[#AEC4D4] hover:bg-[#cde0ee] text-[#220306] font-black text-sm transition shadow-lg flex items-center justify-center gap-2 cursor-pointer"
               >
-                Launch Restaurant Problem Finder
+                <span>Launch Restaurant Problem Finder</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/tools"
-                className="px-8 py-3.5 rounded-xl bg-forest-800/90 text-cream-50 font-bold text-sm hover:bg-forest-800 transition border border-forest-600"
+                className="px-8 py-3.5 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white font-bold text-sm transition border border-[#E5D3AF]/40 shadow-md cursor-pointer"
               >
                 Explore Calculators
               </Link>

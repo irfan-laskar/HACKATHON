@@ -46,38 +46,38 @@ export const Footer: React.FC = () => {
 
           {/* Quick Pillars */}
           <div>
-            <h4 className="text-xs font-bold text-lime-400 uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-black text-[#E5D3AF] !text-[#E5D3AF] uppercase tracking-wider mb-4">
               Diagnostic & Tools
             </h4>
-            <ul className="space-y-2.5 text-sm text-cream-300">
+            <ul className="space-y-2.5 text-sm text-cream-200">
               <li>
-                <Link to="/problem-finder" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-lime-400" />
-                  Problem Finder
+                <Link to="/problem-finder" className="hover:text-white transition flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>Problem Finder</span>
                 </Link>
               </li>
               <li>
-                <Link to="/tools?tab=food-cost" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
-                  Food-Cost Calculator
+                <Link to="/tools?tab=food-cost" className="hover:text-white transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>Food-Cost Calculator</span>
                 </Link>
               </li>
               <li>
-                <Link to="/tools?tab=menu-pricing" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
-                  Menu Pricing Calculator
+                <Link to="/tools?tab=menu-pricing" className="hover:text-white transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>Menu Pricing Calculator</span>
                 </Link>
               </li>
               <li>
-                <Link to="/tools?tab=profit-tracker" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
-                  Monthly Profit Tracker
+                <Link to="/tools?tab=profit-tracker" className="hover:text-white transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>Monthly Profit Tracker</span>
                 </Link>
               </li>
               <li>
-                <Link to="/tools?tab=inventory" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <Calculator className="w-3.5 h-3.5 text-lime-400" />
-                  Pantry Inventory Tracker
+                <Link to="/tools?tab=inventory" className="hover:text-white transition flex items-center gap-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>Pantry Inventory Tracker</span>
                 </Link>
               </li>
             </ul>
@@ -85,32 +85,32 @@ export const Footer: React.FC = () => {
 
           {/* Core Frameworks */}
           <div>
-            <h4 className="text-xs font-bold text-lime-400 uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-black text-[#E5D3AF] !text-[#E5D3AF] uppercase tracking-wider mb-4">
               Solutions & Strategy
             </h4>
-            <ul className="space-y-2.5 text-sm text-cream-300">
+            <ul className="space-y-2.5 text-sm text-cream-200">
               <li>
-                <Link to="/problems" className="hover:text-cream-50 transition flex items-center gap-1.5">
+                <Link to="/problems" className="hover:text-white transition flex items-center gap-1.5">
                   <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
-                  18 Problem Library
+                  <span>18 Problem Library</span>
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <Lightbulb className="w-3.5 h-3.5 text-lime-400" />
-                  Practical Guides
+                <Link to="/solutions" className="hover:text-white transition flex items-center gap-1.5">
+                  <Lightbulb className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>Practical Guides</span>
                 </Link>
               </li>
               <li>
-                <Link to="/growth-planner" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <CalendarCheck2 className="w-3.5 h-3.5 text-lime-400" />
-                  6-Month Action Plan
+                <Link to="/growth-planner" className="hover:text-white transition flex items-center gap-1.5">
+                  <CalendarCheck2 className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>6-Month Action Plan</span>
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <UtensilsCrossed className="w-3.5 h-3.5 text-lime-400" />
-                  Restaurant Dashboard
+                <Link to="/dashboard" className="hover:text-white transition flex items-center gap-1.5">
+                  <UtensilsCrossed className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>Restaurant Dashboard</span>
                 </Link>
               </li>
             </ul>
@@ -118,14 +118,14 @@ export const Footer: React.FC = () => {
 
           {/* Knowledge & Mission */}
           <div>
-            <h4 className="text-xs font-bold text-lime-400 uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-black text-[#E5D3AF] !text-[#E5D3AF] uppercase tracking-wider mb-4">
               Learning & About
             </h4>
-            <ul className="space-y-2.5 text-sm text-cream-300">
+            <ul className="space-y-2.5 text-sm text-cream-200">
               <li>
-                <Link to="/learning-hub" className="hover:text-cream-50 transition flex items-center gap-1.5">
-                  <BookOpen className="w-3.5 h-3.5 text-lime-400" />
-                  FSSAI & GST Playbook
+                <Link to="/learning-hub" className="hover:text-white transition flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5 text-[#AEC4D4]" />
+                  <span>FSSAI & GST Playbook</span>
                 </Link>
               </li>
               <li>

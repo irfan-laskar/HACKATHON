@@ -57,12 +57,12 @@ export default {
           200: '#cedfe9',
           300: '#AEC4D4', // Exact user color #AEC4D4
           400: '#8caaba',
-          500: '#6c8ea2',
-          600: '#547285',
-          700: '#435a69',
-          800: '#374955',
-          900: '#2d3b45',
-          950: '#182229',
+          500: '#5f8399',
+          600: '#2d5573', // High contrast dark shade for light backgrounds
+          700: '#1d3b52', // AAA contrast
+          800: '#132635',
+          900: '#0d1a24',
+          950: '#070f15',
         },
 
         // Semantic mapping to seamlessly apply palette across all existing components
@@ -102,12 +102,12 @@ export default {
           200: '#cedfe9',
           300: '#AEC4D4', // Accent Pill & Badge Anchor #AEC4D4
           400: '#8caaba',
-          500: '#6c8ea2',
-          600: '#547285',
-          700: '#435a69',
-          800: '#374955',
-          900: '#2d3b45',
-          950: '#182229',
+          500: '#5f8399',
+          600: '#2d5573', // Deep high-contrast blue for light mode text
+          700: '#1d3b52',
+          800: '#132635',
+          900: '#0d1a24',
+          950: '#070f15',
         },
         brand: {
           50: '#fdf3f3',
