@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  marketsphere:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - JWT_SECRET=marketsphere_production_super_secret_jwt_key_2026
+      - JWT_EXPIRES_IN=7d
+      - CLIENT_URL=http://localhost:5000
+    restart: unless-stopped
