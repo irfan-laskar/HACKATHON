@@ -199,25 +199,56 @@ export const Problems: React.FC = () => {
               key={prob.id}
               className="bg-white dark:bg-forest-900/90 rounded-3xl p-6 sm:p-8 border border-cream-200 dark:border-forest-800 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-6"
             >
-              {/* Header */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold uppercase px-3 py-1 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-900 dark:text-lime-300 border border-forest-200 dark:border-forest-700">
+              {/* Card Image Banner */}
+              {prob.imageUrl && (
+                <div className="relative -mx-6 sm:-mx-8 -mt-6 sm:-mt-8 h-40 overflow-hidden mb-4">
+                  <img
+                    src={prob.imageUrl}
+                    alt={prob.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                  <div className="absolute bottom-3 left-6 right-6 flex items-center justify-between text-white">
+                    <span className="text-xs font-bold uppercase px-3 py-1 rounded-full bg-forest-900/90 text-lime-300 border border-forest-700 backdrop-blur-sm">
                       {prob.category}
                     </span>
                     <span
                       className={`text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full ${
                         prob.impactLevel === 'Critical'
-                          ? 'bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300'
+                          ? 'bg-rose-500 text-white'
                           : prob.impactLevel === 'High'
-                          ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300'
-                          : 'bg-lime-100 text-forest-800 dark:bg-lime-950/80 dark:text-lime-300'
+                          ? 'bg-amber-500 text-white'
+                          : 'bg-emerald-500 text-white'
                       }`}
                     >
-                      {prob.impactLevel} Impact
+                      {prob.impactLevel} Leak
                     </span>
                   </div>
+                </div>
+              )}
+
+              {/* Header */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  {!prob.imageUrl ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold uppercase px-3 py-1 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-900 dark:text-lime-300 border border-forest-200 dark:border-forest-700">
+                        {prob.category}
+                      </span>
+                      <span
+                        className={`text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full ${
+                          prob.impactLevel === 'Critical'
+                            ? 'bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300'
+                            : prob.impactLevel === 'High'
+                            ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300'
+                            : 'bg-lime-100 text-forest-800 dark:bg-lime-950/80 dark:text-lime-300'
+                        }`}
+                      >
+                        {prob.impactLevel} Impact
+                      </span>
+                    </div>
+                  ) : <div />}
 
                   {/* Copy Action Plan Button */}
                   <button

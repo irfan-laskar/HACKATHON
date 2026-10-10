@@ -34,6 +34,7 @@ interface Question {
     score: number; // 0 (critical issue) to 25 (best practice)
     tags: string[];
     leakRisk?: string;
+    imageUrl?: string;
   }[];
 }
 
@@ -50,6 +51,7 @@ const QUESTIONS: Question[] = [
         score: 15,
         tags: ['Delivery', 'Packaging', 'Platform Dependency'],
         leakRisk: 'High aggregator commission vulnerability (22-28%)',
+        imageUrl: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=300&q=80',
       },
       {
         label: 'Casual Dine-In Restaurant (20 to 60 seats)',
@@ -57,6 +59,7 @@ const QUESTIONS: Question[] = [
         score: 22,
         tags: ['Staff management', 'Customer experience', 'Rent'],
         leakRisk: 'High fixed rent and front-of-house staff overheads',
+        imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=300&q=80',
       },
       {
         label: 'Quick-Service Counter / Dhaba / Kiosk',
@@ -64,6 +67,7 @@ const QUESTIONS: Question[] = [
         score: 20,
         tags: ['Raw-material costs', 'Speed of service', 'Pricing'],
         leakRisk: 'Menu under-pricing and ingredient price volatility',
+        imageUrl: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=300&q=80',
       },
       {
         label: 'Bakery, Cafe or Tea Lounge',
@@ -71,6 +75,7 @@ const QUESTIONS: Question[] = [
         score: 24,
         tags: ['Brand awareness', 'Food costing', 'Customer reach'],
         leakRisk: 'Slow table turnover and beverage spoilage leaks',
+        imageUrl: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=300&q=80',
       },
     ],
   },
@@ -406,14 +411,14 @@ export const ProblemFinder: React.FC = () => {
                     key={idx}
                     type="button"
                     onClick={() => handleSelectOption(idx)}
-                    className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition duration-150 cursor-pointer flex items-start gap-4 ${
+                    className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition duration-150 cursor-pointer flex items-center gap-4 ${
                       isSelected
                         ? 'border-forest-800 dark:border-lime-400 bg-forest-50/70 dark:bg-forest-800/60 shadow-xs'
                         : 'border-cream-200 dark:border-forest-800 bg-white dark:bg-forest-900/80 hover:border-cream-300 dark:hover:border-forest-700'
                     }`}
                   >
                     <div
-                      className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 border transition ${
+                      className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 border transition ${
                         isSelected
                           ? 'border-forest-800 dark:border-lime-400 bg-forest-800 dark:bg-lime-400 text-cream-50 dark:text-forest-950'
                           : 'border-slate-300 dark:border-forest-600'
@@ -421,6 +426,15 @@ export const ProblemFinder: React.FC = () => {
                     >
                       {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                     </div>
+
+                    {opt.imageUrl && (
+                      <img
+                        src={opt.imageUrl}
+                        alt={opt.label}
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 border border-cream-200 dark:border-forest-700 shadow-2xs"
+                      />
+                    )}
+
                     <div className="flex-1">
                       <div className="text-sm sm:text-base font-bold text-forest-950 dark:text-cream-50">
                         {opt.label}

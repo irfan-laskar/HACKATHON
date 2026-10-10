@@ -165,8 +165,30 @@ export const Solutions: React.FC = () => {
             return (
               <div
                 key={sol.id}
-                className="bg-white/95 dark:bg-forest-900/90 rounded-2xl border border-cream-200 dark:border-forest-800 overflow-hidden shadow-xs hover:shadow-md transition duration-200"
+                className="bg-white/95 dark:bg-forest-900/90 rounded-3xl border border-cream-200 dark:border-forest-800 overflow-hidden shadow-xs hover:shadow-md transition duration-200 group"
               >
+                {/* Visual Image Header */}
+                {sol.imageUrl && (
+                  <div className="relative h-44 sm:h-52 w-full overflow-hidden bg-forest-950">
+                    <img
+                      src={sol.imageUrl}
+                      alt={sol.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/40 to-transparent" />
+                    <div className="absolute bottom-3 left-6 right-6 flex items-center justify-between text-white">
+                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-forest-900/90 text-lime-300 border border-forest-700 backdrop-blur-sm">
+                        {sol.category}
+                      </span>
+                      <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-lime-400 text-forest-950 shadow-sm flex items-center gap-1">
+                        <TrendingUp className="w-3.5 h-3.5" />
+                        ROI: {sol.estimatedRoi}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Header Card Summary */}
                 <div className="p-6 sm:p-7">
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-3">

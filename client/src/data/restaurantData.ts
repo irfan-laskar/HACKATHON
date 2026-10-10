@@ -11,6 +11,7 @@ export interface RestaurantProblem {
   recommendedToolPath?: string;
   recommendedToolName?: string;
   tags: string[];
+  imageUrl?: string;
 }
 
 export interface RestaurantSolution {
@@ -24,6 +25,7 @@ export interface RestaurantSolution {
   proTip: string;
   estimatedRoi: string;
   checklistItems: string[];
+  imageUrl?: string;
 }
 
 export interface GrowthTask {
@@ -96,6 +98,7 @@ export const RESTAURANT_PROBLEMS: RestaurantProblem[] = [
     recommendedToolPath: '/tools?tab=food-cost',
     recommendedToolName: 'Food-Cost Calculator',
     tags: ['food cost', 'pricing', 'recipe', 'yield loss'],
+    imageUrl: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 'prob-delivery-commissions',
@@ -118,6 +121,7 @@ export const RESTAURANT_PROBLEMS: RestaurantProblem[] = [
     recommendedToolPath: '/tools?tab=menu-pricing',
     recommendedToolName: 'Menu-Pricing Calculator',
     tags: ['delivery', 'swiggy', 'zomato', 'commissions', 'pricing'],
+    imageUrl: 'https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 'prob-inventory-wastage',
@@ -140,6 +144,7 @@ export const RESTAURANT_PROBLEMS: RestaurantProblem[] = [
     recommendedToolPath: '/tools?tab=inventory',
     recommendedToolName: 'Inventory Tracker',
     tags: ['inventory', 'spoilage', 'par level', 'fifo'],
+    imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 'prob-recipe-standardization',
@@ -363,6 +368,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Create recipe cards for your top 8 revenue-driving dishes.',
       'Conduct a 10-minute daily inventory closing check with the head cook.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-direct-whatsapp-delivery',
@@ -397,6 +403,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Integrate dynamic UPI payment QR links for instant zero-fee settlement.',
       'Set delivery rules: 3km radius, minimum order ₹299.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-google-maps-engine',
@@ -431,6 +438,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Upload 10 high-resolution food and interior photographs.',
       'Commit to answering every review within 24 hours.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-menu-engineering',
@@ -465,6 +473,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Identify and remove 5 low-selling, ingredient-heavy "Dog" dishes.',
       'Redesign menu layout to spotlight top 4 "Star" items.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-signature-branding',
@@ -499,6 +508,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Conduct a 15-minute photo session under warm natural light.',
       'Train serving staff to recommend the signature item as default recommendation.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-gradual-expansion',
@@ -533,6 +543,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Create combo bundles pairing bestselling mains with high-margin beverages.',
       'Enforce the "One In, One Out" rule to prevent inventory bloat.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-hyperlocal-collaboration',
@@ -567,6 +578,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Set up simple barter voucher exchanges with local non-competing businesses.',
       'Build a VIP catering WhatsApp group for instant bulk inquiries.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-monthly-goals',
@@ -601,6 +613,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Track prime cost (food + labor) weekly to ensure it stays below 60%.',
       'Schedule a 30-minute monthly financial review on the 1st of every month.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'sol-business-tracking',
@@ -635,6 +648,7 @@ export const RESTAURANT_SOLUTIONS: RestaurantSolution[] = [
       'Reconcile UPI QR settlements with POS billed amounts daily.',
       'Maintain a digital or physical daily handover logbook.',
     ],
+    imageUrl: 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=800&q=80',
   },
 ];
 

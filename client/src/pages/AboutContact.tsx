@@ -95,6 +95,54 @@ export const AboutContact: React.FC = () => {
           </p>
         </div>
 
+        {/* Culinary Photographic Mosaic */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 rounded-3xl overflow-hidden">
+          <div className="md:col-span-7 relative h-72 sm:h-96 rounded-3xl overflow-hidden group shadow-md">
+            <img
+              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+              alt="Indian dining hospitality"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <span className="inline-block px-3 py-1 rounded-full bg-forest-950/80 backdrop-blur-md text-lime-400 text-xs font-bold uppercase tracking-wider mb-2 border border-lime-400/30">
+                Hospitality & Community
+              </span>
+              <h3 className="text-xl sm:text-2xl font-display font-bold text-cream-50 leading-snug">
+                Where neighborhood culinary warmth meets resilient unit economics
+              </h3>
+            </div>
+          </div>
+
+          <div className="md:col-span-5 grid grid-rows-2 gap-4">
+            <div className="relative h-44 sm:h-[11.25rem] rounded-3xl overflow-hidden group shadow-sm">
+              <img
+                src="https://images.unsplash.com/photo-1577106263724-2c8e03bfe9cf?auto=format&fit=crop&w=600&q=80"
+                alt="Commercial kitchen chef craftsmanship"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <span className="text-xs font-bold text-lime-300 block">Kitchen Precision</span>
+                <p className="text-xs text-cream-100 font-medium">Standardized gram portions & minimal prep waste</p>
+              </div>
+            </div>
+
+            <div className="relative h-44 sm:h-[11.25rem] rounded-3xl overflow-hidden group shadow-sm">
+              <img
+                src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"
+                alt="Authentic Indian spices and seasonings"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <span className="text-xs font-bold text-lime-300 block">Mandi Sourcing & Seasonings</span>
+                <p className="text-xs text-cream-100 font-medium">Direct mandi procurement saving 14% on wholesale</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Mission & Core Pillars Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white dark:bg-forest-900 p-7 rounded-3xl border border-cream-200 dark:border-forest-800 shadow-xs space-y-3">

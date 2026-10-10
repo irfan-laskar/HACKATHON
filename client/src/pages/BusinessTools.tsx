@@ -359,6 +359,7 @@ export const BusinessTools: React.FC = () => {
         positioning: 'High-margin slow-cooked curries with premium clay handi delivery packaging.',
         heroDish: 'Dum Pukht Handi Gosht & Zafrani Phirni',
         igHandle: '@shahidastaan.in',
+        image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80',
       },
       {
         name: selectedVibe === 'Modern Quirky & Trendy' ? 'The Curry Collective' : 'Dilli 6 Dastarkhwan',
@@ -366,6 +367,7 @@ export const BusinessTools: React.FC = () => {
         positioning: 'Pocket-friendly thali boxes and quick 7-minute lunch service for office goers.',
         heroDish: 'Butter Chicken Rice Bowls & Kokum Fizz',
         igHandle: '@currycollective.eats',
+        image: 'https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=600&q=80',
       },
       {
         name: selectedVibe === 'Farm Fresh & Organic' ? 'Pind Botanica' : 'Rasoi Khazana',
@@ -373,6 +375,7 @@ export const BusinessTools: React.FC = () => {
         positioning: 'Health-conscious families seeking zero-adulteration, unrefined home recipes.',
         heroDish: 'Makki Di Roti, Sarson Ka Saag & White Butter',
         igHandle: '@pindbotanica.pure',
+        image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80',
       },
       {
         name: 'Tandoor Republic',
@@ -380,6 +383,7 @@ export const BusinessTools: React.FC = () => {
         positioning: 'Focus on high-turnover evening kebab rolls, tandoori starters & direct delivery.',
         heroDish: 'Bhatti Da Murgh & Smoked Paneer Tikka',
         igHandle: '@tandoorrepublic.official',
+        image: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=600&q=80',
       },
       {
         name: 'Zaika Junction',
@@ -387,6 +391,7 @@ export const BusinessTools: React.FC = () => {
         positioning: 'Affordable, generous portions engineered for group celebrations and students.',
         heroDish: 'Highway Dal Tadka & Kadai Chicken',
         igHandle: '@zaikajunction.in',
+        image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
       },
       {
         name: 'The Biryani Karkhana',
@@ -394,6 +399,7 @@ export const BusinessTools: React.FC = () => {
         positioning: 'Dedicated biryani cloud kitchen delivering in sealed earthen pots with raita.',
         heroDish: 'Awadhi Nizami Dum Biryani',
         igHandle: '@biryanikarkhana.hq',
+        image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80',
       },
     ];
     return list;
@@ -476,28 +482,43 @@ export const BusinessTools: React.FC = () => {
                   </div>
 
                   {/* Preset quick buttons */}
-                  <div className="flex items-center gap-1.5 text-xs font-semibold">
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
                     <span className="text-slate-400 hidden sm:inline">Presets:</span>
                     <button
                       type="button"
                       onClick={() => loadRecipePreset('paneer')}
-                      className="px-2.5 py-1 rounded-lg bg-cream-100 dark:bg-forest-800 text-forest-800 dark:text-cream-200 hover:bg-cream-200"
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-cream-100 dark:bg-forest-800 text-forest-900 dark:text-cream-100 hover:bg-cream-200 dark:hover:bg-forest-750 transition border border-cream-200 dark:border-forest-700 shadow-2xs group"
                     >
-                      Paneer Masala
+                      <img
+                        src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=120&q=80"
+                        alt="Paneer Masala"
+                        className="w-5 h-5 rounded-full object-cover ring-1 ring-lime-500/50 group-hover:scale-110 transition"
+                      />
+                      <span>Paneer Masala</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => loadRecipePreset('biryani')}
-                      className="px-2.5 py-1 rounded-lg bg-cream-100 dark:bg-forest-800 text-forest-800 dark:text-cream-200 hover:bg-cream-200"
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-cream-100 dark:bg-forest-800 text-forest-900 dark:text-cream-100 hover:bg-cream-200 dark:hover:bg-forest-750 transition border border-cream-200 dark:border-forest-700 shadow-2xs group"
                     >
-                      Dum Biryani
+                      <img
+                        src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=120&q=80"
+                        alt="Dum Biryani"
+                        className="w-5 h-5 rounded-full object-cover ring-1 ring-lime-500/50 group-hover:scale-110 transition"
+                      />
+                      <span>Dum Biryani</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => loadRecipePreset('chai')}
-                      className="px-2.5 py-1 rounded-lg bg-cream-100 dark:bg-forest-800 text-forest-800 dark:text-cream-200 hover:bg-cream-200"
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-cream-100 dark:bg-forest-800 text-forest-900 dark:text-cream-100 hover:bg-cream-200 dark:hover:bg-forest-750 transition border border-cream-200 dark:border-forest-700 shadow-2xs group"
                     >
-                      Masala Chai
+                      <img
+                        src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=120&q=80"
+                        alt="Masala Chai"
+                        className="w-5 h-5 rounded-full object-cover ring-1 ring-lime-500/50 group-hover:scale-110 transition"
+                      />
+                      <span>Masala Chai</span>
                     </button>
                   </div>
                 </div>
@@ -1371,60 +1392,72 @@ export const BusinessTools: React.FC = () => {
               {brandIdeas.map((brand, idx) => (
                 <div
                   key={idx}
-                  className="bg-white dark:bg-forest-900 rounded-3xl p-6 border border-cream-200 dark:border-forest-800 shadow-sm flex flex-col justify-between hover:shadow-md transition"
+                  className="bg-white dark:bg-forest-900 rounded-3xl border border-cream-200 dark:border-forest-800 shadow-sm flex flex-col justify-between hover:shadow-md transition overflow-hidden group"
                 >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded bg-forest-100 text-forest-800 dark:bg-forest-800 dark:text-lime-300">
+                  {/* Photo Banner */}
+                  <div className="relative h-44 w-full overflow-hidden bg-forest-950">
+                    <img
+                      src={brand.image}
+                      alt={brand.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-transparent" />
+                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                      <span className="text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full bg-forest-950/70 text-lime-300 backdrop-blur-xs border border-lime-400/30">
                         Concept #{idx + 1}
                       </span>
-                      <span className="text-xs font-bold text-slate-400">
+                      <span className="text-[11px] font-bold text-cream-100 bg-forest-950/60 px-2 py-0.5 rounded-full backdrop-blur-xs">
                         {brand.igHandle}
                       </span>
                     </div>
-
-                    <h4 className="text-2xl font-display font-black text-forest-950 dark:text-cream-50">
-                      {brand.name}
-                    </h4>
-
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-cream-200 italic">
-                      "{brand.tagline}"
-                    </p>
-
-                    <div className="pt-2 border-t border-cream-100 dark:border-forest-800 space-y-2 text-xs">
-                      <div>
-                        <span className="font-bold text-forest-800 dark:text-lime-300 block">
-                          Hero Signature Dish:
-                        </span>
-                        <span className="text-slate-700 dark:text-cream-100">{brand.heroDish}</span>
-                      </div>
-                      <div>
-                        <span className="font-bold text-forest-800 dark:text-lime-300 block">
-                          Market Positioning Pitch:
-                        </span>
-                        <span className="text-slate-600 dark:text-cream-300 leading-relaxed">
-                          {brand.positioning}
-                        </span>
-                      </div>
+                    <div className="absolute bottom-3 left-4 right-4">
+                      <h4 className="text-xl sm:text-2xl font-display font-black text-cream-50 drop-shadow-sm">
+                        {brand.name}
+                      </h4>
                     </div>
                   </div>
 
-                  <div className="mt-5 pt-4 border-t border-cream-100 dark:border-forest-800">
-                    <button
-                      type="button"
-                      onClick={() => copyBrandCard(brand, idx)}
-                      className="w-full py-2 rounded-xl bg-cream-100 dark:bg-forest-800 text-forest-900 dark:text-cream-100 text-xs font-bold hover:bg-cream-200 transition flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      {copiedBrandIdx === idx ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" /> Copied Concept!
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" /> Copy Brand Concept
-                        </>
-                      )}
-                    </button>
+                  <div className="p-6 space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-cream-200 italic mb-3">
+                        "{brand.tagline}"
+                      </p>
+
+                      <div className="pt-2 border-t border-cream-100 dark:border-forest-800 space-y-2 text-xs">
+                        <div>
+                          <span className="font-bold text-forest-800 dark:text-lime-300 block">
+                            Hero Signature Dish:
+                          </span>
+                          <span className="text-slate-700 dark:text-cream-100 font-medium">{brand.heroDish}</span>
+                        </div>
+                        <div>
+                          <span className="font-bold text-forest-800 dark:text-lime-300 block">
+                            Market Positioning Pitch:
+                          </span>
+                          <span className="text-slate-600 dark:text-cream-300 leading-relaxed">
+                            {brand.positioning}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-cream-100 dark:border-forest-800">
+                      <button
+                        type="button"
+                        onClick={() => copyBrandCard(brand, idx)}
+                        className="w-full py-2.5 rounded-xl bg-cream-100 dark:bg-forest-800 text-forest-900 dark:text-cream-100 text-xs font-bold hover:bg-cream-200 dark:hover:bg-forest-750 transition flex items-center justify-center gap-1.5 cursor-pointer border border-cream-200/50 dark:border-forest-700/50"
+                      >
+                        {copiedBrandIdx === idx ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-lime-400" /> Copied Concept!
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" /> Copy Brand Concept
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

@@ -19,6 +19,9 @@ import {
   Layers,
   ChefHat,
   Search,
+  Star,
+  Flame,
+  Award,
 } from 'lucide-react';
 import { RESTAURANT_PROBLEMS, RESTAURANT_SOLUTIONS, SIX_MONTH_GROWTH_PLAN } from '../data/restaurantData';
 
@@ -36,6 +39,37 @@ export const Home: React.FC = () => {
   const aggregatorCommissions = deliverySales * 0.23; // avg 23%
   const recoverableDirectMargin = aggregatorCommissions * 0.35; // 35% converted to direct
   const totalMonthlyPotentialProfit = foodCostOverspend + recoverableDirectMargin;
+
+  const restaurantFormats = [
+    {
+      title: 'Casual Dine-In & Dhabas',
+      seats: '20 - 60 Seaters',
+      desc: 'Optimize front-of-house table turns, calculate plate costs, and eliminate kitchen over-portioning.',
+      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
+      badge: 'Table Turns & Portions',
+    },
+    {
+      title: 'Cloud Kitchens & Delivery Hubs',
+      seats: '100% Online Delivery',
+      desc: 'Absorb 24% Swiggy/Zomato commission cuts with smart menu markups and direct WhatsApp loyalty.',
+      image: 'https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=600&q=80',
+      badge: 'Commission Absorption',
+    },
+    {
+      title: 'Chai Bars, Bakeries & QSRs',
+      seats: 'Quick Turnaround',
+      desc: 'High footfall speed, low food cost beverage combos, and automated par-level inventory reorders.',
+      image: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=600&q=80',
+      badge: 'High-Margin Combos',
+    },
+    {
+      title: 'Specialty Biryani & Grills',
+      seats: 'Signature Champions',
+      desc: 'Crown high-margin signature dishes, standardize marinades, and package in branded handis.',
+      image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80',
+      badge: 'Hero Dishes & SOPs',
+    },
+  ];
 
   return (
     <div className="space-y-20 pb-16">
@@ -103,12 +137,61 @@ export const Home: React.FC = () => {
                   100% Free & Open Access
                 </span>
               </div>
+
+              {/* Featured Plating Visual Bar */}
+              <div className="pt-2 flex items-center justify-center lg:justify-start gap-3">
+                <div className="flex -space-x-2">
+                  <img
+                    className="inline-block h-9 w-9 rounded-full ring-2 ring-cream-50 dark:ring-forest-900 object-cover"
+                    src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=120&q=80"
+                    alt="Chef plating"
+                  />
+                  <img
+                    className="inline-block h-9 w-9 rounded-full ring-2 ring-cream-50 dark:ring-forest-900 object-cover"
+                    src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=120&q=80"
+                    alt="Biryani handi"
+                  />
+                  <img
+                    className="inline-block h-9 w-9 rounded-full ring-2 ring-cream-50 dark:ring-forest-900 object-cover"
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=120&q=80"
+                    alt="Restaurant dining"
+                  />
+                </div>
+                <div className="text-xs text-slate-600 dark:text-cream-300">
+                  <div className="flex items-center gap-1 font-bold text-forest-950 dark:text-cream-50">
+                    <span className="text-amber-500 flex">★★★★★</span>
+                    <span>4.9 / 5</span>
+                  </div>
+                  <span className="text-[11px] text-slate-500 dark:text-cream-400">
+                    Trusted by 450+ independent Indian eateries
+                  </span>
+                </div>
+              </div>
             </div>
 
             {/* Right Column: Interactive Profit Leak Teaser Card */}
             <div className="lg:col-span-5">
-              <div className="bg-white dark:bg-forest-900/90 rounded-3xl p-6 sm:p-8 shadow-xl border border-cream-200 dark:border-forest-700/80 space-y-6 relative">
-                <div className="flex items-center justify-between pb-4 border-b border-cream-100 dark:border-forest-800">
+              <div className="bg-white dark:bg-forest-900/90 rounded-3xl p-6 sm:p-8 shadow-xl border border-cream-200 dark:border-forest-700/80 space-y-6 relative overflow-hidden">
+                
+                {/* Visual Header Image Banner */}
+                <div className="relative -mx-6 sm:-mx-8 -mt-6 sm:-mt-8 h-28 overflow-hidden mb-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=800&q=80"
+                    alt="Indian Tandoor Platter"
+                    className="w-full h-full object-cover brightness-75"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/40 to-transparent" />
+                  <div className="absolute bottom-3 left-6 right-6 flex items-center justify-between text-cream-50">
+                    <span className="text-xs font-bold uppercase tracking-wider text-lime-400">
+                      Live Unit Economics
+                    </span>
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-forest-800/80 border border-forest-600 text-cream-100">
+                      Target 30% Food Cost
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pb-3 border-b border-cream-100 dark:border-forest-800">
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-lime-600 dark:text-lime-400">
                       Quick Margin Diagnostic
@@ -219,7 +302,68 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. CORE PROBLEM CATEGORIES (18 CATEGORIES OVERVIEW) */}
+      {/* 2. RESTAURANT FORMATS VISUAL SHOWCASE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-lime-400">
+            Tailored For Your Operating Model
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-forest-950 dark:text-cream-50 font-display">
+            Built For Indian Independent Food Businesses
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-cream-300">
+            Different restaurant models bleed cash in different ways. Select your format to see where your margins are vulnerable.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {restaurantFormats.map((fmt, idx) => (
+            <div
+              key={idx}
+              className="bg-white dark:bg-forest-900 rounded-3xl overflow-hidden border border-cream-200 dark:border-forest-800 shadow-xs hover:shadow-md transition-all group flex flex-col justify-between"
+            >
+              <div>
+                <div className="relative h-44 overflow-hidden bg-slate-100">
+                  <img
+                    src={fmt.image}
+                    alt={fmt.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-forest-950/80 text-lime-300 backdrop-blur-md">
+                      {fmt.badge}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-5 space-y-2">
+                  <span className="text-[11px] font-bold text-slate-400 block">
+                    {fmt.seats}
+                  </span>
+                  <h3 className="text-base font-bold text-forest-950 dark:text-cream-50 group-hover:text-forest-700 dark:group-hover:text-lime-400 transition-colors">
+                    {fmt.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-cream-300 leading-relaxed">
+                    {fmt.desc}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 pt-0">
+                <Link
+                  to="/problem-finder"
+                  className="w-full py-2 rounded-xl bg-cream-100 dark:bg-forest-800 text-forest-900 dark:text-cream-100 font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-cream-200 transition"
+                >
+                  Run Diagnostic <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. CORE PROBLEM CATEGORIES (18 CATEGORIES OVERVIEW) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
@@ -248,32 +392,45 @@ export const Home: React.FC = () => {
           {RESTAURANT_PROBLEMS.slice(0, 6).map((prob) => (
             <div
               key={prob.id}
-              className="bg-white dark:bg-forest-900/80 rounded-3xl p-6 border border-cream-200 dark:border-forest-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
+              className="bg-white dark:bg-forest-900/80 rounded-3xl overflow-hidden border border-cream-200 dark:border-forest-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
             >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase px-3 py-1 rounded-full bg-cream-100 dark:bg-forest-800 text-forest-800 dark:text-lime-300 border border-cream-200 dark:border-forest-700">
-                    {prob.category}
-                  </span>
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300">
-                    {prob.impactLevel} Leak
-                  </span>
-                </div>
+              <div>
+                {prob.imageUrl && (
+                  <div className="relative h-36 overflow-hidden bg-slate-100">
+                    <img
+                      src={prob.imageUrl}
+                      alt={prob.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-forest-900/90 text-lime-300">
+                        {prob.category}
+                      </span>
+                      <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-rose-500 text-white">
+                        {prob.impactLevel} Leak
+                      </span>
+                    </div>
+                  </div>
+                )}
 
-                <h3 className="text-lg font-bold text-forest-950 dark:text-cream-50 group-hover:text-forest-700 dark:group-hover:text-lime-400 transition-colors">
-                  {prob.title}
-                </h3>
-                <p className="text-xs text-slate-600 dark:text-cream-300/90 leading-relaxed">
-                  {prob.shortDesc}
-                </p>
+                <div className="p-6 space-y-3">
+                  <h3 className="text-base font-bold text-forest-950 dark:text-cream-50 group-hover:text-forest-700 dark:group-hover:text-lime-400 transition-colors leading-snug">
+                    {prob.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-cream-300/90 leading-relaxed line-clamp-2">
+                    {prob.shortDesc}
+                  </p>
 
-                <div className="p-3 rounded-xl bg-cream-50 dark:bg-forest-950/60 border border-cream-200/80 dark:border-forest-800 text-xs flex justify-between items-center">
-                  <span className="text-slate-500 dark:text-cream-400">Typical Loss:</span>
-                  <span className="font-extrabold text-rose-600 dark:text-rose-400">{prob.estimatedMonthlyLoss}</span>
+                  <div className="p-2.5 rounded-xl bg-cream-50 dark:bg-forest-950/60 border border-cream-200/80 dark:border-forest-800 text-xs flex justify-between items-center">
+                    <span className="text-slate-500 dark:text-cream-400">Typical Loss:</span>
+                    <span className="font-extrabold text-rose-600 dark:text-rose-400">{prob.estimatedMonthlyLoss}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-6 mt-4 border-t border-cream-100 dark:border-forest-800 flex items-center justify-between">
+              <div className="p-6 pt-0 flex items-center justify-between border-t border-cream-100 dark:border-forest-800 mt-2">
                 <Link
                   to={`/problems?search=${encodeURIComponent(prob.title)}`}
                   className="text-xs font-bold text-forest-800 dark:text-lime-400 hover:text-forest-950 dark:hover:text-lime-300 flex items-center gap-1"
@@ -296,7 +453,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. FEATURED PRACTICAL SOLUTIONS */}
+      {/* 4. FEATURED PRACTICAL SOLUTIONS WITH IMAGERY */}
       <section className="bg-forest-900 text-cream-50 py-16 sm:py-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -315,45 +472,60 @@ export const Home: React.FC = () => {
             {RESTAURANT_SOLUTIONS.slice(0, 3).map((sol) => (
               <div
                 key={sol.id}
-                className="bg-forest-950/80 rounded-3xl p-6 sm:p-7 border border-forest-800 flex flex-col justify-between space-y-6 hover:border-lime-500/50 transition-colors"
+                className="bg-forest-950/80 rounded-3xl overflow-hidden border border-forest-800 flex flex-col justify-between space-y-5 hover:border-lime-500/50 transition-colors group"
               >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-forest-800 text-lime-300">
-                      {sol.category}
-                    </span>
-                    <span className="text-xs text-cream-400 flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      {sol.readTime}
-                    </span>
-                  </div>
+                <div>
+                  {sol.imageUrl && (
+                    <div className="relative h-44 overflow-hidden bg-forest-950">
+                      <img
+                        src={sol.imageUrl}
+                        alt={sol.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/30 to-transparent" />
+                      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-forest-900 text-lime-300 border border-forest-700">
+                          {sol.category}
+                        </span>
+                        <span className="text-xs text-cream-400 flex items-center gap-1 font-semibold">
+                          <Clock className="w-3.5 h-3.5" />
+                          {sol.readTime}
+                        </span>
+                      </div>
+                    </div>
+                  )}
 
-                  <h3 className="text-xl font-bold text-cream-50 leading-snug">
-                    {sol.title}
-                  </h3>
-                  <p className="text-xs text-cream-300 leading-relaxed">
-                    {sol.summary}
-                  </p>
+                  <div className="p-6 space-y-3">
+                    <h3 className="text-lg font-bold text-cream-50 leading-snug">
+                      {sol.title}
+                    </h3>
+                    <p className="text-xs text-cream-300 leading-relaxed line-clamp-2">
+                      {sol.summary}
+                    </p>
 
-                  <div className="p-3.5 rounded-2xl bg-forest-900/80 border border-forest-800 text-xs space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-lime-400">Estimated Payoff</span>
-                    <p className="font-extrabold text-cream-100">{sol.estimatedRoi}</p>
+                    <div className="p-3 rounded-2xl bg-forest-900/80 border border-forest-800 text-xs space-y-1">
+                      <span className="text-[10px] uppercase font-bold text-lime-400">Estimated Payoff</span>
+                      <p className="font-extrabold text-cream-100">{sol.estimatedRoi}</p>
+                    </div>
                   </div>
                 </div>
 
-                <Link
-                  to="/solutions"
-                  className="w-full py-3 rounded-xl bg-forest-800 hover:bg-forest-700 text-lime-300 font-bold text-xs text-center border border-forest-700 transition"
-                >
-                  View Full Step-by-Step SOP →
-                </Link>
+                <div className="p-6 pt-0">
+                  <Link
+                    to="/solutions"
+                    className="w-full py-3 rounded-xl bg-forest-800 hover:bg-forest-700 text-lime-300 font-bold text-xs text-center border border-forest-700 transition block"
+                  >
+                    View Full Step-by-Step SOP →
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. SIX-MONTH GROWTH PLAN PREVIEW */}
+      {/* 5. SIX-MONTH GROWTH PLAN PREVIEW */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
@@ -361,10 +533,10 @@ export const Home: React.FC = () => {
               Structured Roadmap
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-forest-950 dark:text-cream-50 font-display">
-              The 6-Month Restaurant Turnaround Plan
+              The 6-Month Action Plan Preview
             </h2>
             <p className="text-sm text-slate-600 dark:text-cream-300">
-              A sequenced, week-by-week implementation blueprint. Never wonder what to focus on next.
+              Turnaround doesn't happen by chance. Follow an exact sequential timeline to standardize recipes, capture reviews, and launch corporate lunch boxes.
             </p>
           </div>
           <Link
@@ -376,94 +548,94 @@ export const Home: React.FC = () => {
           </Link>
         </div>
 
-        {/* 6 Month Horizontal Progression Preview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
               month: 'Month 1',
-              title: 'Cost Audit & Standardization',
-              desc: 'Recipe cards, portion control ladles, FSSAI hygiene audit, and separate business current account.',
-              tasksCount: 4,
+              title: 'Foundation & Cost Audit',
+              image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80',
+              tasks: 'Weigh 10 bestseller plates, equip kitchen with digital scales, FSSAI audit, separate bank account.',
             },
             {
               month: 'Month 2',
               title: 'Menu Engineering & Pricing',
-              desc: 'Plowhorse re-pricing, delivery price markup (+18%), and crowning 2 Hero signature dishes.',
-              tasksCount: 3,
+              image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80',
+              tasks: 'Classify Stars vs Dogs, set +20% online delivery price markup, design 2 signature dishes.',
             },
             {
               month: 'Month 3',
-              title: 'Google Maps & Local Search',
-              desc: 'Claim GPS profile, table QR review generators to hit 50+ reviews, and photo upload cadence.',
-              tasksCount: 3,
+              title: 'Local SEO & Google Maps',
+              image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
+              tasks: 'Optimize Google profile, install tabletop QR review stands, service recovery on past complaints.',
             },
-            {
-              month: 'Month 4',
-              title: 'Direct WhatsApp Ordering',
-              desc: 'Delivery bag inserts with 15% off, WhatsApp catalog menu, and spill-proof container upgrades.',
-              tasksCount: 3,
-            },
-            {
-              month: 'Month 5',
-              title: 'Loyalty & B2B Partnerships',
-              desc: '5th visit complimentary reward, nearby office corporate lunch boxes, and staff bonus pool.',
-              tasksCount: 3,
-            },
-            {
-              month: 'Month 6',
-              title: 'Catering & Cloud Scaling',
-              desc: 'Bulk 20-50 pax party catering packages, final P&L margin re-audit, and second kitchen evaluation.',
-              tasksCount: 3,
-            },
-          ].map((m, idx) => (
+          ].map((item, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white dark:bg-forest-900/80 border border-cream-200 dark:border-forest-800 shadow-xs space-y-3 relative overflow-hidden group hover:border-forest-600 dark:hover:border-lime-500 transition-colors"
+              className="bg-white dark:bg-forest-900 rounded-3xl overflow-hidden border border-cream-200 dark:border-forest-800 p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black uppercase text-lime-700 dark:text-lime-400 bg-lime-100 dark:bg-lime-950 px-2.5 py-0.5 rounded-full">
-                  {m.month}
-                </span>
-                <span className="text-[11px] font-semibold text-slate-400 dark:text-cream-400">
-                  {m.tasksCount} Key Milestones
-                </span>
+              <div className="space-y-4">
+                <div className="relative h-32 rounded-2xl overflow-hidden">
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-forest-950/80 to-transparent" />
+                  <div className="absolute bottom-2.5 left-3">
+                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-lime-400 text-forest-950">
+                      {item.month}
+                    </span>
+                  </div>
+                </div>
+
+                <h3 className="text-lg font-bold text-forest-950 dark:text-cream-50">
+                  {item.title}
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-cream-300 leading-relaxed">
+                  {item.tasks}
+                </p>
               </div>
-              <h4 className="text-base font-bold text-forest-950 dark:text-cream-50 font-display">
-                {m.title}
-              </h4>
-              <p className="text-xs text-slate-600 dark:text-cream-300 leading-relaxed">
-                {m.desc}
-              </p>
+
+              <div className="pt-4 mt-4 border-t border-cream-100 dark:border-forest-800">
+                <Link
+                  to="/growth-planner"
+                  className="text-xs font-bold text-forest-800 dark:text-lime-400 hover:underline inline-flex items-center gap-1"
+                >
+                  View Tasks & Checkboxes <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION BANNER */}
+      {/* 6. CALL TO ACTION BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-forest-900 via-forest-800 to-forest-950 rounded-3xl p-8 sm:p-14 text-white text-center sm:text-left relative overflow-hidden shadow-xl border border-forest-700">
-          <div className="max-w-2xl space-y-4 relative z-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-lime-400">
-              Start Free Diagnosis
+        <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+          <img
+            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80"
+            alt="Warm Indian Diner Ambience"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.25]"
+          />
+          <div className="relative p-8 sm:p-14 text-center text-cream-50 max-w-3xl mx-auto space-y-6">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-lime-400">
+              Start Your Margin Recovery Today
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black font-display tracking-tight text-cream-50 leading-tight">
-              Ready to Stop Guessing and Start Operating with Clarity?
+            <h2 className="text-3xl sm:text-5xl font-black font-display tracking-tight leading-tight">
+              Stop Guessing Your Numbers. <br />
+              <span className="text-lime-300">Run a Real Business.</span>
             </h2>
-            <p className="text-sm sm:text-base text-cream-200/90 leading-relaxed">
-              Take our 5-minute Restaurant Problem Finder to uncover your specific profit leaks, or jump straight into the Food-Cost Calculator.
+            <p className="text-sm sm:text-base text-cream-200 leading-relaxed max-w-xl mx-auto">
+              Join hundreds of small restaurant owners, dhabas, and cloud kitchens who turned their busy kitchens into profitable businesses with Scaletrix.
             </p>
-            <div className="flex flex-col sm:flex-row items-center gap-3.5 pt-2">
+            <div className="pt-2 flex flex-wrap justify-center gap-4">
               <Link
                 to="/problem-finder"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-lime-500 hover:bg-lime-400 text-forest-950 font-extrabold text-sm shadow-md transition"
+                className="px-8 py-3.5 rounded-xl bg-lime-400 text-forest-950 font-extrabold text-sm hover:bg-lime-300 transition shadow-lg"
               >
-                Start Problem Finder Assessment
+                Launch Restaurant Problem Finder
               </Link>
               <Link
-                to="/dashboard"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-forest-800 hover:bg-forest-700 text-cream-100 font-bold text-sm border border-forest-600 transition"
+                to="/tools"
+                className="px-8 py-3.5 rounded-xl bg-forest-800/90 text-cream-50 font-bold text-sm hover:bg-forest-800 transition border border-forest-600"
               >
-                View Demonstration Dashboard
+                Explore Calculators
               </Link>
             </div>
           </div>

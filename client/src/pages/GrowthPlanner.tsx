@@ -120,18 +120,25 @@ export const GrowthPlanner: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Header */}
-        <div className="max-w-3xl mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-lime-300 text-xs font-bold uppercase tracking-wider mb-4 border border-forest-200 dark:border-forest-700">
-            <CalendarCheck2 className="w-4 h-4 text-lime-600 dark:text-lime-400" />
-            Execution Roadmap
+        <div className="relative rounded-3xl overflow-hidden mb-8 sm:mb-10 bg-gradient-to-r from-forest-950 via-forest-900 to-forest-950 border border-forest-800 p-8 sm:p-10 shadow-lg">
+          <img
+            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+            alt="Restaurant growth roadmap"
+            className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay"
+          />
+          <div className="relative z-10 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-forest-800/80 text-lime-300 text-xs font-bold uppercase tracking-wider mb-4 border border-lime-400/30 backdrop-blur-xs">
+              <CalendarCheck2 className="w-4 h-4 text-lime-400" />
+              180-Day Execution Roadmap
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-cream-50 leading-tight">
+              Six-Month Restaurant <br className="hidden sm:inline" />
+              <span className="text-lime-400">Growth & Turnaround Plan</span>
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-cream-200/90 leading-relaxed">
+              18 milestone actions structured across 6 critical operational months. Check off tasks as you execute them to eliminate margin leaks and build sustainable profitability.
+            </p>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold tracking-tight text-forest-950 dark:text-cream-50 leading-tight">
-            Six-Month Restaurant <br className="hidden sm:inline" />
-            <span className="text-forest-700 dark:text-lime-400">Growth & Turnaround Plan</span>
-          </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-cream-200 leading-relaxed">
-            18 milestone actions structured across 6 critical operational months. Check off tasks as you execute them to eliminate margin leaks and build sustainable profitability.
-          </p>
         </div>
 
         {/* Global Progress Bar Card */}

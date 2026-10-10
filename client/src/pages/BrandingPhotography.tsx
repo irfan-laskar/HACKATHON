@@ -13,23 +13,26 @@ export const BrandingPhotography: React.FC = () => {
     window: {
       name: 'North Window + Foam Core Reflector (₹80 Budget)',
       shadows: 'Soft, natural diffuse shadows with creamy falloff',
-      bestFor: 'Handmade soaps, artisanal bakery items, ceramics, scented candles',
+      bestFor: 'Handmade breads, artisanal bakery items, breakfast platters, ceramics',
       diagram: 'Window (Left) ──> [ Product on Table ] <── White Foam Board (Right)',
       tip: 'Shoot within 3 feet of the window between 9 AM and 11 AM when light is non-directional.',
+      sampleImage: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80',
     },
     twoway: {
       name: '45-Degree Side-Fill Setup (Crisp Commercial)',
       shadows: 'Subtle definition with clear dimensional texture',
-      bestFor: 'Jewelry, skincare bottles, leather goods, textured textiles',
+      bestFor: 'Plated curries, kebabs, tandoori starters, delivery packaging bowls',
       diagram: 'Key Light (45° Left) ──> [ Product ] <── Fill Light / Reflector (45° Right)',
       tip: 'Keep the key light 1 stop brighter than the fill to preserve tactile shadow depth.',
+      sampleImage: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=700&q=80',
     },
     backlit: {
       name: 'Backlit Glamour Setup (Beverages & Steam)',
       shadows: 'Dramatic rim lighting highlighting transparency and edges',
-      bestFor: 'Cocktails, hot coffee cups, clear glass cosmetics, golden pastries',
+      bestFor: 'Kadak chai in kulhad, mocktails, filter coffee, smoking sizzlers',
       diagram: '[ Product ] <── Backlight (Rear) | Front Reflector bounces glow into face',
       tip: 'Shield the phone camera lens with your hand or cardboard flag to prevent lens flare.',
+      sampleImage: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=700&q=80',
     },
   };
 
@@ -39,6 +42,11 @@ export const BrandingPhotography: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
       {/* Header */}
       <div className="bg-gradient-to-r from-amber-900 via-orange-900 to-slate-900 dark:from-amber-950 dark:via-orange-950 dark:to-slate-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden border border-amber-950">
+        <img
+          src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+          alt="Restaurant lighting background"
+          className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay"
+        />
         <div className="max-w-2xl space-y-3 relative z-10">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold uppercase tracking-wider">
             <Camera className="w-3.5 h-3.5" />
@@ -70,7 +78,7 @@ export const BrandingPhotography: React.FC = () => {
               <button
                 key={mode}
                 onClick={() => setLightingSetup(mode)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold capitalize transition ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold capitalize transition cursor-pointer ${
                   lightingSetup === mode
                     ? 'bg-amber-600 text-white shadow-xs'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -82,9 +90,9 @@ export const BrandingPhotography: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           {/* Schematic visual box */}
-          <div className="p-6 rounded-2xl bg-slate-900 text-amber-300 font-mono text-xs sm:text-sm space-y-4 border border-slate-800 shadow-inner">
+          <div className="p-6 rounded-2xl bg-slate-900 text-amber-300 font-mono text-xs sm:text-sm space-y-4 border border-slate-800 shadow-inner flex flex-col justify-between">
             <div className="flex items-center justify-between text-slate-400 text-[11px] pb-2 border-b border-slate-800">
               <span>Studio Schematic Diagram</span>
               <span className="text-emerald-400">● Active Setup</span>
@@ -98,16 +106,36 @@ export const BrandingPhotography: React.FC = () => {
             </div>
           </div>
 
+          {/* Visual Photographic Output Result */}
+          <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-inner h-64 lg:h-auto min-h-[220px] group">
+            <img
+              src={current.sampleImage}
+              alt={current.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+            <div className="absolute bottom-3 left-3 right-3 text-white">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-600/90 text-white">
+                Live Result Output
+              </span>
+              <p className="text-xs font-semibold text-slate-200 mt-1">
+                Real food shot using this setup
+              </p>
+            </div>
+          </div>
+
           {/* Practical Application Notes */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white">{current.name}</h3>
-            <div className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              <p>
-                <strong className="text-slate-800 dark:text-slate-200">Best For: </strong> {current.bestFor}
-              </p>
-              <p>
-                <strong className="text-slate-800 dark:text-slate-200">Pro Secret: </strong> {current.tip}
-              </p>
+          <div className="space-y-4 flex flex-col justify-between">
+            <div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{current.name}</h3>
+              <div className="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p>
+                  <strong className="text-slate-800 dark:text-slate-200">Best For: </strong> {current.bestFor}
+                </p>
+                <p>
+                  <strong className="text-slate-800 dark:text-slate-200">Pro Secret: </strong> {current.tip}
+                </p>
+              </div>
             </div>
 
             <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
