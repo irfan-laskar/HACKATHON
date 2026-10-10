@@ -8,6 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        // User requested: change white colour into #F5EFE1
+        white: '#F5EFE1',
+
         // Core Crimson Scale centered around #790D16
         crimson: {
           50: '#fdf3f3',
