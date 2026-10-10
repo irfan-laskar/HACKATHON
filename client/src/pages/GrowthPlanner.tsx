@@ -34,10 +34,25 @@ export const GrowthPlanner: React.FC = () => {
   const [filterImpact, setFilterImpact] = useState<string>('All');
   const [copiedPlan, setCopiedPlan] = useState<boolean>(false);
 
-  // Pro Subscription State (Month 1 is Free; Months 2-6 require ₹29/month)
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(() => {
-    return localStorage.getItem('scaletrix_planner_pro_active') === 'true';
+  // Subscription & Free Trial Status: 'trial_active' | 'trial_expired' | 'paid_pro'
+  type TrialStatus = 'trial_active' | 'trial_expired' | 'paid_pro';
+
+  const [trialStatus, setTrialStatus] = useState<TrialStatus>(() => {
+    const saved = localStorage.getItem('scaletrix_planner_trial_status') as TrialStatus;
+    if (saved === 'trial_expired' || saved === 'paid_pro' || saved === 'trial_active') {
+      return saved;
+    }
+    if (localStorage.getItem('scaletrix_planner_pro_active') === 'true') {
+      return 'paid_pro';
+    }
+    return 'trial_active'; // Default: First month is 100% Free Trial!
   });
+
+  const [trialDaysLeft, setTrialDaysLeft] = useState<number>(() => {
+    const saved = localStorage.getItem('scaletrix_planner_trial_days');
+    return saved ? Number(saved) : 26;
+  });
+
   const [showCheckoutModal, setShowCheckoutModal] = useState<boolean>(false);
   const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card' | 'netbanking'>('upi');
   const [upiId, setUpiId] = useState('');
@@ -64,17 +79,16 @@ export const GrowthPlanner: React.FC = () => {
   }, []);
 
   const toggleTask = (taskId: string, taskMonth: number) => {
-    // Month 1 is 100% Free; Months 2-6 require subscription
-    if (taskMonth > 1 && !isSubscribed) {
+    // If trial is expired and task is in Month 2-6, prompt checkout
+    if (trialStatus === 'trial_expired' && taskMonth > 1) {
       setTargetMonthPrompt(taskMonth);
       setShowCheckoutModal(true);
-      showToast(`Month ${taskMonth} requires Scaletrix Pro. Month 1 is Free, then just ₹29/month!`, 'info');
+      showToast(`Your 30-Day Free Trial has ended. Pay ₹29/month to continue Month ${taskMonth}!`, 'info');
       return;
     }
 
     setTasks((prev) => {
       const updated = prev.map((t) => (t.id === taskId ? { ...t, completed: !t.completed } : t));
-      // Save completed ids map to localStorage
       const completedMap: Record<string, boolean> = {};
       updated.forEach((t) => {
         if (t.completed) completedMap[t.id] = true;
@@ -86,8 +100,8 @@ export const GrowthPlanner: React.FC = () => {
 
   const handleSelectMonth = (m: number) => {
     setSelectedMonth(m);
-    if (m > 1 && !isSubscribed) {
-      showToast(`Viewing Month ${m} preview. Unlock full interactive tasks for ₹29/month!`, 'info');
+    if (trialStatus === 'trial_expired' && m > 1) {
+      showToast(`Month ${m} is locked (Free trial ended). Pay ₹29/month to unlock!`, 'info');
     }
   };
 
@@ -96,23 +110,28 @@ export const GrowthPlanner: React.FC = () => {
     setIsProcessingPayment(true);
     setTimeout(() => {
       setIsProcessingPayment(false);
-      setIsSubscribed(true);
+      setTrialStatus('paid_pro');
+      localStorage.setItem('scaletrix_planner_trial_status', 'paid_pro');
       localStorage.setItem('scaletrix_planner_pro_active', 'true');
       setShowCheckoutModal(false);
-      showToast('🎉 Payment of ₹29 successful! All 6 Months of Growth Planner are now fully unlocked.', 'success');
+      showToast('🎉 Payment of ₹29 successful! Your Scaletrix Pro plan is active at ₹29/month.', 'success');
     }, 1200);
   };
 
-  const handleToggleSubscriptionTest = () => {
-    if (isSubscribed) {
-      setIsSubscribed(false);
-      localStorage.removeItem('scaletrix_planner_pro_active');
-      showToast('Switched to Free Tier (Month 1 free, Months 2–6 locked).', 'info');
-    } else {
-      setIsSubscribed(true);
-      localStorage.setItem('scaletrix_planner_pro_active', 'true');
-      showToast('Scaletrix Pro active (₹29/month). All months unlocked.', 'success');
-    }
+  const handleSimulateTrialExpired = () => {
+    setTrialStatus('trial_expired');
+    localStorage.setItem('scaletrix_planner_trial_status', 'trial_expired');
+    localStorage.removeItem('scaletrix_planner_pro_active');
+    showToast('Simulated: Your 30-Day Free Trial has ended. Months 2–6 now require ₹29/month.', 'warning');
+  };
+
+  const handleResetFreeTrial = () => {
+    setTrialStatus('trial_active');
+    setTrialDaysLeft(28);
+    localStorage.setItem('scaletrix_planner_trial_status', 'trial_active');
+    localStorage.setItem('scaletrix_planner_trial_days', '28');
+    localStorage.removeItem('scaletrix_planner_pro_active');
+    showToast('First Month Free Trial restarted (28 days left at ₹0).', 'success');
   };
 
   const resetAllTasks = () => {
@@ -124,14 +143,21 @@ export const GrowthPlanner: React.FC = () => {
   const copyProgressSummary = () => {
     const completedCount = tasks.filter((t) => t.completed).length;
     const pct = Math.round((completedCount / tasks.length) * 100);
+    const statusText =
+      trialStatus === 'paid_pro'
+        ? 'Scaletrix Pro Member (₹29/mo)'
+        : trialStatus === 'trial_active'
+        ? `30-Day Free Trial Active (${trialDaysLeft} days left)`
+        : 'Free Trial Expired';
+
     const text = `ScaleTrix 6-Month Restaurant Growth Roadmap\n` +
-      `Pricing Status: ${isSubscribed ? 'Scaletrix Pro Member (₹29/mo)' : 'Month 1 Free Trial'}\n` +
+      `Access Plan: ${statusText}\n` +
       `Overall Completion: ${completedCount}/${tasks.length} tasks completed (${pct}%)\n\n` +
       tasks
         .map(
           (t) =>
             `[${t.completed ? 'X' : ' '}] Month ${t.month} (Day ${t.deadlineDays}): ${t.title} [${t.impact} Impact]${
-              t.month > 1 && !isSubscribed ? ' (Locked - ₹29/mo)' : ''
+              trialStatus === 'trial_expired' && t.month > 1 ? ' (Locked - ₹29/mo)' : ''
             }`
         )
         .join('\n');
@@ -159,10 +185,10 @@ export const GrowthPlanner: React.FC = () => {
         total: mTasks.length,
         done: mDone,
         pct: mTasks.length > 0 ? Math.round((mDone / mTasks.length) * 100) : 0,
-        isLocked: m > 1 && !isSubscribed,
+        isLocked: trialStatus === 'trial_expired' && m > 1,
       };
     });
-  }, [tasks, isSubscribed]);
+  }, [tasks, trialStatus]);
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((t) => {
@@ -202,60 +228,109 @@ export const GrowthPlanner: React.FC = () => {
           </div>
         </div>
 
-        {/* Pricing Model Banner: Month 1 Free, then ₹29/month */}
+        {/* Pricing Model Banner: 1st Month Free Trial, Then Pay ₹29/Month */}
         <div className={`mb-8 rounded-3xl p-6 sm:p-7 border transition-all overflow-hidden relative shadow-sm ${
-          isSubscribed
+          trialStatus === 'paid_pro'
             ? 'bg-gradient-to-r from-emerald-950 via-forest-900 to-emerald-900 text-cream-50 border-emerald-600/50'
-            : 'bg-gradient-to-r from-forest-900 via-forest-850 to-forest-900 text-cream-50 border-lime-400/30'
+            : trialStatus === 'trial_active'
+            ? 'bg-gradient-to-r from-forest-900 via-forest-850 to-forest-900 text-cream-50 border-lime-400/40'
+            : 'bg-gradient-to-r from-amber-950 via-forest-900 to-amber-950 text-cream-50 border-amber-600/50'
         }`}>
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="space-y-2 max-w-2xl">
               <div className="flex flex-wrap items-center gap-2">
                 <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
-                  isSubscribed
+                  trialStatus === 'paid_pro'
                     ? 'bg-emerald-400 text-forest-950'
-                    : 'bg-lime-400 text-forest-950'
+                    : trialStatus === 'trial_active'
+                    ? 'bg-lime-400 text-forest-950'
+                    : 'bg-amber-400 text-amber-950'
                 }`}>
                   <Sparkles className="w-3.5 h-3.5" />
-                  {isSubscribed ? 'SCALETRIX PRO ACTIVE' : 'MONTH 1 IS 100% FREE'}
+                  {trialStatus === 'paid_pro'
+                    ? 'SCALETRIX PRO ACTIVE'
+                    : trialStatus === 'trial_active'
+                    ? '1ST MONTH FREE TRIAL'
+                    : 'FREE TRIAL ENDED'}
                 </span>
-                {!isSubscribed ? (
-                  <span className="text-xs font-bold text-cream-200">
-                    Then just <span className="text-lime-300 font-extrabold text-sm">₹29 / month</span> for Months 2 to 6
+
+                {trialStatus === 'trial_active' ? (
+                  <span className="text-xs font-bold text-lime-300">
+                    Day {30 - trialDaysLeft} of 30 • Renews at <span className="font-extrabold text-sm text-cream-50">₹29 / month</span> after trial
+                  </span>
+                ) : trialStatus === 'trial_expired' ? (
+                  <span className="text-xs font-bold text-amber-300">
+                    Your 30-day trial is over • Pay just <span className="font-extrabold text-sm text-cream-50">₹29 / month</span> to continue
                   </span>
                 ) : (
                   <span className="text-xs font-bold text-emerald-300">
-                    Subscribed at ₹29/month • All 6 months unlocked
+                    Subscribed at ₹29/month • All 6 months permanently unlocked
                   </span>
                 )}
               </div>
 
               <h2 className="text-xl sm:text-2xl font-display font-black text-cream-50">
-                {isSubscribed
+                {trialStatus === 'paid_pro'
                   ? 'Your Complete 180-Day Turnaround Blueprint is Active'
-                  : 'Execute Month 1 Free — Continue Your 6-Month Plan for ₹29/month'}
+                  : trialStatus === 'trial_active'
+                  ? 'First Month Free Trial Active — Experience the Entire Plan at ₹0'
+                  : 'Your Free Month Has Ended — Continue Access for Just ₹29/Month'}
               </h2>
 
               <p className="text-xs sm:text-sm text-cream-200/90 leading-relaxed">
-                {isSubscribed
+                {trialStatus === 'paid_pro'
                   ? 'You have unlimited access to all 18 milestone checklists, B2B catering blueprints, direct WhatsApp ordering engines, and cloud kitchen expansion models.'
-                  : 'Month 1 portioning & weighing audits are unlocked for everyone at zero cost. Unlock Months 2 through 6 for just ₹29/month (less than ₹1/day) to stop ₹45,000+ in monthly aggregator and kitchen margin leaks.'}
+                  : trialStatus === 'trial_active'
+                  ? 'Your first 30 days are 100% free with zero upfront charges. Execute your portion control audits and Google Maps engines. After your 30-day trial concludes, keep full access for just ₹29/month.'
+                  : 'Your 30 days of free trial access have concluded. Subscribe for just ₹29/month (less than ₹1/day) to continue your roadmap and eliminate ₹45,000+ in monthly kitchen margin leaks.'}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-3 shrink-0">
-              {!isSubscribed ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setTargetMonthPrompt(2);
-                    setShowCheckoutModal(true);
-                  }}
-                  className="px-6 py-3.5 rounded-2xl bg-lime-400 hover:bg-lime-300 text-forest-950 font-display font-black text-sm sm:text-base shadow-md transition-all flex items-center gap-2 group cursor-pointer"
-                >
-                  <Unlock className="w-4 h-4 text-forest-950 group-hover:scale-110 transition" />
-                  <span>Unlock Months 2–6 for ₹29/mo</span>
-                </button>
+              {trialStatus === 'trial_active' ? (
+                <div className="flex flex-col sm:flex-row items-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTargetMonthPrompt(2);
+                      setShowCheckoutModal(true);
+                    }}
+                    className="px-5 py-3 rounded-2xl bg-lime-400 hover:bg-lime-300 text-forest-950 font-display font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <Unlock className="w-4 h-4 text-forest-950" />
+                    <span>Pay ₹29/mo Now</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSimulateTrialExpired}
+                    className="px-3.5 py-3 rounded-2xl bg-forest-800 hover:bg-forest-750 text-cream-200 text-xs font-bold border border-forest-700 transition cursor-pointer"
+                    title="Simulate what happens when the 30-day free trial concludes"
+                  >
+                    Simulate Trial Expired
+                  </button>
+                </div>
+              ) : trialStatus === 'trial_expired' ? (
+                <div className="flex flex-col sm:flex-row items-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTargetMonthPrompt(2);
+                      setShowCheckoutModal(true);
+                    }}
+                    className="px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-amber-950 font-display font-black text-sm sm:text-base shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <CreditCard className="w-4 h-4 text-amber-950" />
+                    <span>Pay ₹29/mo to Continue</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleResetFreeTrial}
+                    className="px-3 py-2 text-xs font-bold text-cream-300 hover:text-white underline cursor-pointer"
+                    title="Reset to 30-Day Free Trial"
+                  >
+                    Reset Free Trial
+                  </button>
+                </div>
               ) : (
                 <div className="flex items-center gap-3">
                   <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-3.5 py-2 rounded-xl">
@@ -263,11 +338,11 @@ export const GrowthPlanner: React.FC = () => {
                   </span>
                   <button
                     type="button"
-                    onClick={handleToggleSubscriptionTest}
+                    onClick={handleResetFreeTrial}
                     className="text-xs font-bold text-cream-300 hover:text-white underline decoration-cream-400/50 cursor-pointer"
-                    title="Toggle to Free Tier to test locked states"
+                    title="Switch back to Free Trial mode to test trial states"
                   >
-                    Manage Plan
+                    Test Free Trial
                   </button>
                 </div>
               )}
@@ -394,7 +469,7 @@ export const GrowthPlanner: React.FC = () => {
                   <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-200/80 text-emerald-950 font-black">
                     FREE
                   </span>
-                ) : !isSubscribed ? (
+                ) : trialStatus === 'trial_expired' ? (
                   <Lock className="w-3 h-3 text-amber-500" />
                 ) : null}
               </button>
@@ -432,7 +507,7 @@ export const GrowthPlanner: React.FC = () => {
         {/* Task List */}
         <div className="space-y-4">
           {filteredTasks.map((task) => {
-            const isMonthLocked = task.month > 1 && !isSubscribed;
+            const isMonthLocked = trialStatus === 'trial_expired' && task.month > 1;
 
             return (
               <div
@@ -472,9 +547,19 @@ export const GrowthPlanner: React.FC = () => {
                           ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
                           : isMonthLocked
                           ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
-                          : 'bg-forest-100 text-forest-800 dark:bg-forest-800 dark:text-lime-300'
+                          : trialStatus === 'trial_active'
+                          ? 'bg-lime-100 text-forest-800 dark:bg-forest-800 dark:text-lime-300'
+                          : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
                       }`}>
-                        Month {task.month} {task.month === 1 ? '• Free Trial' : isMonthLocked ? '• Scaletrix Pro' : '• Unlocked'}
+                        Month {task.month} {
+                          task.month === 1
+                            ? '• Free Trial'
+                            : isMonthLocked
+                            ? '• 🔒 Trial Expired'
+                            : trialStatus === 'trial_active'
+                            ? '• Free Trial Active'
+                            : '• Unlocked'
+                        }
                       </span>
                       <span className="text-xs font-semibold text-slate-500 dark:text-cream-400">
                         {task.category}
@@ -520,7 +605,7 @@ export const GrowthPlanner: React.FC = () => {
                     <div className="mt-3 pt-3 border-t border-amber-200/60 dark:border-forest-800 flex flex-wrap items-center justify-between gap-3">
                       <div className="text-xs text-amber-800 dark:text-amber-300 flex items-center gap-1.5 font-medium">
                         <Lock className="w-3.5 h-3.5 shrink-0" />
-                        <span>Unlock Month {task.month} SOP checklist & action items</span>
+                        <span>30-Day Free Trial ended for Month {task.month}. Pay ₹29/month to continue.</span>
                       </div>
                       <button
                         type="button"
@@ -532,7 +617,7 @@ export const GrowthPlanner: React.FC = () => {
                         className="px-3.5 py-1.5 rounded-xl bg-forest-800 hover:bg-forest-900 dark:bg-lime-400 dark:hover:bg-lime-300 text-cream-50 dark:text-forest-950 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
                       >
                         <Unlock className="w-3 h-3" />
-                        <span>Unlock for ₹29/mo</span>
+                        <span>Pay ₹29/mo to Unlock</span>
                       </button>
                     </div>
                   )}
@@ -571,7 +656,7 @@ export const GrowthPlanner: React.FC = () => {
       </div>
 
       {/* ============================================================
-          INTERACTIVE PRO CHECKOUT MODAL (₹29 / MONTH)
+          INTERACTIVE PRO CHECKOUT MODAL (FREE TRIAL -> ₹29 / MONTH)
       ============================================================ */}
       {showCheckoutModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-forest-950/75 backdrop-blur-xs animate-fadeIn">
@@ -589,16 +674,18 @@ export const GrowthPlanner: React.FC = () => {
 
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lime-400/20 text-lime-300 text-xs font-black uppercase tracking-wider mb-2 border border-lime-400/30">
                 <Zap className="w-3.5 h-3.5 text-lime-400" />
-                Month 1 Was Free • Scaletrix Pro
+                {trialStatus === 'trial_expired' ? 'Free Trial Ended • Continue with Pro' : '1st Month Free Trial • Then ₹29/Month'}
               </div>
 
               <h3 className="text-2xl font-display font-black text-cream-50">
-                Unlock 6-Month Growth Roadmap
+                {trialStatus === 'trial_expired'
+                  ? 'Subscribe for ₹29/Month to Continue'
+                  : 'Start Your 30-Day Free Trial'}
               </h3>
               <p className="text-xs sm:text-sm text-cream-200/90 mt-1">
-                {targetMonthPrompt
-                  ? `Activate Month ${targetMonthPrompt} and all remaining milestones for just ₹29/month.`
-                  : 'Get all 18 restaurant milestones, B2B catering deals, and WhatsApp delivery playbooks.'}
+                {trialStatus === 'trial_expired'
+                  ? `Your 30-day free trial has completed. Pay ₹29/month to continue executing Month ${targetMonthPrompt || 2} through 6.`
+                  : 'First 30 days are 100% free with ₹0 due today. Renews at ₹29/month after the trial. Cancel anytime.'}
               </p>
             </div>
 
@@ -609,23 +696,27 @@ export const GrowthPlanner: React.FC = () => {
               <div className="p-4 rounded-2xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-800 flex items-center justify-between">
                 <div>
                   <span className="text-xs uppercase font-extrabold text-slate-500 dark:text-cream-400 block">
-                    Subscription Fee
+                    {trialStatus === 'trial_expired' ? 'Subscription Renewal' : '1st Month Free Trial'}
                   </span>
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl font-display font-black text-forest-950 dark:text-cream-50">
-                      ₹29
+                      {trialStatus === 'trial_expired' ? '₹29' : '₹0'}
                     </span>
-                    <span className="text-xs font-bold text-slate-400">/ month</span>
+                    <span className="text-xs font-bold text-slate-400">
+                      {trialStatus === 'trial_expired' ? '/ month' : 'today'}
+                    </span>
                     <span className="text-xs text-slate-400 line-through">₹199/mo</span>
                   </div>
                   <span className="text-[11px] text-emerald-600 dark:text-lime-400 font-semibold block mt-0.5">
-                    Less than ₹1/day • Cancel anytime in 1 click
+                    {trialStatus === 'trial_expired'
+                      ? 'Less than ₹1/day • Cancel anytime in 1 click'
+                      : 'Month 1 is ₹0 • Renews at ₹29/month on Day 31'}
                   </span>
                 </div>
 
                 <div className="text-right">
                   <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-300">
-                    Month 1: ₹0 (Free)
+                    {trialStatus === 'trial_expired' ? 'Due Today: ₹29' : 'Due Today: ₹0.00'}
                   </span>
                   <span className="block text-[10px] text-slate-400 mt-1">
                     Billed monthly
@@ -641,7 +732,7 @@ export const GrowthPlanner: React.FC = () => {
                 <div className="space-y-1.5 text-slate-700 dark:text-cream-200">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400 shrink-0" />
-                    <span>Months 2 to 6 milestones (15 high-impact kitchen & marketing SOPs)</span>
+                    <span>All 6 months & 18 operational turnaround milestones</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400 shrink-0" />
@@ -661,7 +752,7 @@ export const GrowthPlanner: React.FC = () => {
               {/* Payment Methods */}
               <div className="space-y-3 pt-2 border-t border-cream-200 dark:border-forest-800">
                 <span className="text-xs uppercase font-extrabold tracking-wider text-slate-700 dark:text-cream-200 block">
-                  Select Payment Method
+                  Select Payment Method (For ₹29/mo renewal)
                 </span>
 
                 <div className="grid grid-cols-3 gap-2">
@@ -793,12 +884,17 @@ export const GrowthPlanner: React.FC = () => {
                 {isProcessingPayment ? (
                   <>
                     <RotateCcw className="w-4 h-4 animate-spin" />
-                    <span>Processing Secure Payment (₹29)...</span>
+                    <span>Processing {trialStatus === 'trial_expired' ? 'Payment (₹29)...' : 'Free Trial (₹0)...'}</span>
+                  </>
+                ) : trialStatus === 'trial_expired' ? (
+                  <>
+                    <Zap className="w-4 h-4" />
+                    <span>Pay ₹29 & Re-activate Full Access</span>
                   </>
                 ) : (
                   <>
                     <Zap className="w-4 h-4" />
-                    <span>Pay ₹29 & Unlock All 6 Months</span>
+                    <span>Start 30-Day Free Trial (₹0 Today)</span>
                   </>
                 )}
               </button>
@@ -816,3 +912,4 @@ export const GrowthPlanner: React.FC = () => {
   );
 };
 
+export default GrowthPlanner;
