@@ -89,28 +89,42 @@ export default {
           50: '#F5EFE1', // Page canvas & primary card surface #F5EFE1
           100: '#f0e8d6',
           200: '#E5D3AF', // Border & warm highlight #E5D3AF
-          300: '#d5be8a',
-          400: '#c5a769',
-          500: '#b28e4e',
+          300: '#E5D3AF', // Warm Sand readable text
+          400: '#E5D3AF',
+          500: '#c5a769',
           600: '#94723a',
           700: '#75582c',
           800: '#5c4422',
           900: '#423018',
           950: '#25190b',
         },
-        // 'lime' becomes the soft Powder Blue #AEC4D4 contrast accent scale
+        // 'lime' becomes the bright Powder Blue #AEC4D4 contrast accent scale
         lime: {
           50: '#f3f7fa',
           100: '#e5edf3',
           200: '#cedfe9',
-          300: '#AEC4D4', // Accent Pill & Badge Anchor #AEC4D4
-          400: '#8caaba',
-          500: '#5f8399',
+          300: '#c2d5e3', // Light Powder Blue
+          400: '#AEC4D4', // Accent Pill & Badge Anchor #AEC4D4
+          500: '#AEC4D4', // Vibrant readable Powder Blue in dark mode
           600: '#2d5573', // Deep high-contrast blue for light mode text
           700: '#1d3b52',
           800: '#132635',
           900: '#0d1a24',
           950: '#070f15',
+        },
+        // 'slate' mapped to user custom palette to eliminate cold gray clashes
+        slate: {
+          50: '#F5EFE1',  // Warm Ivory
+          100: '#ede3ce',
+          200: '#E5D3AF', // Warm Sand
+          300: '#E5D3AF',
+          400: '#AEC4D4', // Powder Blue
+          500: '#8caaba',
+          600: '#E5D3AF',
+          700: '#E5D3AF',
+          800: '#3a0509',
+          900: '#2a0407',
+          950: '#220306', // Deep Crimson Canvas
         },
         brand: {
           50: '#fdf3f3',

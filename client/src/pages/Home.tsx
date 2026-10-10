@@ -162,26 +162,26 @@ export const Home: React.FC = () => {
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden pt-8 sm:pt-14 pb-16 sm:pb-24">
         {/* Ambient background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-lime-300/20 via-forest-500/10 to-transparent dark:from-forest-800/30 dark:via-lime-900/20 rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-[#790D16]/20 via-[#AEC4D4]/15 to-transparent dark:from-[#790D16]/30 dark:via-[#AEC4D4]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column: Headlines & CTAs */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest-100 dark:bg-forest-900/80 border border-forest-200 dark:border-forest-700/80 text-forest-800 dark:text-lime-300 text-xs font-bold uppercase tracking-wider shadow-2xs">
-                <Sparkles className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#790D16]/10 dark:bg-[#790D16]/40 border border-[#790D16]/30 dark:border-[#E5D3AF]/40 text-[#790D16] dark:text-[#E5D3AF] text-xs font-bold uppercase tracking-wider shadow-2xs">
+                <Sparkles className="w-3.5 h-3.5 text-[#790D16] dark:text-[#AEC4D4]" />
                 <span>Small Restaurant Growth Platform • India</span>
               </div>
 
-              <h1 className="text-4xl sm:text-6xl font-black font-display text-forest-950 dark:text-cream-50 tracking-tight leading-[1.12]">
+              <h1 className="text-4xl sm:text-6xl font-black font-display text-[#220306] dark:text-[#F5EFE1] tracking-tight leading-[1.12]">
                 Your Restaurant <br className="hidden sm:inline" />
-                <span className="italic font-normal text-forest-700 dark:text-lime-400 underline decoration-lime-400/60 dark:decoration-lime-500/80 underline-offset-8">
+                <span className="italic font-normal text-[#790D16] dark:text-[#AEC4D4] underline decoration-[#AEC4D4]/60 dark:decoration-[#AEC4D4]/80 underline-offset-8">
                   Deserves to Grow
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-700 dark:text-cream-200/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+              <p className="text-base sm:text-lg text-slate-700 dark:text-[#E5D3AF] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
                 Identify why your bank balance doesn't reflect your busy kitchen. We help small dine-ins,
                 cloud kitchens, and neighborhood cafes cut food waste, escape 24% aggregator commission traps,
                 and unlock predictable profit.
@@ -191,34 +191,34 @@ export const Home: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
                 <Link
                   to="/problem-finder"
-                  className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-forest-800 hover:bg-forest-900 dark:bg-lime-500 dark:hover:bg-lime-400 text-cream-50 dark:text-forest-950 font-extrabold text-sm shadow-forest flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02]"
+                  className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-[#AEC4D4] hover:bg-[#cde0ee] text-[#220306] font-extrabold text-sm shadow-md flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02] cursor-pointer"
                 >
-                  <Compass className="w-5 h-5 text-lime-400 dark:text-forest-950" />
+                  <Compass className="w-5 h-5 text-[#220306]" />
                   <span>Take Problem Finder (3 Min)</span>
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>
 
                 <Link
                   to="/tools"
-                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-cream-100 dark:bg-forest-900/90 hover:bg-cream-200 dark:hover:bg-forest-800 text-forest-900 dark:text-cream-50 font-bold text-sm border border-cream-300 dark:border-forest-700 flex items-center justify-center gap-2 transition"
+                  className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-[#790D16] hover:bg-[#91111c] text-[#F5EFE1] font-bold text-sm border border-[#E5D3AF]/40 shadow-md flex items-center justify-center gap-2 transition cursor-pointer"
                 >
-                  <Calculator className="w-4 h-4 text-forest-700 dark:text-lime-400" />
+                  <Calculator className="w-4 h-4 text-[#E5D3AF]" />
                   <span>Explore 5 Free Calculators</span>
                 </Link>
               </div>
 
               {/* Verified Trust Badges */}
-              <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-slate-600 dark:text-cream-300">
+              <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-slate-700 dark:text-[#E5D3AF]">
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-forest-700 dark:text-lime-400" />
+                  <CheckCircle2 className="w-4 h-4 text-[#790D16] dark:text-[#AEC4D4]" />
                   No Paid Software Ads
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-forest-700 dark:text-lime-400" />
+                  <CheckCircle2 className="w-4 h-4 text-[#790D16] dark:text-[#AEC4D4]" />
                   Honest Indian F&B Unit Economics
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-forest-700 dark:text-lime-400" />
+                  <CheckCircle2 className="w-4 h-4 text-[#790D16] dark:text-[#AEC4D4]" />
                   100% Free & Open Access
                 </span>
               </div>
@@ -227,27 +227,27 @@ export const Home: React.FC = () => {
               <div className="pt-2 flex items-center justify-center lg:justify-start gap-3">
                 <div className="flex -space-x-2">
                   <img
-                    className="inline-block h-9 w-9 rounded-full ring-2 ring-cream-50 dark:ring-forest-900 object-cover"
+                    className="inline-block h-9 w-9 rounded-full ring-2 ring-[#E5D3AF] dark:ring-[#790D16] object-cover"
                     src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=120&q=80"
                     alt="Chef plating"
                   />
                   <img
-                    className="inline-block h-9 w-9 rounded-full ring-2 ring-cream-50 dark:ring-forest-900 object-cover"
+                    className="inline-block h-9 w-9 rounded-full ring-2 ring-[#E5D3AF] dark:ring-[#790D16] object-cover"
                     src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=120&q=80"
                     alt="Biryani handi"
                   />
                   <img
-                    className="inline-block h-9 w-9 rounded-full ring-2 ring-cream-50 dark:ring-forest-900 object-cover"
+                    className="inline-block h-9 w-9 rounded-full ring-2 ring-[#E5D3AF] dark:ring-[#790D16] object-cover"
                     src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=120&q=80"
                     alt="Restaurant dining"
                   />
                 </div>
-                <div className="text-xs text-slate-600 dark:text-cream-300">
-                  <div className="flex items-center gap-1 font-bold text-forest-950 dark:text-cream-50">
-                    <span className="text-amber-500 flex">★★★★★</span>
+                <div className="text-xs text-slate-700 dark:text-[#E5D3AF]">
+                  <div className="flex items-center gap-1 font-bold text-[#220306] dark:text-[#F5EFE1]">
+                    <span className="text-amber-400 flex">★★★★★</span>
                     <span>4.9 / 5</span>
                   </div>
-                  <span className="text-[11px] text-slate-500 dark:text-cream-400">
+                  <span className="text-[11px] text-slate-500 dark:text-[#E5D3AF]/80">
                     Trusted by 450+ independent Indian eateries
                   </span>
                 </div>
@@ -256,7 +256,7 @@ export const Home: React.FC = () => {
 
             {/* Right Column: Interactive Profit Leak Teaser Card */}
             <div className="lg:col-span-5">
-              <div className="bg-white dark:bg-forest-900/90 rounded-3xl p-6 sm:p-8 shadow-xl border border-cream-200 dark:border-forest-700/80 space-y-6 relative overflow-hidden">
+              <div className="bg-[#F5EFE1] dark:bg-[#3a0509] rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#E5D3AF] dark:border-[#790D16] space-y-6 relative overflow-hidden">
                 
                 {/* Visual Header Image Banner */}
                 <div className="relative -mx-6 sm:-mx-8 -mt-6 sm:-mt-8 h-28 overflow-hidden mb-2">
@@ -265,36 +265,36 @@ export const Home: React.FC = () => {
                     alt="Indian Tandoor Platter"
                     className="w-full h-full object-cover brightness-75"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/40 to-transparent" />
-                  <div className="absolute bottom-3 left-6 right-6 flex items-center justify-between text-cream-50">
-                    <span className="text-xs font-bold uppercase tracking-wider text-lime-400">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#220306] via-[#220306]/40 to-transparent" />
+                  <div className="absolute bottom-3 left-6 right-6 flex items-center justify-between text-[#F5EFE1]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#AEC4D4]">
                       Live Unit Economics
                     </span>
-                    <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-forest-800/80 border border-forest-600 text-cream-100">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#790D16] border border-[#E5D3AF]/40 text-[#F5EFE1]">
                       Target 30% Food Cost
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pb-3 border-b border-cream-100 dark:border-forest-800">
+                <div className="flex items-center justify-between pb-3 border-b border-[#E5D3AF]/60 dark:border-[#790D16]">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-lime-600 dark:text-lime-400">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#790D16] dark:text-[#AEC4D4]">
                       Quick Margin Diagnostic
                     </span>
-                    <h3 className="text-lg font-bold text-forest-950 dark:text-cream-50">
+                    <h3 className="text-lg font-bold font-display text-[#220306] dark:text-[#F5EFE1]">
                       Calculate Your Monthly Profit Leak
                     </h3>
                   </div>
-                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-800 flex items-center justify-center text-forest-800 dark:text-lime-400">
+                  <div className="w-9 h-9 rounded-xl bg-[#E5D3AF]/60 dark:bg-[#790D16] flex items-center justify-center text-[#790D16] dark:text-[#AEC4D4] shadow-xs">
                     <TrendingUp className="w-5 h-5" />
                   </div>
                 </div>
 
                 {/* Slider 1: Monthly Revenue */}
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-cream-200">
+                  <div className="flex justify-between text-xs font-semibold text-[#220306] dark:text-[#E5D3AF]">
                     <span>Monthly Sales Volume</span>
-                    <span className="text-forest-800 dark:text-lime-300 font-bold">
+                    <span className="text-[#790D16] dark:text-[#AEC4D4] font-black">
                       ₹{monthlyRevenue.toLocaleString('en-IN')}
                     </span>
                   </div>
@@ -305,9 +305,9 @@ export const Home: React.FC = () => {
                     step="25000"
                     value={monthlyRevenue}
                     onChange={(e) => setMonthlyRevenue(Number(e.target.value))}
-                    className="w-full h-2 bg-cream-200 dark:bg-forest-800 rounded-lg appearance-none cursor-pointer accent-forest-700 dark:accent-lime-500"
+                    className="w-full h-2 bg-[#E5D3AF]/40 dark:bg-[#220306] rounded-lg appearance-none cursor-pointer accent-[#790D16] dark:accent-[#AEC4D4]"
                   />
-                  <div className="flex justify-between text-[10px] text-slate-400">
+                  <div className="flex justify-between text-[10px] text-slate-500 dark:text-[#E5D3AF]/70 font-medium">
                     <span>₹1 Lakh</span>
                     <span>₹15 Lakhs</span>
                   </div>
@@ -315,9 +315,9 @@ export const Home: React.FC = () => {
 
                 {/* Slider 2: Current Food Cost % */}
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-cream-200">
+                  <div className="flex justify-between text-xs font-semibold text-[#220306] dark:text-[#E5D3AF]">
                     <span>Estimated Food Cost %</span>
-                    <span className={`${estimatedFoodCostPct > 32 ? 'text-amber-600 dark:text-amber-400' : 'text-forest-700 dark:text-lime-400'} font-bold`}>
+                    <span className={`${estimatedFoodCostPct > 32 ? 'text-amber-600 dark:text-[#f87171]' : 'text-emerald-700 dark:text-[#AEC4D4]'} font-bold`}>
                       {estimatedFoodCostPct}% {estimatedFoodCostPct > 32 ? '(Benchmark is 28-32%)' : '✓ Healthy'}
                     </span>
                   </div>
@@ -328,15 +328,15 @@ export const Home: React.FC = () => {
                     step="1"
                     value={estimatedFoodCostPct}
                     onChange={(e) => setEstimatedFoodCostPct(Number(e.target.value))}
-                    className="w-full h-2 bg-cream-200 dark:bg-forest-800 rounded-lg appearance-none cursor-pointer accent-forest-700 dark:accent-lime-500"
+                    className="w-full h-2 bg-[#E5D3AF]/40 dark:bg-[#220306] rounded-lg appearance-none cursor-pointer accent-[#790D16] dark:accent-[#AEC4D4]"
                   />
                 </div>
 
                 {/* Slider 3: Delivery Channel Share % */}
                 <div className="space-y-2">
-                  <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-cream-200">
+                  <div className="flex justify-between text-xs font-semibold text-[#220306] dark:text-[#E5D3AF]">
                     <span>Swiggy / Zomato Delivery Share</span>
-                    <span className="text-forest-800 dark:text-lime-300 font-bold">{deliverySharePct}%</span>
+                    <span className="text-[#790D16] dark:text-[#AEC4D4] font-black">{deliverySharePct}%</span>
                   </div>
                   <input
                     type="range"
@@ -345,38 +345,38 @@ export const Home: React.FC = () => {
                     step="5"
                     value={deliverySharePct}
                     onChange={(e) => setDeliverySharePct(Number(e.target.value))}
-                    className="w-full h-2 bg-cream-200 dark:bg-forest-800 rounded-lg appearance-none cursor-pointer accent-forest-700 dark:accent-lime-500"
+                    className="w-full h-2 bg-[#E5D3AF]/40 dark:bg-[#220306] rounded-lg appearance-none cursor-pointer accent-[#790D16] dark:accent-[#AEC4D4]"
                   />
                 </div>
 
                 {/* Output Highlight Card */}
-                <div className="p-4 rounded-2xl bg-forest-50 dark:bg-forest-950/80 border border-forest-200 dark:border-forest-800 space-y-2">
-                  <div className="flex justify-between text-xs text-slate-600 dark:text-cream-300">
+                <div className="p-4 rounded-2xl bg-[#E5D3AF]/30 dark:bg-[#220306] border border-[#E5D3AF] dark:border-[#790D16] space-y-2.5">
+                  <div className="flex justify-between text-xs text-slate-700 dark:text-[#E5D3AF]">
                     <span>Overspent on Raw Food Wastage:</span>
-                    <span className="font-bold text-amber-700 dark:text-amber-400">
+                    <span className="font-extrabold text-[#790D16] dark:text-[#f87171]">
                       ₹{Math.round(foodCostOverspend).toLocaleString('en-IN')}/mo
                     </span>
                   </div>
-                  <div className="flex justify-between text-xs text-slate-600 dark:text-cream-300">
+                  <div className="flex justify-between text-xs text-slate-700 dark:text-[#E5D3AF]">
                     <span>Aggregator Commissions Paid:</span>
-                    <span className="font-bold text-rose-700 dark:text-rose-400">
+                    <span className="font-extrabold text-[#790D16] dark:text-[#f87171]">
                       ₹{Math.round(aggregatorCommissions).toLocaleString('en-IN')}/mo
                     </span>
                   </div>
-                  <div className="pt-2 border-t border-forest-200/80 dark:border-forest-800 flex justify-between items-center">
-                    <span className="text-xs font-extrabold uppercase text-forest-950 dark:text-cream-50">
+                  <div className="pt-2 border-t border-[#E5D3AF]/60 dark:border-[#790D16] flex justify-between items-center">
+                    <span className="text-xs font-black uppercase text-[#220306] dark:text-[#F5EFE1]">
                       Recoverable Profit:
                     </span>
-                    <span className="text-xl font-black text-forest-800 dark:text-lime-400">
+                    <span className="text-xl font-black text-[#790D16] dark:text-[#AEC4D4]">
                       +₹{Math.round(totalMonthlyPotentialProfit).toLocaleString('en-IN')}
-                      <span className="text-xs font-normal text-slate-500">/month</span>
+                      <span className="text-xs font-normal text-slate-500 dark:text-[#E5D3AF]/70">/month</span>
                     </span>
                   </div>
                 </div>
 
                 <Link
                   to="/tools?tab=food-cost"
-                  className="block text-center py-2.5 rounded-xl bg-forest-800 hover:bg-forest-900 text-cream-50 font-bold text-xs transition"
+                  className="block text-center py-3 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-[#F5EFE1] font-extrabold text-xs border border-[#E5D3AF]/40 transition shadow-md cursor-pointer"
                 >
                   Open Full Food-Cost Calculator →
                 </Link>
