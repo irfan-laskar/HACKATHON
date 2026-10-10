@@ -109,8 +109,10 @@ const startServer = async () => {
   });
 };
 
-startServer().catch((err) => {
-  console.error('Fatal server startup error:', err);
-});
+if (!process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error('Fatal server startup error:', err);
+  });
+}
 
 export default app;
