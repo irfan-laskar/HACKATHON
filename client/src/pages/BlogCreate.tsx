@@ -27,7 +27,7 @@ export const BlogCreate: React.FC = () => {
       <div className="max-w-xl mx-auto my-20 p-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 text-center space-y-4">
         <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white">Sign in to Publish</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          You must be logged in to write and publish articles on MarketSphere.
+          You must be logged in to write and publish articles on Scaletrix.
         </p>
         <button
           onClick={() => navigate('/login')}

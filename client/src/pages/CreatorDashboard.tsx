@@ -72,7 +72,7 @@ export const CreatorDashboard: React.FC = () => {
     setUpgrading(true);
     try {
       await becomeCreator({ channelName, bio });
-      showToast('Welcome to MarketSphere Creator Studio!', 'success');
+      showToast('Welcome to Scaletrix Creator Studio!', 'success');
       fetchDashboard();
     } catch {
       showToast('Failed to activate Creator status.', 'error');
@@ -181,7 +181,7 @@ export const CreatorDashboard: React.FC = () => {
             Activate Your Creator Profile
           </h1>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            Join MarketSphere's educator network to upload tutorials, build your personal brand, and
+            Join Scaletrix's educator network to upload tutorials, build your personal brand, and
             mentor thousands of indie entrepreneurs.
           </p>
         </div>

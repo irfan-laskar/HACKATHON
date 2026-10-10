@@ -277,7 +277,7 @@ export const KnowledgeHub: React.FC = () => {
         <div className="max-w-3xl space-y-4 relative z-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30 text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 text-brand-400" />
-            <span>MarketSphere Master Curriculum • 100% Free Educational Access</span>
+            <span>Scaletrix Master Curriculum • 100% Free Educational Access</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black font-display tracking-tight text-white leading-tight">
             Comprehensive Marketing & Growth Curriculum

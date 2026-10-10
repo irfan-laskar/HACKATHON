@@ -24,7 +24,7 @@ export const Login: React.FC = () => {
 
     try {
       await login(email.trim(), password);
-      showToast('Welcome back to MarketSphere!', 'success');
+      showToast('Welcome back to Scaletrix!', 'success');
       navigate(from, { replace: true });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed. Please check credentials.');
@@ -47,7 +47,7 @@ export const Login: React.FC = () => {
               <Compass className="w-5 h-5 text-white" />
             </div>
             <span className="text-2xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Market<span className="text-brand-600 dark:text-brand-400">Sphere</span>
+              Scale<span className="text-brand-600 dark:text-brand-400">trix</span>
             </span>
           </Link>
           <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white pt-2">
@@ -111,19 +111,19 @@ export const Login: React.FC = () => {
           <div className="grid grid-cols-1 gap-1.5">
             <button
               type="button"
-              onClick={() => handleQuickLogin('admin@marketsphere.com', 'admin123456')}
+              onClick={() => handleQuickLogin('admin@scaletrix.com', 'admin123456')}
               className="p-2.5 rounded-xl border border-purple-200 dark:border-purple-800/80 bg-purple-50/70 dark:bg-purple-950/40 hover:bg-purple-100 dark:hover:bg-purple-900/60 text-purple-900 dark:text-purple-200 text-xs font-semibold flex items-center justify-between transition text-left"
             >
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                <span>Editorial Admin (admin@marketsphere.com)</span>
+                <span>Editorial Admin (admin@scaletrix.com)</span>
               </div>
               <span className="text-[10px] text-purple-700 dark:text-purple-300 uppercase font-bold">Admin</span>
             </button>
 
             <button
               type="button"
-              onClick={() => handleQuickLogin('priya.sharma@marketsphere.com', 'creator123')}
+              onClick={() => handleQuickLogin('priya.sharma@scaletrix.com', 'creator123')}
               className="p-2.5 rounded-xl border border-brand-200 dark:border-brand-800/80 bg-brand-50/70 dark:bg-brand-950/40 hover:bg-brand-100 dark:hover:bg-brand-900/60 text-brand-900 dark:text-brand-200 text-xs font-semibold flex items-center justify-between transition text-left"
             >
               <div className="flex items-center gap-2">
@@ -135,7 +135,7 @@ export const Login: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => handleQuickLogin('vikram.patel@marketsphere.com', 'user123456')}
+              onClick={() => handleQuickLogin('vikram.patel@scaletrix.com', 'user123456')}
               className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold flex items-center justify-between transition text-left"
             >
               <div className="flex items-center gap-2">
@@ -150,7 +150,7 @@ export const Login: React.FC = () => {
         <p className="text-center text-xs text-slate-500 dark:text-slate-400">
           Don't have an account yet?{' '}
           <Link to="/register" className="font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700">
-            Join MarketSphere for free
+            Join Scaletrix for free
           </Link>
         </p>
       </div>

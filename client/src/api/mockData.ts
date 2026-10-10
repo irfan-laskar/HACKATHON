@@ -4,12 +4,12 @@ export const mockUsers: (User & { password?: string })[] = [
   {
     _id: '660000000000000000000001',
     name: 'Editorial & Compliance Team',
-    email: 'admin@marketsphere.com',
+    email: 'admin@scaletrix.com',
     password: 'admin123456',
     role: 'admin',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
-    bio: 'MarketSphere Lead Editors and Verified Legal & Marketing Compliance Council.',
-    channelName: 'MarketSphere Official',
+    bio: 'Scaletrix Lead Editors and Verified Legal & Marketing Compliance Council.',
+    channelName: 'Scaletrix Official',
     followersCount: 15400,
     followingCount: 3,
     isVerified: true,
@@ -18,7 +18,7 @@ export const mockUsers: (User & { password?: string })[] = [
   {
     _id: '660000000000000000000002',
     name: 'Priya Sharma',
-    email: 'priya.sharma@marketsphere.com',
+    email: 'priya.sharma@scaletrix.com',
     password: 'creator123',
     role: 'creator',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
@@ -33,7 +33,7 @@ export const mockUsers: (User & { password?: string })[] = [
   {
     _id: '660000000000000000000003',
     name: 'Aravind Menon',
-    email: 'aravind.menon@marketsphere.com',
+    email: 'aravind.menon@scaletrix.com',
     password: 'creator123',
     role: 'creator',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
@@ -48,7 +48,7 @@ export const mockUsers: (User & { password?: string })[] = [
   {
     _id: '660000000000000000000004',
     name: 'CA Neha Kapoor',
-    email: 'neha.kapoor@marketsphere.com',
+    email: 'neha.kapoor@scaletrix.com',
     password: 'creator123',
     role: 'creator',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
@@ -63,7 +63,7 @@ export const mockUsers: (User & { password?: string })[] = [
   {
     _id: '660000000000000000000005',
     name: 'Vikram Patel',
-    email: 'vikram.patel@marketsphere.com',
+    email: 'vikram.patel@scaletrix.com',
     password: 'user123456',
     role: 'user',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',

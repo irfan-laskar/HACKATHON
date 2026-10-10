@@ -73,10 +73,10 @@ export const register = async (req: Request, res: Response) => {
         password,
         role: assignedRole,
         channelName: channelName || (assignedRole === 'creator' ? `${name}'s Academy` : undefined),
-        bio: bio || (assignedRole === 'creator' ? 'Educational Creator on MarketSphere' : 'Learner & Entrepreneur on MarketSphere'),
+        bio: bio || (assignedRole === 'creator' ? 'Educational Creator on Scaletrix' : 'Learner & Entrepreneur on Scaletrix'),
       });
 
-      return sendAuthResponse(user, 201, res, 'Registration successful. Welcome to MarketSphere!');
+      return sendAuthResponse(user, 201, res, 'Registration successful. Welcome to Scaletrix!');
     } else {
       const existing = inMemoryDB.users.find((u) => u.email.toLowerCase() === cleanEmail);
       if (existing) {
@@ -91,7 +91,7 @@ export const register = async (req: Request, res: Response) => {
         password: hashedPassword,
         role: assignedRole as 'user' | 'creator',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
-        bio: bio || (assignedRole === 'creator' ? 'Educational Creator on MarketSphere' : 'Learner & Entrepreneur on MarketSphere'),
+        bio: bio || (assignedRole === 'creator' ? 'Educational Creator on Scaletrix' : 'Learner & Entrepreneur on Scaletrix'),
         channelName: channelName || (assignedRole === 'creator' ? `${name}'s Academy` : undefined),
         followersCount: 0,
         followers: [],
@@ -103,7 +103,7 @@ export const register = async (req: Request, res: Response) => {
       };
 
       inMemoryDB.users.push(newUser);
-      return sendAuthResponse(newUser, 201, res, 'Registration successful. Welcome to MarketSphere!');
+      return sendAuthResponse(newUser, 201, res, 'Registration successful. Welcome to Scaletrix!');
     }
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Registration failed.' });
@@ -120,9 +120,10 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const cleanEmail = email.toLowerCase().trim();
+    const normalizedEmail = cleanEmail.replace(/@marketsphere\.com$/, '@scaletrix.com');
 
     if (isMongooseReady()) {
-      const user = await User.findOne({ email: cleanEmail }).select('+password');
+      const user = await User.findOne({ $or: [{ email: cleanEmail }, { email: normalizedEmail }] }).select('+password');
       if (!user) {
         return res.status(401).json({ success: false, message: 'Invalid email or password.' });
       }
@@ -141,7 +142,7 @@ export const login = async (req: Request, res: Response) => {
 
       return sendAuthResponse(user, 200, res, 'Login successful.');
     } else {
-      const user = inMemoryDB.users.find((u) => u.email.toLowerCase() === cleanEmail);
+      const user = inMemoryDB.users.find((u) => u.email.toLowerCase() === cleanEmail || u.email.toLowerCase() === normalizedEmail);
       if (!user) {
         return res.status(401).json({ success: false, message: 'Invalid email or password.' });
       }

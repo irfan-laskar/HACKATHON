@@ -1,7 +1,7 @@
 {
   "name": "marketsphere",
   "version": "1.0.0",
-  "description": "MarketSphere — All-in-One Educational Platform & Video-Sharing Hub for Marketing, Branding & Business Growth",
+  "description": "Scaletrix — All-in-One Educational Platform & Video-Sharing Hub for Marketing, Branding & Business Growth",
   "scripts": {
     "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "build": "npm run build --prefix client && npm run build --prefix server",

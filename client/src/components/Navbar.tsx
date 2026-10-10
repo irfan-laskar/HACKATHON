@@ -65,7 +65,7 @@ export const Navbar: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-1.5">
-                  Market<span className="text-brand-600 dark:text-brand-400">Sphere</span>
+                  Scale<span className="text-brand-600 dark:text-brand-400">trix</span>
                 </span>
                 <span className="text-[10px] uppercase font-bold tracking-widest text-brand-600 dark:text-brand-400 -mt-1 hidden sm:block">
                   Knowledge & Academy
@@ -120,7 +120,7 @@ export const Navbar: React.FC = () => {
               <button
                 onClick={() => setSearchModalOpen(true)}
                 className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 text-slate-500 dark:text-slate-400 text-sm transition"
-                title="Search MarketSphere"
+                title="Search Scaletrix"
               >
                 <Search className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <span className="hidden md:inline-block text-xs font-medium pr-2">Search...</span>

@@ -50,16 +50,17 @@ export const handleMockRequest = (config: any): any => {
 
   const cleanPath = url.replace(/^[a-zA-Z]+:\/\/[^/]+/, '').replace(/^\/api/, '');
 
-  console.log(`[MarketSphere Demo Fallback] Intercepted: ${method.toUpperCase()} ${cleanPath}`);
+  console.log(`[Scaletrix Demo Fallback] Intercepted: ${method.toUpperCase()} ${cleanPath}`);
 
   // 1. AUTH: LOGIN
   if (cleanPath.startsWith('/auth/login') && method === 'post') {
-    const email = (data.email || '').toLowerCase().trim();
+    const rawEmail = (data.email || '').toLowerCase().trim();
+    const email = rawEmail.replace(/@marketsphere\.com$/, '@scaletrix.com');
     const password = data.password || '';
 
     const allUsers = [...mockUsers, ...getRegisteredUsers()];
     const found = allUsers.find(
-      (u) => u.email.toLowerCase() === email && (u.password === password || !u.password)
+      (u) => (u.email.toLowerCase() === email || u.email.toLowerCase() === rawEmail) && (u.password === password || !u.password)
     );
 
     if (found) {
@@ -87,7 +88,7 @@ export const handleMockRequest = (config: any): any => {
         config,
         data: {
           success: true,
-          message: 'Welcome back to MarketSphere (Demo Resilient Mode)!',
+          message: 'Welcome back to Scaletrix (Demo Resilient Mode)!',
           token,
           user: userSafe,
         },
@@ -143,7 +144,7 @@ export const handleMockRequest = (config: any): any => {
       password: data.password || 'password123',
       role,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
-      bio: data.bio || (role === 'creator' ? 'Educational Creator on MarketSphere' : 'Learner & Entrepreneur on MarketSphere'),
+      bio: data.bio || (role === 'creator' ? 'Educational Creator on Scaletrix' : 'Learner & Entrepreneur on Scaletrix'),
       channelName: data.channelName || (role === 'creator' ? `${data.name}'s Academy` : undefined),
       followersCount: 0,
       followingCount: 0,
@@ -161,7 +162,7 @@ export const handleMockRequest = (config: any): any => {
       config,
       data: {
         success: true,
-        message: 'Account created successfully! Welcome to MarketSphere.',
+        message: 'Account created successfully! Welcome to Scaletrix.',
         token,
         user: newUser,
       },
@@ -330,7 +331,7 @@ export const handleMockRequest = (config: any): any => {
               title: 'Marketing 101: Understanding Customer Psychology & Value',
               description: 'Comprehensive breakdown of customer value proposition and positioning.',
               thumbnail: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80',
-              channelTitle: 'MarketSphere Academy',
+              channelTitle: 'Scaletrix Academy',
               publishedAt: '2026-01-15T00:00:00Z',
               videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
               embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',

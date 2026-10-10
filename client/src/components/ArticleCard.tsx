@@ -70,7 +70,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article, featured = fa
               className="w-7 h-7 rounded-full object-cover border border-slate-200 dark:border-slate-700"
             />
             <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[120px]">
-              {article.author?.name || 'MarketSphere Editorial'}
+              {article.author?.name || 'Scaletrix Editorial'}
             </span>
           </div>
 

@@ -110,10 +110,10 @@ export const AdminDashboard: React.FC = () => {
         <Lock className="w-12 h-12 text-rose-600 mx-auto" />
         <h2 className="text-xl font-bold text-slate-800 dark:text-slate-200">Restricted Administrator Area</h2>
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Only authorized MarketSphere compliance administrators can access this portal.
+          Only authorized Scaletrix compliance administrators can access this portal.
         </p>
         <p className="text-xs text-slate-400 dark:text-slate-500">
-          Tip: Log in with <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">admin@marketsphere.com</code> / <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">admin123456</code> to test admin capabilities.
+          Tip: Log in with <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">admin@scaletrix.com</code> / <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded">admin123456</code> to test admin capabilities.
         </p>
       </div>
     );

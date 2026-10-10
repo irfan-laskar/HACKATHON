@@ -63,7 +63,7 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'online',
     timestamp: new Date().toISOString(),
-    service: 'MarketSphere Educational Platform API',
+    service: 'Scaletrix Educational Platform API',
   });
 });
 
@@ -104,7 +104,7 @@ const startServer = async () => {
   await seedInitialData();
 
   app.listen(PORT, () => {
-    console.log(`🚀 MarketSphere Server running at http://localhost:${PORT}`);
+    console.log(`🚀 Scaletrix Server running at http://localhost:${PORT}`);
     console.log(`📚 API documentation & endpoints active.`);
   });
 };

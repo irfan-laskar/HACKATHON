@@ -34,7 +34,7 @@ export const Register: React.FC = () => {
         role,
         channelName: role === 'creator' ? channelName : undefined,
       });
-      showToast('Registration complete! Welcome to MarketSphere.', 'success');
+      showToast('Registration complete! Welcome to Scaletrix.', 'success');
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed.');
@@ -52,7 +52,7 @@ export const Register: React.FC = () => {
               <Compass className="w-5 h-5 text-white" />
             </div>
             <span className="text-2xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Market<span className="text-brand-600 dark:text-brand-400">Sphere</span>
+              Scale<span className="text-brand-600 dark:text-brand-400">trix</span>
             </span>
           </Link>
           <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white pt-2">

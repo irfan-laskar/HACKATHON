@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
                 <Compass className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-display font-extrabold text-white tracking-tight">
-                Market<span className="text-sky-400">Sphere</span>
+                Scale<span className="text-sky-400">trix</span>
               </span>
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
@@ -138,7 +138,7 @@ export const Footer: React.FC = () => {
             <BookOpen className="w-3.5 h-3.5 text-amber-400" />
             Educational Compliance Disclaimer
           </p>
-          The regulatory, tax, and legal guides provided on MarketSphere (including GST, Udyam MSME, and
+          The regulatory, tax, and legal guides provided on Scaletrix (including GST, Udyam MSME, and
           business structures) are prepared strictly for educational purposes. Regulatory thresholds and
           statutory provisions change periodically. Always verify with official portals (e.g. gst.gov.in,
           udyamregistration.gov.in) and consult a practicing Chartered Accountant or legal counsel before
@@ -147,7 +147,7 @@ export const Footer: React.FC = () => {
 
         {/* Copyright bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>© {new Date().getFullYear()} MarketSphere Platform. Designed for modern entrepreneurs.</p>
+          <p>© {new Date().getFullYear()} Scaletrix Platform. Designed for modern entrepreneurs.</p>
           <div className="flex items-center gap-6">
             <Link to="/knowledge-hub" className="hover:text-slate-300 transition">
               Knowledge Hub

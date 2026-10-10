@@ -116,7 +116,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
               <textarea
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
-                placeholder="Explain why this content violates MarketSphere educational guidelines..."
+                placeholder="Explain why this content violates Scaletrix educational guidelines..."
                 rows={3}
                 className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-brand-500 resize-none"
               />
@@ -125,7 +125,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
             <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-xs text-amber-800 dark:text-amber-200 flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
               <span>
-                MarketSphere maintains strict educational guidelines. Reports are reviewed by human
+                Scaletrix maintains strict educational guidelines. Reports are reviewed by human
                 moderators.
               </span>
             </div>

@@ -344,7 +344,7 @@ export const SearchPage: React.FC = () => {
                       </span>
                     </h2>
                     <p className="text-xs text-slate-500 dark:text-slate-400">
-                      High-yield masterclasses & tutorials playable directly in MarketSphere
+                      High-yield masterclasses & tutorials playable directly in Scaletrix
                     </p>
                   </div>
                 </div>
