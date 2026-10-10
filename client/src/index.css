@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-cream-50/70 text-slate-800 dark:bg-forest-950 dark:text-cream-100 antialiased font-sans selection:bg-lime-500 selection:text-forest-950 transition-colors duration-200;
+    @apply bg-cream-50 text-slate-800 dark:bg-forest-950 dark:text-cream-100 antialiased font-sans selection:bg-lime-200 selection:text-forest-900 transition-colors duration-200;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -24,48 +24,48 @@
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f9f6ed;
+  background: #F5EFE1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c4d9cd;
+  background: #E5D3AF;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #62a87e;
+  background: #AEC4D4;
 }
 
 /* Custom scrollbars - Dark */
 .dark ::-webkit-scrollbar-track {
-  background: #091c12;
+  background: #220306;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: #1e472f;
+  background: #640911;
   border-radius: 4px;
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #2c7047;
+  background: #790D16;
 }
 
 /* Glassmorphism utilities */
 .glass-panel {
-  background: rgba(253, 252, 247, 0.88);
+  background: rgba(245, 239, 225, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(223, 239, 229, 0.8);
+  border: 1px solid rgba(229, 211, 175, 0.85);
 }
 
 .dark .glass-panel {
-  background: rgba(14, 42, 27, 0.85);
+  background: rgba(34, 3, 6, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(44, 112, 71, 0.35);
+  border: 1px solid rgba(121, 13, 22, 0.40);
 }
 
-/* Custom shadow tokens */
+/* Custom shadow tokens using crimson & powder blue */
 .shadow-forest {
-  box-shadow: 0 10px 25px -5px rgba(20, 51, 33, 0.12), 0 8px 10px -6px rgba(20, 51, 33, 0.08);
+  box-shadow: 0 10px 25px -5px rgba(121, 13, 22, 0.22), 0 8px 10px -6px rgba(121, 13, 22, 0.12);
 }
 
 .shadow-lime {
-  box-shadow: 0 10px 25px -5px rgba(132, 204, 22, 0.25);
+  box-shadow: 0 10px 25px -5px rgba(174, 196, 212, 0.40);
 }

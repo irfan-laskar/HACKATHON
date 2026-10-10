@@ -77,13 +77,13 @@ const BENCHMARK_MODELS: BenchmarkModel[] = [
       { month: 'Oct', sales: 480000, rawFoodCost: 148800, operatingExpenses: 242400, grossProfit: 331200, netProfit: 88800, dineInCovers: 1060, deliveryOrders: 480 },
     ],
     costBreakdown: [
-      { name: 'Raw Food Cost (31%)', value: 31, color: '#166534' }, // forest-800
-      { name: 'Staff Salaries (20%)', value: 20, color: '#15803d' }, // forest-700
-      { name: 'Rent & Maintenance (15%)', value: 15, color: '#ca8a04' }, // amber
-      { name: 'Aggregator Commissions (8%)', value: 8, color: '#ea580c' }, // orange
-      { name: 'LPG Gas, Power & Water (5%)', value: 5, color: '#64748b' }, // slate
-      { name: 'Packaging Supplies (2.5%)', value: 2.5, color: '#94a3b8' },
-      { name: 'Net Take-Home Profit (18.5%)', value: 18.5, color: '#84cc16' }, // lime-500
+      { name: 'Raw Food Cost (31%)', value: 31, color: '#790D16' }, // Core Crimson
+      { name: 'Staff Salaries (20%)', value: 20, color: '#b01d2a' }, // Crimson Medium
+      { name: 'Rent & Maintenance (15%)', value: 15, color: '#E5D3AF' }, // Core Sand
+      { name: 'Aggregator Commissions (8%)', value: 8, color: '#AEC4D4' }, // Core Powder Blue
+      { name: 'LPG Gas, Power & Water (5%)', value: 5, color: '#6c8ea2' }, // Slate Blue
+      { name: 'Packaging Supplies (2.5%)', value: 2.5, color: '#d5be8a' }, // Soft Sand
+      { name: 'Net Take-Home Profit (18.5%)', value: 18.5, color: '#435a69' }, // Deep Powder Slate
     ],
   },
   {
@@ -104,13 +104,13 @@ const BENCHMARK_MODELS: BenchmarkModel[] = [
       { month: 'Oct', sales: 360000, rawFoodCost: 106200, operatingExpenses: 206280, grossProfit: 253800, netProfit: 47520, dineInCovers: 0, deliveryOrders: 1150 },
     ],
     costBreakdown: [
-      { name: 'Raw Food Cost (29.5%)', value: 29.5, color: '#166534' },
-      { name: 'Aggregator Commissions (22%)', value: 22, color: '#ea580c' },
-      { name: 'Kitchen Staff (16%)', value: 16, color: '#15803d' },
-      { name: 'Packaging Containers (7%)', value: 7, color: '#94a3b8' },
-      { name: 'Kitchen Rent & Power (8.5%)', value: 8.5, color: '#ca8a04' },
-      { name: 'Platform Sponsored Ads (3.8%)', value: 3.8, color: '#e11d48' },
-      { name: 'Net Take-Home Profit (13.2%)', value: 13.2, color: '#84cc16' },
+      { name: 'Raw Food Cost (29.5%)', value: 29.5, color: '#790D16' },
+      { name: 'Aggregator Commissions (22%)', value: 22, color: '#AEC4D4' },
+      { name: 'Kitchen Staff (16%)', value: 16, color: '#b01d2a' },
+      { name: 'Packaging Containers (7%)', value: 7, color: '#d5be8a' },
+      { name: 'Kitchen Rent & Power (8.5%)', value: 8.5, color: '#E5D3AF' },
+      { name: 'Platform Sponsored Ads (3.8%)', value: 3.8, color: '#e3727c' },
+      { name: 'Net Take-Home Profit (13.2%)', value: 13.2, color: '#435a69' },
     ],
   },
   {
@@ -131,13 +131,13 @@ const BENCHMARK_MODELS: BenchmarkModel[] = [
       { month: 'Oct', sales: 280000, rawFoodCost: 72800, operatingExpenses: 144480, grossProfit: 207200, netProfit: 62720, dineInCovers: 2550, deliveryOrders: 440 },
     ],
     costBreakdown: [
-      { name: 'Raw Food & Dairy Cost (26%)', value: 26, color: '#166534' },
-      { name: 'Counter Staff (18%)', value: 18, color: '#15803d' },
-      { name: 'High-Street Kiosk Rent (20%)', value: 20, color: '#ca8a04' },
-      { name: 'Electricity & Gas (6%)', value: 6, color: '#64748b' },
-      { name: 'Packaging & Glasses (4%)', value: 4, color: '#94a3b8' },
-      { name: 'Delivery Commissions (3.6%)', value: 3.6, color: '#ea580c' },
-      { name: 'Net Take-Home Profit (22.4%)', value: 22.4, color: '#84cc16' },
+      { name: 'Raw Food & Dairy Cost (26%)', value: 26, color: '#790D16' },
+      { name: 'Counter Staff (18%)', value: 18, color: '#b01d2a' },
+      { name: 'High-Street Kiosk Rent (20%)', value: 20, color: '#E5D3AF' },
+      { name: 'Electricity & Gas (6%)', value: 6, color: '#6c8ea2' },
+      { name: 'Packaging & Glasses (4%)', value: 4, color: '#d5be8a' },
+      { name: 'Delivery Commissions (3.6%)', value: 3.6, color: '#AEC4D4' },
+      { name: 'Net Take-Home Profit (22.4%)', value: 22.4, color: '#435a69' },
     ],
   },
 ];
@@ -354,17 +354,17 @@ export const Dashboard: React.FC = () => {
                   <Tooltip
                     formatter={(value: any) => [`₹${Number(value).toLocaleString('en-IN')}`, '']}
                     contentStyle={{
-                      backgroundColor: '#052e16',
-                      borderColor: '#166534',
+                      backgroundColor: '#220306',
+                      borderColor: '#790D16',
                       borderRadius: '12px',
-                      color: '#fdfbf7',
+                      color: '#F5EFE1',
                       fontSize: '12px',
                     }}
                   />
                   <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                  <Bar dataKey="sales" name="Gross Sales" fill="#1e293b" radius={[6, 6, 0, 0]} />
-                  <Bar dataKey="operatingExpenses" name="Operating Expenses" fill="#94a3b8" radius={[6, 6, 0, 0]} />
-                  <Line type="monotone" dataKey="grossProfit" name="Gross Profit" stroke="#84cc16" strokeWidth={3} dot={{ r: 4 }} />
+                  <Bar dataKey="sales" name="Gross Sales" fill="#790D16" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="operatingExpenses" name="Operating Expenses" fill="#E5D3AF" radius={[6, 6, 0, 0]} />
+                  <Line type="monotone" dataKey="grossProfit" name="Gross Profit" stroke="#AEC4D4" strokeWidth={3} dot={{ r: 4 }} />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
@@ -398,10 +398,10 @@ export const Dashboard: React.FC = () => {
                   <Tooltip
                     formatter={(val: any) => [`${val}%`, 'Share']}
                     contentStyle={{
-                      backgroundColor: '#052e16',
-                      borderColor: '#166534',
+                      backgroundColor: '#220306',
+                      borderColor: '#790D16',
                       borderRadius: '12px',
-                      color: '#fdfbf7',
+                      color: '#F5EFE1',
                       fontSize: '12px',
                     }}
                   />
@@ -443,12 +443,12 @@ export const Dashboard: React.FC = () => {
                 <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorGross" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#15803d" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#15803d" stopOpacity={0} />
+                      <stop offset="5%" stopColor="#790D16" stopOpacity={0.35} />
+                      <stop offset="95%" stopColor="#790D16" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="colorNet" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#84cc16" stopOpacity={0.5} />
-                      <stop offset="95%" stopColor="#84cc16" stopOpacity={0} />
+                      <stop offset="5%" stopColor="#AEC4D4" stopOpacity={0.5} />
+                      <stop offset="95%" stopColor="#AEC4D4" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" opacity={0.6} />
@@ -457,16 +457,16 @@ export const Dashboard: React.FC = () => {
                   <Tooltip
                     formatter={(value: any) => [`₹${Number(value).toLocaleString('en-IN')}`, '']}
                     contentStyle={{
-                      backgroundColor: '#052e16',
-                      borderColor: '#166534',
+                      backgroundColor: '#220306',
+                      borderColor: '#790D16',
                       borderRadius: '12px',
-                      color: '#fdfbf7',
+                      color: '#F5EFE1',
                       fontSize: '12px',
                     }}
                   />
                   <Legend wrapperStyle={{ fontSize: '12px' }} />
-                  <Area type="monotone" dataKey="grossProfit" name="Gross Profit (Sales - Food)" stroke="#15803d" fillOpacity={1} fill="url(#colorGross)" />
-                  <Area type="monotone" dataKey="netProfit" name="Net Profit (Take Home)" stroke="#84cc16" strokeWidth={2} fillOpacity={1} fill="url(#colorNet)" />
+                  <Area type="monotone" dataKey="grossProfit" name="Gross Profit (Sales - Food)" stroke="#790D16" strokeWidth={2.5} fillOpacity={1} fill="url(#colorGross)" />
+                  <Area type="monotone" dataKey="netProfit" name="Net Profit (Take Home)" stroke="#AEC4D4" strokeWidth={2.5} fillOpacity={1} fill="url(#colorNet)" />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -491,16 +491,16 @@ export const Dashboard: React.FC = () => {
                   <YAxis stroke="#64748b" fontSize={12} tickLine={false} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#052e16',
-                      borderColor: '#166534',
+                      backgroundColor: '#220306',
+                      borderColor: '#790D16',
                       borderRadius: '12px',
-                      color: '#fdfbf7',
+                      color: '#F5EFE1',
                       fontSize: '12px',
                     }}
                   />
                   <Legend wrapperStyle={{ fontSize: '12px' }} />
-                  <Line type="monotone" dataKey="dineInCovers" name="Dine-In Covers" stroke="#15803d" strokeWidth={3} dot={{ r: 4 }} />
-                  <Line type="monotone" dataKey="deliveryOrders" name="Online Delivery Orders" stroke="#ea580c" strokeWidth={3} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="dineInCovers" name="Dine-In Covers" stroke="#790D16" strokeWidth={3} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="deliveryOrders" name="Online Delivery Orders" stroke="#AEC4D4" strokeWidth={3} dot={{ r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
