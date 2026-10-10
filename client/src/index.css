@@ -33,6 +33,9 @@
     @apply font-display text-forest-950 dark:text-cream-50 tracking-tight;
   }
 
+  .text-white h1, .text-white h2, .text-white h3, .text-white h4,
+  .text-cream-50 h1, .text-cream-50 h2, .text-cream-50 h3, .text-cream-50 h4,
+  .text-cream-100 h1, .text-cream-100 h2, .text-cream-100 h3, .text-cream-100 h4,
   footer h1, footer h2, footer h3, footer h4, footer h5, footer h6 {
     color: #F5EFE1;
   }

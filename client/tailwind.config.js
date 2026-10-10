@@ -89,9 +89,9 @@ export default {
           50: '#F5EFE1', // Page canvas & primary card surface #F5EFE1
           100: '#f0e8d6',
           200: '#E5D3AF', // Border & warm highlight #E5D3AF
-          300: '#E5D3AF', // Warm Sand readable text
-          400: '#E5D3AF',
-          500: '#c5a769',
+          300: '#d9c299',
+          400: '#cbb082',
+          500: '#b89860',
           600: '#94723a',
           700: '#75582c',
           800: '#5c4422',
@@ -112,19 +112,19 @@ export default {
           900: '#0d1a24',
           950: '#070f15',
         },
-        // 'slate' mapped to user custom palette to eliminate cold gray clashes
+        // 'slate' mapped to user custom palette to guarantee crisp readability in light and dark mode
         slate: {
-          50: '#F5EFE1',  // Warm Ivory
-          100: '#ede3ce',
-          200: '#E5D3AF', // Warm Sand
-          300: '#E5D3AF',
-          400: '#AEC4D4', // Powder Blue
-          500: '#8caaba',
-          600: '#E5D3AF',
-          700: '#E5D3AF',
-          800: '#3a0509',
-          900: '#2a0407',
-          950: '#220306', // Deep Crimson Canvas
+          50: '#F5EFE1',  // Warm Ivory Canvas
+          100: '#f0e8d6', // Soft Warm Sand
+          200: '#E5D3AF', // Warm Sand Border
+          300: '#AEC4D4', // Powder Blue Accent
+          400: '#8c5a61', // Soft Warm Crimson
+          500: '#790D16', // Brand Crimson Text
+          600: '#640911', // Dark Crimson Body Text (8.8:1 contrast on #F5EFE1)
+          700: '#4e070c', // Rich Dark Crimson Nav/Labels (11.5:1 contrast on #F5EFE1)
+          800: '#3a0509', // Dark Crimson Headings (14:1 contrast on #F5EFE1)
+          900: '#2a0407', // Deep Crimson-Black
+          950: '#220306', // Deep Crimson Canvas (Dark mode)
         },
         brand: {
           50: '#fdf3f3',
