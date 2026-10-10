@@ -22,6 +22,7 @@ import {
   Star,
   Flame,
   Award,
+  TrendingDown,
 } from 'lucide-react';
 import { RESTAURANT_PROBLEMS, RESTAURANT_SOLUTIONS, SIX_MONTH_GROWTH_PLAN } from '../data/restaurantData';
 
@@ -363,19 +364,21 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. CORE PROBLEM CATEGORIES (18 CATEGORIES OVERVIEW) */}
+      {/* 3. CORE PROBLEM CATEGORIES (18 CATEGORIES OVERVIEW - MATCHING SOLUTIONS STYLE) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-lime-400">
-              18 Root-Cause Categories
-            </span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-lime-300 text-xs font-bold uppercase tracking-wider border border-forest-200 dark:border-forest-700">
+              <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+              <span>18 Root-Cause Problem Breakdowns</span>
+            </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-forest-950 dark:text-cream-50 font-display">
-              Where Small Restaurants Silently Bleed Profit
+              Where Small Restaurants <br className="hidden sm:inline" />
+              <span className="italic font-normal text-forest-700 dark:text-lime-400">Silently Bleed Profit</span>
             </h2>
-            <p className="text-sm text-slate-600 dark:text-cream-300">
+            <p className="text-sm text-slate-600 dark:text-cream-300 leading-relaxed">
               Most restaurant owners work 14-hour days without realizing where the cash is leaking.
-              Explore research-backed breakdowns across the full operational spectrum.
+              Explore research-backed breakdowns across the full operational spectrum with step-by-step corrective SOPs.
             </p>
           </div>
           <Link
@@ -387,64 +390,86 @@ export const Home: React.FC = () => {
           </Link>
         </div>
 
-        {/* Categories Spotlight Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Problems Cards Grid (Matching Solutions Style Cards) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {RESTAURANT_PROBLEMS.slice(0, 6).map((prob) => (
             <div
               key={prob.id}
-              className="bg-white dark:bg-forest-900/80 rounded-3xl overflow-hidden border border-cream-200 dark:border-forest-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
+              className="bg-white/95 dark:bg-forest-900/90 rounded-3xl border border-cream-200 dark:border-forest-800 overflow-hidden shadow-xs hover:shadow-md transition duration-200 group flex flex-col justify-between"
             >
               <div>
+                {/* Visual Image Header */}
                 {prob.imageUrl && (
-                  <div className="relative h-36 overflow-hidden bg-slate-100">
+                  <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-forest-950">
                     <img
                       src={prob.imageUrl}
                       alt={prob.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-forest-900/90 text-lime-300">
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/40 to-transparent" />
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white">
+                      <span className="text-[10px] font-bold uppercase px-2.5 py-1 rounded-full bg-forest-900/90 text-lime-300 border border-forest-700 backdrop-blur-sm">
                         {prob.category}
                       </span>
-                      <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-rose-500 text-white">
+                      <span className={`text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full shadow-sm flex items-center gap-1 ${
+                        prob.impactLevel === 'Critical'
+                          ? 'bg-rose-600 text-white'
+                          : prob.impactLevel === 'High'
+                          ? 'bg-amber-600 text-white'
+                          : 'bg-emerald-600 text-white'
+                      }`}>
+                        <AlertTriangle className="w-3 h-3" />
                         {prob.impactLevel} Leak
                       </span>
                     </div>
                   </div>
                 )}
 
+                {/* Content Area */}
                 <div className="p-6 space-y-3">
-                  <h3 className="text-base font-bold text-forest-950 dark:text-cream-50 group-hover:text-forest-700 dark:group-hover:text-lime-400 transition-colors leading-snug">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-lime-300">
+                      {prob.category}
+                    </span>
+                    <span className="text-xs font-semibold text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-0.5 rounded-full border border-rose-200 dark:border-rose-900/60 flex items-center gap-1">
+                      <TrendingDown className="w-3 h-3" />
+                      {prob.marginLeakPercent}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-bold font-display text-forest-950 dark:text-cream-50 leading-snug group-hover:text-forest-700 dark:group-hover:text-lime-400 transition-colors">
                     {prob.title}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-cream-300/90 leading-relaxed line-clamp-2">
+
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-cream-200/90 leading-relaxed line-clamp-2">
                     {prob.shortDesc}
                   </p>
 
-                  <div className="p-2.5 rounded-xl bg-cream-50 dark:bg-forest-950/60 border border-cream-200/80 dark:border-forest-800 text-xs flex justify-between items-center">
-                    <span className="text-slate-500 dark:text-cream-400">Typical Loss:</span>
-                    <span className="font-extrabold text-rose-600 dark:text-rose-400">{prob.estimatedMonthlyLoss}</span>
+                  {/* Financial Loss Callout */}
+                  <div className="p-3 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-900/50 flex justify-between items-center text-xs">
+                    <span className="text-slate-500 dark:text-rose-300 font-medium">Estimated Monthly Loss:</span>
+                    <span className="font-black text-rose-700 dark:text-rose-400">{prob.estimatedMonthlyLoss}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 pt-0 flex items-center justify-between border-t border-cream-100 dark:border-forest-800 mt-2">
+              {/* Bottom Action Footer */}
+              <div className="p-6 pt-0 flex items-center justify-between border-t border-cream-100 dark:border-forest-800/80 mt-2">
                 <Link
                   to={`/problems?search=${encodeURIComponent(prob.title)}`}
                   className="text-xs font-bold text-forest-800 dark:text-lime-400 hover:text-forest-950 dark:hover:text-lime-300 flex items-center gap-1"
                 >
-                  <span>Read Action Plan</span>
+                  <span>View Corrective SOP</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
 
                 {prob.recommendedToolPath && (
                   <Link
                     to={prob.recommendedToolPath}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-cream-200 font-semibold hover:bg-forest-200 dark:hover:bg-forest-700 transition"
+                    className="text-[11px] px-2.5 py-1 rounded-xl bg-forest-100 dark:bg-forest-800 text-forest-800 dark:text-cream-200 font-bold hover:bg-forest-200 dark:hover:bg-forest-700 transition"
                   >
-                    Use Tool →
+                    Launch Tool →
                   </Link>
                 )}
               </div>
