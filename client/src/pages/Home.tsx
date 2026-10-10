@@ -529,14 +529,19 @@ export const Home: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-lime-400">
-              Structured Roadmap
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-forest-700 dark:text-lime-400">
+                Structured Roadmap
+              </span>
+              <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300/50">
+                Month 1 Free • Then ₹29/mo
+              </span>
+            </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-forest-950 dark:text-cream-50 font-display">
               The 6-Month Action Plan Preview
             </h2>
             <p className="text-sm text-slate-600 dark:text-cream-300">
-              Turnaround doesn't happen by chance. Follow an exact sequential timeline to standardize recipes, capture reviews, and launch corporate lunch boxes.
+              Turnaround doesn't happen by chance. Execute Month 1 portioning audits 100% free, then continue the complete 6-month roadmap for just ₹29/month.
             </p>
           </div>
           <Link
@@ -552,18 +557,21 @@ export const Home: React.FC = () => {
           {[
             {
               month: 'Month 1',
+              badge: 'Free Access',
               title: 'Foundation & Cost Audit',
               image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80',
               tasks: 'Weigh 10 bestseller plates, equip kitchen with digital scales, FSSAI audit, separate bank account.',
             },
             {
               month: 'Month 2',
+              badge: '₹29/mo Pro',
               title: 'Menu Engineering & Pricing',
               image: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80',
               tasks: 'Classify Stars vs Dogs, set +20% online delivery price markup, design 2 signature dishes.',
             },
             {
               month: 'Month 3',
+              badge: '₹29/mo Pro',
               title: 'Local SEO & Google Maps',
               image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
               tasks: 'Optimize Google profile, install tabletop QR review stands, service recovery on past complaints.',
@@ -577,9 +585,12 @@ export const Home: React.FC = () => {
                 <div className="relative h-32 rounded-2xl overflow-hidden">
                   <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-forest-950/80 to-transparent" />
-                  <div className="absolute bottom-2.5 left-3">
+                  <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5">
                     <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-lime-400 text-forest-950">
                       {item.month}
+                    </span>
+                    <span className="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-forest-950/80 text-cream-100 backdrop-blur-xs">
+                      {item.badge}
                     </span>
                   </div>
                 </div>
