@@ -154,37 +154,28 @@ export default {
       },
       fontFamily: {
         sans: [
-          '"Helvetica Neue"',
-          'Helvetica',
-          'Arial',
+          '"Plus Jakarta Sans"',
           '-apple-system',
           'BlinkMacSystemFont',
-          'sans-serif'
-        ],
-        helvetica: [
-          '"Helvetica Neue"',
-          'Helvetica',
-          'Arial',
+          '"Segoe UI"',
+          'Roboto',
           'sans-serif'
         ],
         display: [
-          '"Apoc Revelations"',
+          '"Playfair Display"',
           '"Instrument Serif"',
-          '"Cormorant Garamond"',
           'Georgia',
           'serif'
         ],
         serif: [
-          '"Apoc Revelations"',
+          '"Playfair Display"',
           '"Instrument Serif"',
-          '"Cormorant Garamond"',
           'Georgia',
           'serif'
         ],
         apoc: [
-          '"Apoc Revelations"',
+          '"Playfair Display"',
           '"Instrument Serif"',
-          '"Cormorant Garamond"',
           'Georgia',
           'serif'
         ],
