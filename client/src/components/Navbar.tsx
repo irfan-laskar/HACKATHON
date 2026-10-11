@@ -447,6 +447,14 @@ export const Navbar: React.FC = () => {
                         <span>Dashboard</span>
                       </Link>
                       <Link
+                        to="/creator/dashboard"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2 px-3 py-2 text-slate-700 dark:text-cream-200 hover:bg-cream-50 dark:hover:bg-forest-800 transition"
+                      >
+                        <VideoIcon className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
+                        <span>Upload / Creator Studio</span>
+                      </Link>
+                      <Link
                         to="/profile"
                         onClick={() => setUserDropdownOpen(false)}
                         className="flex items-center gap-2 px-3 py-2 text-slate-700 dark:text-cream-200 hover:bg-cream-50 dark:hover:bg-forest-800 transition"

@@ -43,8 +43,9 @@ export const CreatorDashboard: React.FC = () => {
   const [bio, setBio] = useState('');
   const [upgrading, setUpgrading] = useState(false);
 
+  const [guestName, setGuestName] = useState('');
+
   const fetchDashboard = async () => {
-    if (!user) return;
     setLoading(true);
     try {
       const res = await api.get('/videos/creator/dashboard');
@@ -60,11 +61,7 @@ export const CreatorDashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    if (user && (user.role === 'creator' || user.role === 'admin')) {
-      fetchDashboard();
-    } else {
-      setLoading(false);
-    }
+    fetchDashboard();
   }, [user]);
 
   const handleBecomeCreator = async (e: React.FormEvent) => {
@@ -81,6 +78,17 @@ export const CreatorDashboard: React.FC = () => {
     }
   };
 
+  const handleVideoUrlChange = (val: string) => {
+    setVideoUrl(val);
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+    const match = val.match(regExp);
+    if (match && match[2].length === 11) {
+      if (!thumbnailUrl || thumbnailUrl.includes('unsplash.com')) {
+        setThumbnailUrl(`https://img.youtube.com/vi/${match[2]}/hqdefault.jpg`);
+      }
+    }
+  };
+
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !description.trim() || !category) {
@@ -88,7 +96,7 @@ export const CreatorDashboard: React.FC = () => {
       return;
     }
     if (!videoFile && !videoUrl.trim()) {
-      showToast('Please provide an MP4 video file or valid stream URL.', 'error');
+      showToast('Please provide an MP4 video file or valid YouTube/stream URL.', 'error');
       return;
     }
 
@@ -98,9 +106,12 @@ export const CreatorDashboard: React.FC = () => {
       formData.append('title', title.trim());
       formData.append('description', description.trim());
       formData.append('category', category);
-      formData.append('duration', duration);
+      formData.append('duration', duration || '10:00');
       formData.append('tags', tags);
       formData.append('learningObjectives', learningObjectives);
+      if (guestName.trim()) {
+        formData.append('creatorName', guestName.trim());
+      }
 
       if (videoFile) {
         formData.append('video', videoFile);
@@ -119,7 +130,7 @@ export const CreatorDashboard: React.FC = () => {
       });
 
       if (res.data.success) {
-        showToast('Video published successfully to the platform!', 'success');
+        showToast('Video published successfully! Accessible to everyone.', 'success');
         setShowUploadModal(false);
         // Reset form
         setTitle('');
@@ -129,7 +140,14 @@ export const CreatorDashboard: React.FC = () => {
         setThumbnailUrl('');
         setVideoFile(null);
         setThumbnailFile(null);
-        fetchDashboard();
+        if (res.data.video) {
+          setVideos((prev) => [res.data.video, ...prev.filter((v) => v._id !== res.data.video._id)]);
+          setStats((prev) => ({
+            ...prev,
+            totalVideos: (prev.totalVideos || 0) + 1,
+          }));
+        }
+        await fetchDashboard();
       }
     } catch (err: any) {
       showToast(err.response?.data?.message || 'Video upload failed.', 'error');
@@ -151,84 +169,26 @@ export const CreatorDashboard: React.FC = () => {
     }
   };
 
-  if (!user) {
-    return (
-      <div className="max-w-xl mx-auto my-20 p-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 text-center space-y-4">
-        <AlertCircle className="w-12 h-12 text-brand-600 dark:text-brand-400 mx-auto" />
-        <h2 className="text-2xl font-bold font-display text-slate-900 dark:text-white">Sign in to Access Creator Studio</h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Sign in or create an account to publish educational marketing and business lessons.
-        </p>
-        <a
-          href="/login"
-          className="inline-block px-6 py-2.5 rounded-xl bg-brand-600 text-white font-semibold text-sm hover:bg-brand-700"
-        >
-          Sign In
-        </a>
-      </div>
-    );
-  }
-
-  // If user is not yet a creator, show 1-click activation form
-  if (user.role === 'user') {
-    return (
-      <div className="max-w-2xl mx-auto my-16 p-8 sm:p-10 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-brand-50 dark:bg-brand-950/70 text-brand-600 dark:text-brand-400 flex items-center justify-center mx-auto mb-3">
-            <Sparkles className="w-6 h-6" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-900 dark:text-white">
-            Activate Your Creator Profile
-          </h1>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            Join Scaletrix's educator network to upload tutorials, build your personal brand, and
-            mentor thousands of indie entrepreneurs.
-          </p>
-        </div>
-
-        <form onSubmit={handleBecomeCreator} className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1.5">
-              Academy / Channel Name
-            </label>
-            <input
-              type="text"
-              value={channelName}
-              onChange={(e) => setChannelName(e.target.value)}
-              placeholder="e.g. D2C Growth Academy"
-              required
-              className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:border-brand-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1.5">
-              Creator Bio & Expertise
-            </label>
-            <textarea
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              placeholder="Tell learners about your experience in marketing, photography, tax, or business..."
-              rows={3}
-              required
-              className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:border-brand-500 resize-none"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={upgrading}
-            className="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm shadow-md transition disabled:opacity-50"
-          >
-            {upgrading ? 'Activating Studio...' : 'Activate Creator Studio'}
-          </button>
-        </form>
-      </div>
-    );
-  }
+  const studioName = user?.channelName || user?.name || (guestName ? `${guestName}'s Studio` : 'Open Creator Studio');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+      {/* Guest Notice */}
+      {!user && (
+        <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5 text-amber-900 dark:text-amber-200">
+            <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+            <span>Open Studio: Anyone can upload educational video lessons on Scaletrix! Sign in to tie uploads to your personal profile.</span>
+          </div>
+          <Link
+            to="/login"
+            className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold shrink-0"
+          >
+            Sign In / Register
+          </Link>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
@@ -236,7 +196,7 @@ export const CreatorDashboard: React.FC = () => {
             Creator Studio
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-900 dark:text-white mt-1">
-            {user.channelName || user.name}
+            {studioName}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Manage your uploaded educational lessons, track engagement, and upload new masterclasses.
@@ -245,7 +205,7 @@ export const CreatorDashboard: React.FC = () => {
 
         <button
           onClick={() => setShowUploadModal(true)}
-          className="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs sm:text-sm tracking-wide shadow-md transition flex items-center gap-2 shrink-0"
+          className="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs sm:text-sm tracking-wide shadow-md transition flex items-center gap-2 shrink-0 cursor-pointer"
         >
           <UploadCloud className="w-4 h-4" />
           <span>Upload Video Lesson</span>
@@ -490,11 +450,31 @@ export const CreatorDashboard: React.FC = () => {
                 />
               </div>
 
+              {!user && (
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase mb-1">
+                    Your Name or Channel Name (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)}
+                    placeholder="e.g. Rahul Sharma or FoodTech Insights"
+                    className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-brand-500"
+                  />
+                </div>
+              )}
+
               {/* Media File Upload or URL */}
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
-                <span className="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 block">
-                  Video Source (File Upload or Stream URL)
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 block">
+                    Video Source (File Upload, YouTube, or Stream URL)
+                  </span>
+                  <span className="text-[11px] text-brand-600 dark:text-brand-400 font-semibold">
+                    Universal Player Supported
+                  </span>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">
@@ -509,17 +489,20 @@ export const CreatorDashboard: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">
-                      Or Direct Video URL
+                      Or YouTube / Direct Video URL
                     </label>
                     <input
                       type="url"
                       value={videoUrl}
-                      onChange={(e) => setVideoUrl(e.target.value)}
-                      placeholder="https://example.com/video.mp4"
+                      onChange={(e) => handleVideoUrlChange(e.target.value)}
+                      placeholder="https://youtube.com/watch?v=... or MP4 URL"
                       className="w-full p-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     />
                   </div>
                 </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 italic">
+                  Tip: Paste any YouTube link, Vimeo link, or upload an MP4/WebM file. The video will be playable for all visitors worldwide.
+                </p>
 
                 <div className="pt-2 border-t border-slate-200 dark:border-slate-700 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
@@ -541,7 +524,7 @@ export const CreatorDashboard: React.FC = () => {
                       type="url"
                       value={thumbnailUrl}
                       onChange={(e) => setThumbnailUrl(e.target.value)}
-                      placeholder="https://images.unsplash.com/..."
+                      placeholder="Auto-detected for YouTube, or image URL"
                       className="w-full p-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     />
                   </div>

@@ -4,6 +4,7 @@ import { Eye, Edit3, ArrowLeft } from 'lucide-react';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { MarkdownRenderer } from '../components/MarkdownRenderer';
 
 export const BlogCreate: React.FC = () => {
   const { user } = useAuth();
@@ -225,8 +226,8 @@ export const BlogCreate: React.FC = () => {
             {coverImage && (
               <img src={coverImage} alt="Cover Preview" className="w-full aspect-video rounded-2xl object-cover" />
             )}
-            <div className="prose-educational whitespace-pre-line text-slate-700 dark:text-slate-300 leading-relaxed pt-4 border-t border-slate-100 dark:border-slate-800">
-              {content || 'Start typing in the Editor tab to preview article layout.'}
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+              <MarkdownRenderer content={content || 'Start typing in the Editor tab to preview article layout.'} showOutline={false} />
             </div>
           </div>
         )}

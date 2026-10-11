@@ -53,6 +53,69 @@ const getCurrentMockUser = (): User | null => {
   }
 };
 
+const getCustomVideos = (): Video[] => {
+  try {
+    const raw = localStorage.getItem('ms_uploaded_videos');
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return [];
+};
+
+const saveCustomVideo = (video: Video) => {
+  try {
+    const current = getCustomVideos();
+    const updated = [video, ...current.filter((v) => v._id !== video._id)];
+    localStorage.setItem('ms_uploaded_videos', JSON.stringify(updated));
+  } catch {}
+};
+
+const removeCustomVideo = (videoId: string) => {
+  try {
+    const current = getCustomVideos();
+    const updated = current.filter((v) => v._id !== videoId);
+    localStorage.setItem('ms_uploaded_videos', JSON.stringify(updated));
+    const raw = localStorage.getItem('ms_deleted_video_ids');
+    const deleted: string[] = raw ? JSON.parse(raw) : [];
+    if (!deleted.includes(videoId)) {
+      deleted.push(videoId);
+      localStorage.setItem('ms_deleted_video_ids', JSON.stringify(deleted));
+    }
+  } catch {}
+};
+
+const getAllVideos = (): Video[] => {
+  const custom = getCustomVideos();
+  const deletedIds: string[] = (() => {
+    try {
+      const raw = localStorage.getItem('ms_deleted_video_ids');
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  })();
+  const filteredMock = mockVideos.filter((v) => !deletedIds.includes(v._id));
+  return [...custom, ...filteredMock];
+};
+
+const slugifyVideo = (text: string): string => {
+  return (
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-') +
+    '-' +
+    Math.floor(1000 + Math.random() * 9000)
+  );
+};
+
+const getYouTubeVideoId = (url: string): string | null => {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+};
+
 export const handleMockRequest = (config: any): any => {
   const url: string = config.url || '';
   const method: string = (config.method || 'get').toLowerCase();
@@ -263,8 +326,13 @@ export const handleMockRequest = (config: any): any => {
     };
   }
 
-  // 8. VIDEOS
+  // 8. VIDEOS: CREATOR DASHBOARD
   if (cleanPath.startsWith('/videos/creator/dashboard') && method === 'get') {
+    const allVids = getAllVideos();
+    const totalViews = allVids.reduce((acc, v) => acc + (v.viewsCount || 0), 0);
+    const totalLikes = allVids.reduce((acc, v) => acc + (v.likesCount || 0), 0);
+    const totalComments = allVids.reduce((acc, v) => acc + (v.commentsCount || 0), 0);
+
     return {
       status: 200,
       statusText: 'OK',
@@ -273,21 +341,155 @@ export const handleMockRequest = (config: any): any => {
       data: {
         success: true,
         stats: {
-          totalViews: 16940,
-          totalLikes: 1410,
-          totalComments: 104,
-          videoCount: mockVideos.length,
+          totalVideos: allVids.length,
+          totalViews,
+          totalLikes,
+          totalComments,
         },
-        videos: mockVideos,
+        videos: allVids,
       },
     };
   }
 
+  // 8. VIDEOS: UPLOAD & PUBLISH (Support both POST /videos and POST /videos/upload)
+  if ((cleanPath === '/videos' || cleanPath === '/videos/' || cleanPath.startsWith('/videos/upload')) && method === 'post') {
+    let title = '';
+    let description = '';
+    let category = 'Digital Marketing';
+    let duration = '10:00';
+    let tags: string[] = [];
+    let learningObjectives: string[] = [];
+    let videoUrl = '';
+    let thumbnailUrl = '';
+
+    if (config.data instanceof FormData) {
+      title = (config.data.get('title') as string) || '';
+      description = (config.data.get('description') as string) || '';
+      category = (config.data.get('category') as string) || 'Digital Marketing';
+      duration = (config.data.get('duration') as string) || '10:00';
+      const rawTags = (config.data.get('tags') as string) || '';
+      tags = rawTags.split(',').map((t) => t.trim()).filter(Boolean);
+      const rawObjectives = (config.data.get('learningObjectives') as string) || '';
+      learningObjectives = rawObjectives.split('\n').map((o) => o.trim()).filter(Boolean);
+
+      const videoFile = config.data.get('video');
+      const manualVideoUrl = (config.data.get('videoUrl') as string) || '';
+      if (videoFile instanceof File && typeof window !== 'undefined' && window.URL) {
+        videoUrl = window.URL.createObjectURL(videoFile);
+      } else if (manualVideoUrl) {
+        videoUrl = manualVideoUrl.trim();
+      }
+
+      const thumbnailFile = config.data.get('thumbnail');
+      const manualThumbnailUrl = (config.data.get('thumbnailUrl') as string) || '';
+      if (thumbnailFile instanceof File && typeof window !== 'undefined' && window.URL) {
+        thumbnailUrl = window.URL.createObjectURL(thumbnailFile);
+      } else if (manualThumbnailUrl) {
+        thumbnailUrl = manualThumbnailUrl.trim();
+      }
+    } else if (data) {
+      title = data.title || '';
+      description = data.description || '';
+      category = data.category || 'Digital Marketing';
+      duration = data.duration || '10:00';
+      tags = Array.isArray(data.tags)
+        ? data.tags
+        : typeof data.tags === 'string'
+        ? data.tags.split(',').map((t: string) => t.trim()).filter(Boolean)
+        : [];
+      learningObjectives = Array.isArray(data.learningObjectives)
+        ? data.learningObjectives
+        : typeof data.learningObjectives === 'string'
+        ? data.learningObjectives.split('\n').map((o: string) => o.trim()).filter(Boolean)
+        : [];
+      videoUrl = data.videoUrl || '';
+      thumbnailUrl = data.thumbnailUrl || '';
+    }
+
+    if (!videoUrl) {
+      videoUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+    }
+
+    // Auto-detect YouTube thumbnail if not provided
+    const ytId = getYouTubeVideoId(videoUrl);
+    if (ytId && !thumbnailUrl) {
+      thumbnailUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+    } else if (!thumbnailUrl) {
+      thumbnailUrl = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80';
+    }
+
+    const currentUser = getCurrentMockUser() || mockUsers[1];
+    const newVideo: Video = {
+      _id: `vid_${Date.now()}`,
+      title: title || 'Untitled Educational Masterclass',
+      slug: slugifyVideo(title || `video-${Date.now()}`),
+      description: description || 'Educational lesson shared with the Scaletrix community.',
+      videoUrl,
+      thumbnailUrl,
+      duration: duration || '10:00',
+      category,
+      tags: tags.length > 0 ? tags : ['Educational', category],
+      creator: {
+        _id: currentUser._id,
+        name: currentUser.name,
+        email: currentUser.email || 'creator@scaletrix.com',
+        role: currentUser.role || 'creator',
+        avatar: currentUser.avatar,
+        channelName: currentUser.channelName || currentUser.name,
+        isVerified: Boolean(currentUser.isVerified),
+        followersCount: currentUser.followersCount || 0,
+      },
+      viewsCount: 1,
+      likesCount: 0,
+      commentsCount: 0,
+      status: 'published',
+      isFeatured: false,
+      learningObjectives,
+      createdAt: new Date().toISOString(),
+    };
+
+    saveCustomVideo(newVideo);
+
+    return {
+      status: 201,
+      statusText: 'Created',
+      headers: { 'content-type': 'application/json' },
+      config,
+      data: {
+        success: true,
+        message: 'Educational video published successfully!',
+        video: newVideo,
+      },
+    };
+  }
+
+  // 8. VIDEOS: DELETE
+  if (cleanPath.match(/\/videos\/([a-zA-Z0-9_-]+)/) && method === 'delete') {
+    const match = cleanPath.match(/\/videos\/([a-zA-Z0-9_-]+)/);
+    const videoId = match ? match[1] : '';
+    if (videoId) {
+      removeCustomVideo(videoId);
+    }
+    return {
+      status: 200,
+      statusText: 'OK',
+      headers: { 'content-type': 'application/json' },
+      config,
+      data: {
+        success: true,
+        message: 'Video deleted successfully.',
+      },
+    };
+  }
+
+  // 8. VIDEOS: GET SINGLE & GET LIST
   if (cleanPath.startsWith('/videos') && method === 'get') {
+    const allVids = getAllVideos();
     const slugMatch = cleanPath.match(/\/videos\/([a-zA-Z0-9_-]+)/);
-    if (slugMatch && slugMatch[1] && !cleanPath.includes('?')) {
+
+    if (slugMatch && slugMatch[1] && !cleanPath.includes('?') && slugMatch[1] !== 'creator') {
       const slug = slugMatch[1];
-      const video = mockVideos.find((v) => v.slug === slug || v._id === slug) || mockVideos[0];
+      const video = allVids.find((v) => v.slug === slug || v._id === slug) || allVids[0];
       return {
         status: 200,
         statusText: 'OK',
@@ -296,9 +498,44 @@ export const handleMockRequest = (config: any): any => {
         data: {
           success: true,
           video,
-          relatedVideos: mockVideos.filter((v) => v._id !== video._id).slice(0, 3),
+          related: allVids.filter((v) => v._id !== video._id).slice(0, 4),
+          relatedVideos: allVids.filter((v) => v._id !== video._id).slice(0, 4),
         },
       };
+    }
+
+    // Listing with search, category & sorting
+    const urlObj = new URL(url.startsWith('http') ? url : `http://localhost${url}`);
+    const categoryParam = urlObj.searchParams.get('category');
+    const searchParam = urlObj.searchParams.get('search');
+    const sortParam = urlObj.searchParams.get('sort');
+
+    let filtered = allVids.filter((v) => v.status === 'published');
+
+    if (categoryParam && categoryParam !== 'All') {
+      filtered = filtered.filter(
+        (v) => v.category.toLowerCase() === categoryParam.toLowerCase()
+      );
+    }
+
+    if (searchParam) {
+      const s = searchParam.toLowerCase();
+      filtered = filtered.filter(
+        (v) =>
+          v.title.toLowerCase().includes(s) ||
+          v.description.toLowerCase().includes(s) ||
+          (v.tags && v.tags.some((t) => t.toLowerCase().includes(s)))
+      );
+    }
+
+    if (sortParam === 'likes') {
+      filtered.sort((a, b) => b.likesCount - a.likesCount);
+    } else if (sortParam === 'popular') {
+      filtered.sort((a, b) => b.viewsCount - a.viewsCount);
+    } else if (sortParam === 'oldest') {
+      filtered.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    } else {
+      filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
 
     return {
@@ -308,8 +545,8 @@ export const handleMockRequest = (config: any): any => {
       config,
       data: {
         success: true,
-        videos: mockVideos,
-        total: mockVideos.length,
+        videos: filtered,
+        total: filtered.length,
       },
     };
   }

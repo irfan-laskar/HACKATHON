@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { LEARNING_ARTICLES, LearningArticle } from '../data/restaurantData';
 import { useToast } from '../context/ToastContext';
+import { MarkdownRenderer } from '../components/MarkdownRenderer';
 
 interface OperationalTemplate {
   id: string;
@@ -361,8 +362,8 @@ export const LearningHub: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="prose dark:prose-invert max-w-none text-xs sm:text-sm text-slate-700 dark:text-cream-200 leading-relaxed whitespace-pre-wrap">
-                  {readingArticle.content}
+                <div className="pt-2">
+                  <MarkdownRenderer content={readingArticle.content} showOutline={false} />
                 </div>
 
                 {readingArticle.keyTakeaways && (

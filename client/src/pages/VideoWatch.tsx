@@ -137,6 +137,22 @@ export const VideoWatch: React.FC = () => {
     );
   }
 
+  const getYouTubeId = (url: string): string | null => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
+
+  const getVimeoId = (url: string): string | null => {
+    if (!url) return null;
+    const match = url.match(/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)/);
+    return match ? match[1] : null;
+  };
+
+  const youtubeId = getYouTubeId(video.videoUrl);
+  const vimeoId = getVimeoId(video.videoUrl);
+
   // Format video url if local static vs external
   const finalVideoSrc = video.videoUrl.startsWith('/uploads')
     ? `http://localhost:5000${video.videoUrl}`
@@ -147,17 +163,35 @@ export const VideoWatch: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Player & Details Column */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Responsive HTML5 Video Player */}
+          {/* Responsive HTML5 or YouTube Embed Video Player */}
           <div className="relative aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800">
-            <video
-              src={finalVideoSrc}
-              controls
-              poster={video.thumbnailUrl}
-              className="w-full h-full object-contain"
-              playsInline
-            >
-              Your browser does not support the video tag.
-            </video>
+            {youtubeId ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+                title={video.title}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            ) : vimeoId ? (
+              <iframe
+                src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1`}
+                title={video.title}
+                className="w-full h-full border-0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <video
+                src={finalVideoSrc}
+                controls
+                poster={video.thumbnailUrl}
+                className="w-full h-full object-contain"
+                playsInline
+              >
+                Your browser does not support the video tag.
+              </video>
+            )}
           </div>
 
           {/* Title and Metadata */}

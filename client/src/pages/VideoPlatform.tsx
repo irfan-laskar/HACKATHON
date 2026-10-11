@@ -134,6 +134,13 @@ export const VideoPlatform: React.FC = () => {
               <option value="-createdAt">Newest Uploads</option>
               <option value="likes">Most Liked</option>
             </select>
+            <Link
+              to="/creator/dashboard"
+              className="px-4 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs tracking-wide shadow-xs transition flex items-center gap-1.5 shrink-0"
+            >
+              <UploadCloud className="w-3.5 h-3.5" />
+              <span>Upload Video</span>
+            </Link>
           </div>
         </div>
       </div>

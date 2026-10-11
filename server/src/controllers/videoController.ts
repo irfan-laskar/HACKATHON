@@ -167,16 +167,25 @@ export const getVideoBySlug = async (req: Request, res: Response) => {
   }
 };
 
-// @route   POST /api/videos/upload
+// @route   POST /api/videos/upload and POST /api/videos
 export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ success: false, message: 'Authentication required.' });
-
-    if (req.user.role !== 'creator' && req.user.role !== 'admin') {
-      return res.status(403).json({
-        success: false,
-        message: 'Only registered creators can upload videos. Please activate your Creator profile first.',
-      });
+    // Anyone can upload! Use logged-in user or fallback to guest contributor
+    let authorUser: any = req.user;
+    if (!authorUser) {
+      if (isMongooseReady()) {
+        const User = (await import('../models/User')).default;
+        authorUser = (await User.findOne({ role: 'creator' })) || (await User.findOne({}));
+      }
+      if (!authorUser) {
+        authorUser = inMemoryDB.users.find((u) => u.role === 'creator') || inMemoryDB.users[0] || {
+          _id: inMemoryDB.generateId(),
+          name: 'Community Creator',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+          channelName: 'Open Academy',
+          isVerified: true,
+        };
+      }
     }
 
     const {
@@ -213,7 +222,7 @@ export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
     if (!finalVideoUrl) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide a video file or valid stream URL.',
+        message: 'Please provide a video file or valid stream / YouTube URL.',
       });
     }
 
@@ -221,7 +230,7 @@ export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
     const parsedTags = Array.isArray(tags)
       ? tags
       : typeof tags === 'string'
-      ? tags.split(',').map((t) => t.trim())
+      ? tags.split(',').map((t) => t.trim()).filter(Boolean)
       : [];
 
     const parsedObjectives = Array.isArray(learningObjectives)
@@ -229,6 +238,9 @@ export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
       : typeof learningObjectives === 'string'
       ? learningObjectives.split('\n').map((o) => o.trim()).filter(Boolean)
       : [];
+
+    const authorId = authorUser._id ? authorUser._id.toString() : authorUser.id || 'community_creator';
+    const channelName = authorUser.channelName || authorUser.name || 'Community Channel';
 
     if (isMongooseReady()) {
       const video = await Video.create({
@@ -242,13 +254,13 @@ export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
         duration: duration || '10:00',
         category,
         tags: parsedTags,
-        creator: req.user._id,
+        creator: authorUser._id,
         status: 'published',
         learningObjectives: parsedObjectives,
       });
 
       const populated = await Video.findById(video._id).populate('creator', 'name avatar channelName');
-      return res.status(201).json({ success: true, message: 'Educational video published!', video: populated });
+      return res.status(201).json({ success: true, message: 'Educational video published successfully!', video: populated });
     } else {
       const newVideo: any = {
         _id: inMemoryDB.generateId(),
@@ -263,11 +275,11 @@ export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
         category,
         tags: parsedTags,
         creator: {
-          _id: req.user._id,
-          name: req.user.name,
-          avatar: req.user.avatar,
-          channelName: req.user.channelName,
-          isVerified: req.user.isVerified || false,
+          _id: authorId,
+          name: authorUser.name || 'Community Creator',
+          avatar: authorUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+          channelName,
+          isVerified: Boolean(authorUser.isVerified),
         },
         viewsCount: 0,
         likesCount: 0,
@@ -279,7 +291,7 @@ export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
       };
 
       inMemoryDB.videos.unshift(newVideo);
-      return res.status(201).json({ success: true, message: 'Educational video published!', video: newVideo });
+      return res.status(201).json({ success: true, message: 'Educational video published successfully!', video: newVideo });
     }
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message || 'Video upload failed.' });
@@ -289,12 +301,25 @@ export const uploadAndCreateVideo = async (req: AuthRequest, res: Response) => {
 // @route   GET /api/videos/creator/dashboard
 export const getCreatorVideos = async (req: AuthRequest, res: Response) => {
   try {
-    if (!req.user) return res.status(401).json({ success: false, message: 'Not authorized.' });
+    if (!req.user) {
+      // If guest, show all public published videos so dashboard works smoothly
+      const videos = inMemoryDB.videos;
+      const totalViews = videos.reduce((acc, v) => acc + v.viewsCount, 0);
+      const totalLikes = videos.reduce((acc, v) => acc + v.likesCount, 0);
+      const totalComments = videos.reduce((acc, v) => acc + v.commentsCount, 0);
+      return res.status(200).json({
+        success: true,
+        stats: { totalVideos: videos.length, totalViews, totalLikes, totalComments },
+        videos,
+      });
+    }
 
     const userId = req.user._id ? req.user._id.toString() : req.user.id;
 
     if (isMongooseReady()) {
-      const videos = await Video.find({ creator: req.user._id }).sort('-createdAt');
+      const userVideos = await Video.find({ creator: req.user._id }).sort('-createdAt');
+      const otherVideos = await Video.find({ status: 'published', creator: { $ne: req.user._id } }).sort('-createdAt').limit(10);
+      const videos = [...userVideos, ...otherVideos];
       const totalViews = videos.reduce((acc, v) => acc + v.viewsCount, 0);
       const totalLikes = videos.reduce((acc, v) => acc + v.likesCount, 0);
       const totalComments = videos.reduce((acc, v) => acc + v.commentsCount, 0);
@@ -305,10 +330,15 @@ export const getCreatorVideos = async (req: AuthRequest, res: Response) => {
         videos,
       });
     } else {
-      const videos = inMemoryDB.videos.filter((v) => {
+      const userVideos = inMemoryDB.videos.filter((v) => {
         const cId = v.creator?._id ? v.creator._id.toString() : v.creator?.toString();
         return cId === userId;
       });
+      const otherVideos = inMemoryDB.videos.filter((v) => {
+        const cId = v.creator?._id ? v.creator._id.toString() : v.creator?.toString();
+        return cId !== userId;
+      });
+      const videos = [...userVideos, ...otherVideos];
 
       const totalViews = videos.reduce((acc, v) => acc + v.viewsCount, 0);
       const totalLikes = videos.reduce((acc, v) => acc + v.likesCount, 0);

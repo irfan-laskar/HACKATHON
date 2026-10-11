@@ -22,6 +22,7 @@ import { useToast } from '../context/ToastContext';
 import { CommentSection } from '../components/CommentSection';
 import { ReportModal } from '../components/ReportModal';
 import { ArticleCard } from '../components/ArticleCard';
+import { MarkdownRenderer } from '../components/MarkdownRenderer';
 
 export const ArticleDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -276,9 +277,9 @@ export const ArticleDetail: React.FC = () => {
       )}
 
       {/* Main Prose Content */}
-      <div className="prose-educational whitespace-pre-line text-slate-700 dark:text-slate-300 leading-relaxed font-sans text-base sm:text-lg">
-        {article.content}
-      </div>
+      <section className="pt-2">
+        <MarkdownRenderer content={article.content} showOutline={true} />
+      </section>
 
       {/* Common Mistakes Warning Callout */}
       {article.commonMistakes && article.commonMistakes.length > 0 && (
