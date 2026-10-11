@@ -154,19 +154,19 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 12 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-xl bg-[#F5EFE1] dark:bg-[#220306] rounded-3xl shadow-2xl border border-cream-200 dark:border-forest-800 overflow-hidden z-10 max-h-[90vh] flex flex-col my-auto"
+          className="relative w-full max-w-lg bg-[#F5EFE1] dark:bg-[#220306] rounded-2xl shadow-2xl border border-cream-200 dark:border-forest-800 overflow-hidden z-10 max-h-[92vh] flex flex-col my-auto"
         >
           {/* Header */}
-          <div className="px-6 py-4.5 border-b border-cream-200/80 dark:border-forest-800/80 flex items-center justify-between bg-white/40 dark:bg-forest-900/40 backdrop-blur-xs shrink-0">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#790D16] text-[#F5EFE1] dark:bg-[#AEC4D4] dark:text-[#220306] flex items-center justify-center shadow-xs">
-                <MessageSquareHeart className="w-5 h-5" />
+          <div className="px-5 py-3.5 border-b border-cream-200/80 dark:border-forest-800/80 flex items-center justify-between bg-white/40 dark:bg-forest-900/40 backdrop-blur-xs shrink-0">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-[#790D16] text-[#F5EFE1] dark:bg-[#AEC4D4] dark:text-[#220306] flex items-center justify-center shadow-xs">
+                <MessageSquareHeart className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-lg font-display font-black text-forest-950 dark:text-cream-50 leading-tight">
+                <h2 className="text-base font-display font-black text-forest-950 dark:text-cream-50 leading-tight">
                   Share Your Feedback
                 </h2>
-                <p className="text-[11px] text-slate-500 dark:text-cream-300">
+                <p className="text-[10px] text-slate-500 dark:text-cream-300">
                   Help us empower independent restaurant owners across India
                 </p>
               </div>
@@ -175,21 +175,21 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="w-8 h-8 rounded-xl bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-slate-500 dark:text-cream-300 flex items-center justify-center transition cursor-pointer"
+              className="w-7 h-7 rounded-lg bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-slate-500 dark:text-cream-300 flex items-center justify-center transition cursor-pointer"
               aria-label="Close feedback modal"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
 
           {/* Body Content */}
-          <div className="p-6 overflow-y-auto space-y-5 text-forest-950 dark:text-cream-50 flex-1">
+          <div className="p-4 sm:p-5 overflow-y-auto space-y-3.5 text-forest-950 dark:text-cream-50 flex-1">
             {isSuccess ? (
-              <div className="py-12 text-center space-y-3">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center animate-bounce">
-                  <CheckCircle2 className="w-9 h-9" />
+              <div className="py-10 text-center space-y-2.5">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center animate-bounce">
+                  <CheckCircle2 className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-forest-950 dark:text-cream-50">
+                <h3 className="text-lg font-display font-bold text-forest-950 dark:text-cream-50">
                   Feedback Received!
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-cream-300 max-w-sm mx-auto">
@@ -197,14 +197,14 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4.5">
+              <form onSubmit={handleSubmit} className="space-y-3.5">
                 {/* 1. Rating Selector */}
-                <div className="bg-white/70 dark:bg-forest-900/70 p-4 rounded-2xl border border-cream-200 dark:border-forest-800 text-center space-y-2 shadow-2xs">
-                  <span className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-cream-300">
+                <div className="bg-white/70 dark:bg-forest-900/70 p-3 rounded-xl border border-cream-200 dark:border-forest-800 text-center space-y-1 shadow-2xs">
+                  <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-cream-300">
                     How has your experience with Scaletrix been?
                   </span>
 
-                  <div className="flex items-center justify-center gap-1.5 pt-1">
+                  <div className="flex items-center justify-center gap-1 pt-0.5">
                     {[1, 2, 3, 4, 5].map((starVal) => {
                       const isFilled = starVal <= activeRating;
                       return (
@@ -214,11 +214,11 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                           onClick={() => setRating(starVal)}
                           onMouseEnter={() => setHoverRating(starVal)}
                           onMouseLeave={() => setHoverRating(null)}
-                          className="p-1.5 transition-transform hover:scale-125 focus:outline-hidden cursor-pointer"
+                          className="p-1 transition-transform hover:scale-125 focus:outline-hidden cursor-pointer"
                           aria-label={`Rate ${starVal} out of 5 stars`}
                         >
                           <Star
-                            className={`w-7 h-7 sm:w-8 sm:h-8 transition-colors ${
+                            className={`w-6 h-6 transition-colors ${
                               isFilled
                                 ? 'text-amber-400 fill-amber-400 drop-shadow-xs'
                                 : 'text-slate-300 dark:text-forest-700'
@@ -229,7 +229,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                     })}
                   </div>
 
-                  <div className="text-xs font-bold text-forest-900 dark:text-cream-100 flex items-center justify-center gap-1.5 min-h-[1.25rem]">
+                  <div className="text-xs font-bold text-forest-900 dark:text-cream-100 flex items-center justify-center gap-1.5 min-h-[1.1rem]">
                     <span>{RATING_LABELS[activeRating]?.emoji}</span>
                     <span>{RATING_LABELS[activeRating]?.text}</span>
                   </div>
@@ -237,10 +237,10 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
 
                 {/* 2. Category selection chips */}
                 <div>
-                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-2">
+                  <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-1.5">
                     Feedback Category *
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                     {CATEGORIES.map((cat) => {
                       const Icon = cat.icon;
                       const isSelected = category === cat.id;
@@ -249,14 +249,14 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                           key={cat.id}
                           type="button"
                           onClick={() => setCategory(cat.id)}
-                          className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left cursor-pointer ${
+                          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition-all text-left cursor-pointer ${
                             isSelected
-                              ? 'bg-[#790D16] text-[#F5EFE1] border-[#790D16] dark:bg-[#AEC4D4] dark:text-[#220306] dark:border-[#AEC4D4] shadow-xs scale-[1.02]'
+                              ? 'bg-[#790D16] text-[#F5EFE1] border-[#790D16] dark:bg-[#AEC4D4] dark:text-[#220306] dark:border-[#AEC4D4] shadow-xs font-bold'
                               : 'bg-white/80 dark:bg-forest-900/80 text-slate-700 dark:text-cream-200 border-cream-200 dark:border-forest-700 hover:bg-white dark:hover:bg-forest-800'
                           }`}
                         >
                           <Icon className="w-3.5 h-3.5 shrink-0" />
-                          <span className="truncate">{cat.label}</span>
+                          <span className="truncate text-xs">{cat.label}</span>
                         </button>
                       );
                     })}
@@ -265,7 +265,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
 
                 {/* 3. Feedback Title */}
                 <div>
-                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-1.5">
+                  <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-1">
                     Feedback Summary / Title *
                   </label>
                   <input
@@ -275,14 +275,14 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="e.g., Add multi-portion batch scaling to Food Cost tool"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-forest-950 dark:text-cream-50 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden shadow-2xs"
+                    className="w-full px-3 py-2 rounded-lg bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-forest-950 dark:text-cream-50 text-xs font-semibold focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden shadow-2xs"
                   />
                 </div>
 
                 {/* 4. Feedback Message */}
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300">
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[10px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300">
                       Detailed Suggestion or Experience *
                     </label>
                     <span className="text-[10px] text-slate-400 dark:text-cream-400">
@@ -291,21 +291,21 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                   </div>
                   <textarea
                     required
-                    rows={4}
+                    rows={3}
                     maxLength={2000}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Share specific details, pain points in your kitchen operations, or how this feature would help you save money or increase orders..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-forest-950 dark:text-cream-50 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden shadow-2xs leading-relaxed"
+                    placeholder="Share specific details, pain points in your kitchen operations, or how this feature would help you save money..."
+                    className="w-full px-3 py-2 rounded-lg bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-forest-950 dark:text-cream-50 text-xs font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden shadow-2xs leading-relaxed"
                   />
                 </div>
 
                 {/* 5. Quick Tags */}
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-500 dark:text-cream-300 mb-1.5">
+                  <label className="block text-[10px] font-bold text-slate-500 dark:text-cream-300 mb-1">
                     Add Topic Tags (Optional)
                   </label>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1">
                     {SUGGESTED_TAGS.map((tag) => {
                       const isSelected = selectedTags.includes(tag);
                       return (
@@ -313,7 +313,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                           key={tag}
                           type="button"
                           onClick={() => toggleTag(tag)}
-                          className={`text-[11px] px-2.5 py-1 rounded-full font-medium transition cursor-pointer ${
+                          className={`text-[10px] px-2 py-0.5 rounded-full font-medium transition cursor-pointer ${
                             isSelected
                               ? 'bg-[#790D16] text-[#F5EFE1] dark:bg-[#AEC4D4] dark:text-[#220306] font-bold'
                               : 'bg-white/80 dark:bg-forest-900 text-slate-600 dark:text-cream-300 border border-cream-200 dark:border-forest-700 hover:bg-cream-100'
@@ -328,31 +328,31 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                 </div>
 
                 {/* 6. Restaurant & Business Details */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-600 dark:text-cream-300 mb-1">
+                    <label className="block text-[10px] font-bold text-slate-600 dark:text-cream-300 mb-1">
                       Kitchen / Brand Name (Optional)
                     </label>
                     <div className="relative">
-                      <Building2 className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
+                      <Building2 className="w-3 h-3 text-slate-400 absolute left-2.5 top-2.5" />
                       <input
                         type="text"
                         value={restaurantName}
                         onChange={(e) => setRestaurantName(e.target.value)}
                         placeholder="e.g. Royal Chai & Kebabs"
-                        className="w-full pl-8 pr-3 py-2 rounded-xl bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
+                        className="w-full pl-7 pr-2.5 py-1.5 rounded-lg bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-600 dark:text-cream-300 mb-1">
+                    <label className="block text-[10px] font-bold text-slate-600 dark:text-cream-300 mb-1">
                       Business Model
                     </label>
                     <select
                       value={businessType}
                       onChange={(e) => setBusinessType(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-semibold focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
+                      className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-semibold focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
                     >
                       <option value="Cloud Kitchen">Cloud Kitchen / Delivery-only</option>
                       <option value="Cafe / Bistro">Cafe / Bistro</option>
@@ -368,29 +368,29 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                 </div>
 
                 {/* 7. Contact Info & Anonymous Toggle */}
-                <div className="space-y-2.5 pt-1">
-                  <div className="flex items-center gap-2">
+                <div className="space-y-1.5 pt-0.5">
+                  <div className="flex items-center gap-1.5">
                     <input
                       type="checkbox"
                       id="anonCheck"
                       checked={isAnonymous}
                       onChange={(e) => setIsAnonymous(e.target.checked)}
-                      className="w-4 h-4 rounded text-[#790D16] focus:ring-[#790D16] dark:text-[#AEC4D4] border-cream-300 dark:border-forest-700 cursor-pointer"
+                      className="w-3.5 h-3.5 rounded text-[#790D16] focus:ring-[#790D16] dark:text-[#AEC4D4] border-cream-300 dark:border-forest-700 cursor-pointer"
                     />
-                    <label htmlFor="anonCheck" className="text-xs font-semibold text-slate-600 dark:text-cream-300 cursor-pointer">
+                    <label htmlFor="anonCheck" className="text-[11px] font-medium text-slate-600 dark:text-cream-300 cursor-pointer">
                       Post feedback anonymously (hide personal name on community board)
                     </label>
                   </div>
 
                   {!isAnonymous && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div>
                         <input
                           type="text"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           placeholder="Your Name (Optional)"
-                          className="w-full px-3 py-2 rounded-xl bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
                         />
                       </div>
                       <div>
@@ -399,7 +399,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="Email (for roadmap updates)"
-                          className="w-full px-3 py-2 rounded-xl bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
                         />
                       </div>
                     </div>
@@ -407,19 +407,19 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-2">
+                <div className="pt-1">
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-3 px-4 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white dark:bg-[#AEC4D4] dark:hover:bg-[#c3d8e7] dark:text-[#220306] font-bold text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-2.5 px-4 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white dark:bg-[#AEC4D4] dark:hover:bg-[#c3d8e7] dark:text-[#220306] font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {submitting ? (
                       <span className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 animate-spin" /> Submitting your feedback...
+                        <Sparkles className="w-3.5 h-3.5 animate-spin" /> Submitting...
                       </span>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" /> Submit Valuable Feedback
+                        <Send className="w-3.5 h-3.5" /> Submit Valuable Feedback
                       </>
                     )}
                   </button>
@@ -429,7 +429,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
           </div>
 
           {/* Footer Link to Dedicated Feedback Page */}
-          <div className="px-6 py-3.5 bg-cream-100/70 dark:bg-forest-900/60 border-t border-cream-200/80 dark:border-forest-800/80 flex items-center justify-between text-xs text-slate-600 dark:text-cream-300 shrink-0">
+          <div className="px-5 py-2.5 bg-cream-100/70 dark:bg-forest-900/60 border-t border-cream-200/80 dark:border-forest-800/80 flex items-center justify-between text-[11px] text-slate-600 dark:text-cream-300 shrink-0">
             <span>Want to see what others are requesting?</span>
             <button
               type="button"

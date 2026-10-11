@@ -40,7 +40,7 @@ export const Navbar: React.FC = () => {
     { name: 'Growth Planner', path: '/growth-planner', icon: CalendarCheck2 },
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Learning Hub', path: '/learning-hub', icon: BookOpen },
-    { name: 'Feedback', path: '/feedback', icon: MessageSquareHeart, badge: 'Voice' },
+    { name: 'Feedback', path: '/feedback', icon: MessageSquareHeart },
     { name: 'About', path: '/about', icon: Info },
   ];
 
@@ -48,25 +48,25 @@ export const Navbar: React.FC = () => {
     <>
       <header className="sticky top-0 z-40 bg-cream-50/95 dark:bg-forest-950/95 backdrop-blur-md border-b border-cream-200/80 dark:border-forest-800/80 transition-colors duration-200 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
+          <div className="flex items-center justify-between h-14 sm:h-16 gap-3">
             
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 shrink-0 group">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-forest-800 via-forest-700 to-forest-600 dark:from-forest-700 dark:to-lime-600 flex items-center justify-center text-lime-400 shadow-md shadow-forest-900/20 group-hover:scale-105 transition-transform">
-                <UtensilsCrossed className="w-5 h-5 text-lime-400 dark:text-cream-50" />
+            <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-forest-800 via-forest-700 to-forest-600 dark:from-forest-700 dark:to-lime-600 flex items-center justify-center text-lime-400 shadow-md shadow-forest-900/20 group-hover:scale-105 transition-transform">
+                <UtensilsCrossed className="w-4 h-4 sm:w-5 sm:h-5 text-lime-400 dark:text-cream-50" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-display font-black tracking-tight text-forest-950 dark:text-cream-50 flex items-center gap-1">
+                <span className="text-lg sm:text-xl font-display font-black tracking-tight text-forest-950 dark:text-cream-50 flex items-center gap-1">
                   Scale<span className="text-[#790D16] dark:text-[#AEC4D4]">trix</span>
                 </span>
-                <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#790D16] dark:text-[#AEC4D4] -mt-1 hidden sm:block">
+                <span className="text-[9px] uppercase font-extrabold tracking-widest text-[#790D16] dark:text-[#AEC4D4] -mt-1 hidden sm:block">
                   Restaurant Growth OS
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden xl:flex items-center gap-0.5">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const active = isActive(link.path);
@@ -74,16 +74,16 @@ export const Navbar: React.FC = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition relative ${
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition relative whitespace-nowrap ${
                       active
                         ? 'text-forest-900 dark:text-lime-300 bg-forest-100/70 dark:bg-forest-800/60 shadow-xs'
                         : 'text-slate-700 dark:text-cream-200 hover:text-forest-900 dark:hover:text-cream-50 hover:bg-cream-100/80 dark:hover:bg-forest-900/60'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${active ? 'text-forest-700 dark:text-lime-400' : 'text-slate-400 dark:text-cream-400'}`} />
+                    <Icon className={`w-3.5 h-3.5 ${active ? 'text-forest-700 dark:text-lime-400' : 'text-slate-400 dark:text-cream-400'}`} />
                     <span>{link.name}</span>
                     {link.badge && (
-                      <span className="ml-1 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[#AEC4D4] text-[#220306] dark:bg-[#AEC4D4]/30 dark:text-[#AEC4D4] shadow-2xs">
+                      <span className="ml-0.5 text-[8px] font-black uppercase tracking-wider px-1 py-0.2 rounded-full bg-[#AEC4D4] text-[#220306] dark:bg-[#AEC4D4]/30 dark:text-[#AEC4D4]">
                         {link.badge}
                       </span>
                     )}
@@ -93,34 +93,24 @@ export const Navbar: React.FC = () => {
             </nav>
 
             {/* Right side controls */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 shrink-0">
               {/* Theme Toggle Button */}
               <button
                 type="button"
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-forest-800 dark:text-lime-300 flex items-center justify-center transition border border-cream-200 dark:border-forest-700 cursor-pointer"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-forest-800 dark:text-lime-300 flex items-center justify-center transition border border-cream-200 dark:border-forest-700 cursor-pointer"
               >
-                {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-forest-700" />}
+                {theme === 'dark' ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-forest-700" />}
               </button>
-
-              {/* Quick Feedback Shortcut */}
-              <Link
-                to="/feedback"
-                aria-label="Give feedback"
-                className="hidden md:flex w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-forest-800 dark:text-lime-300 items-center justify-center transition border border-cream-200 dark:border-forest-700 cursor-pointer group"
-                title="Share your valuable feedback"
-              >
-                <MessageSquareHeart className="w-4 h-4 text-[#790D16] dark:text-[#AEC4D4] group-hover:scale-115 transition-transform" />
-              </Link>
 
               {/* Primary Assessment CTA */}
               <button
                 type="button"
                 onClick={() => navigate('/problem-finder')}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white dark:bg-[#AEC4D4] dark:hover:bg-[#cde0ee] dark:text-[#220306] font-extrabold text-xs shadow-md transition-all hover:scale-[1.02] shrink-0 whitespace-nowrap cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white dark:bg-[#AEC4D4] dark:hover:bg-[#cde0ee] dark:text-[#220306] font-extrabold text-xs shadow-md transition-all hover:scale-[1.02] shrink-0 whitespace-nowrap cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#E5D3AF] dark:text-[#220306]" />
+                <Sparkles className="w-3 h-3 text-[#E5D3AF] dark:text-[#220306]" />
                 <span className="text-white dark:text-[#220306] font-extrabold">Problem Finder</span>
               </button>
 

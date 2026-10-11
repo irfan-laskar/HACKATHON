@@ -200,132 +200,132 @@ export const FeedbackPage: React.FC = () => {
   const activeRating = hoverRating !== null ? hoverRating : rating;
 
   return (
-    <div className="min-h-screen bg-cream-50 dark:bg-forest-950 text-forest-950 dark:text-cream-50 transition-colors py-10 sm:py-14">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="min-h-screen bg-cream-50 dark:bg-forest-950 text-forest-950 dark:text-cream-50 transition-colors py-6 sm:py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-7">
         {/* HERO SECTION */}
-        <div className="relative rounded-3xl bg-gradient-to-br from-forest-900 via-forest-800 to-[#790D16] dark:from-[#3a0509] dark:via-forest-900 dark:to-[#220306] text-cream-50 p-8 sm:p-12 overflow-hidden shadow-xl border border-forest-800/80">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-lime-400/10 dark:bg-[#AEC4D4]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative rounded-2xl bg-gradient-to-br from-forest-900 via-forest-800 to-[#790D16] dark:from-[#3a0509] dark:via-forest-900 dark:to-[#220306] text-cream-50 p-6 sm:p-7 overflow-hidden shadow-lg border border-forest-800/80">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-lime-400/10 dark:bg-[#AEC4D4]/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest-950/70 border border-lime-400/30 text-lime-400 dark:text-[#AEC4D4] text-xs font-black uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
+          <div className="relative z-10 max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-950/70 border border-lime-400/30 text-lime-400 dark:text-[#AEC4D4] text-[11px] font-black uppercase tracking-wider">
+              <Sparkles className="w-3 h-3" />
               Community Voice & Feedback Hub
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight leading-tight text-white">
+            <h1 className="text-2xl sm:text-3xl font-display font-black tracking-tight leading-snug text-white">
               We Value Your Feedback
             </h1>
 
-            <p className="text-sm sm:text-base text-cream-200 leading-relaxed max-w-2xl">
-              Scaletrix was built from the ground up to solve the real, unvarnished challenges of Indian food entrepreneurs: raw food cost calculations, delivery commissions, and cash-flow discipline. Tell us what you need next.
+            <p className="text-xs sm:text-sm text-cream-200/90 leading-relaxed max-w-xl">
+              Scaletrix is built hand-in-hand with Indian food entrepreneurs. Tell us what features, calculators, or operational tools you need next.
             </p>
 
             {/* Quick Actions */}
-            <div className="pt-2 flex flex-wrap items-center gap-3">
+            <div className="pt-1 flex flex-wrap items-center gap-2.5">
               <button
                 type="button"
                 onClick={() => setActiveTab('submit')}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-lime-400 hover:bg-lime-500 text-forest-950 font-black text-xs sm:text-sm shadow-md transition-all hover:scale-[1.02] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-lime-400 hover:bg-lime-500 text-forest-950 font-black text-xs shadow-md transition-all hover:scale-[1.02] cursor-pointer"
               >
-                <MessageSquareHeart className="w-4 h-4 text-forest-950" />
+                <MessageSquareHeart className="w-3.5 h-3.5 text-forest-950" />
                 <span>Post Your Feedback</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab('wall')}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-forest-950/60 hover:bg-forest-950 text-cream-100 border border-forest-700 font-bold text-xs sm:text-sm transition cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-forest-950/60 hover:bg-forest-950 text-cream-100 border border-forest-700 font-bold text-xs transition cursor-pointer"
               >
-                <ThumbsUp className="w-4 h-4 text-lime-400" />
-                <span>Browse Feedback Wall & Vote</span>
+                <ThumbsUp className="w-3.5 h-3.5 text-lime-400" />
+                <span>Browse Feedback Wall</span>
               </button>
             </div>
           </div>
         </div>
 
         {/* METRICS & STATS BAR */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white dark:bg-forest-900 p-5 rounded-2xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-1">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5">
+          <div className="bg-white dark:bg-forest-900 p-3.5 sm:p-4 rounded-xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-0.5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
                 Average Rating
               </span>
-              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl sm:text-3xl font-display font-black text-forest-950 dark:text-cream-50">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl sm:text-2xl font-display font-black text-forest-950 dark:text-cream-50">
                 {stats?.averageRating || '4.9'}
               </span>
-              <span className="text-xs text-slate-500 dark:text-cream-400 font-medium">/ 5.0</span>
+              <span className="text-[11px] text-slate-500 dark:text-cream-400 font-medium">/ 5.0</span>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-cream-400">From verified restaurateurs</p>
+            <p className="text-[10px] text-slate-500 dark:text-cream-400">From verified restaurateurs</p>
           </div>
 
-          <div className="bg-white dark:bg-forest-900 p-5 rounded-2xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-1">
+          <div className="bg-white dark:bg-forest-900 p-3.5 sm:p-4 rounded-xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-0.5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
                 Total Suggestions
               </span>
-              <MessageSquareHeart className="w-4 h-4 text-blue-500" />
+              <MessageSquareHeart className="w-3.5 h-3.5 text-blue-500" />
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl sm:text-3xl font-display font-black text-forest-950 dark:text-cream-50">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl sm:text-2xl font-display font-black text-forest-950 dark:text-cream-50">
                 {stats?.totalFeedbacks || feedbacks.length || '14'}
               </span>
-              <span className="text-xs text-slate-500 dark:text-cream-400 font-medium">Submissions</span>
+              <span className="text-[11px] text-slate-500 dark:text-cream-400 font-medium">Submissions</span>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-cream-400">Community ideas received</p>
+            <p className="text-[10px] text-slate-500 dark:text-cream-400">Community ideas received</p>
           </div>
 
-          <div className="bg-white dark:bg-forest-900 p-5 rounded-2xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-1">
+          <div className="bg-white dark:bg-forest-900 p-3.5 sm:p-4 rounded-xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-0.5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
                 On Roadmap
               </span>
-              <Clock className="w-4 h-4 text-amber-500" />
+              <Clock className="w-3.5 h-3.5 text-amber-500" />
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl sm:text-3xl font-display font-black text-forest-950 dark:text-cream-50">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl sm:text-2xl font-display font-black text-forest-950 dark:text-cream-50">
                 {stats?.statusCounts?.planned || '2'}
               </span>
-              <span className="text-xs text-amber-600 dark:text-amber-400 font-medium">Planned</span>
+              <span className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">Planned</span>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-cream-400">In active engineering</p>
+            <p className="text-[10px] text-slate-500 dark:text-cream-400">In active engineering</p>
           </div>
 
-          <div className="bg-white dark:bg-forest-900 p-5 rounded-2xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-1">
+          <div className="bg-white dark:bg-forest-900 p-3.5 sm:p-4 rounded-xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-0.5">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-slate-500 dark:text-cream-400 uppercase tracking-wider">
                 Implemented
               </span>
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl sm:text-3xl font-display font-black text-forest-950 dark:text-cream-50">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl sm:text-2xl font-display font-black text-forest-950 dark:text-cream-50">
                 {stats?.statusCounts?.completed || '1'}
               </span>
-              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Shipped</span>
+              <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">Shipped</span>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-cream-400">Suggestions live in production</p>
+            <p className="text-[10px] text-slate-500 dark:text-cream-400">Suggestions live in production</p>
           </div>
         </div>
 
         {/* PRIMARY VIEW CONTROLS */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-cream-200 dark:border-forest-800 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cream-200 dark:border-forest-800 pb-3">
           {/* Main Navigation Tabs */}
-          <div className="inline-flex p-1 rounded-2xl bg-cream-100 dark:bg-forest-900 border border-cream-200 dark:border-forest-800 shadow-2xs">
+          <div className="inline-flex p-1 rounded-xl bg-cream-100 dark:bg-forest-900 border border-cream-200 dark:border-forest-800 shadow-2xs">
             <button
               type="button"
               onClick={() => setActiveTab('wall')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'wall'
                   ? 'bg-white dark:bg-forest-800 text-forest-950 dark:text-cream-50 shadow-xs'
                   : 'text-slate-600 dark:text-cream-300 hover:text-forest-950 dark:hover:text-cream-50'
               }`}
             >
-              <ThumbsUp className="w-4 h-4" />
+              <ThumbsUp className="w-3.5 h-3.5" />
               <span>Community Feedback Wall</span>
-              <span className="ml-1 text-[10px] px-2 py-0.5 rounded-full bg-forest-100 dark:bg-forest-950 text-forest-800 dark:text-cream-200">
+              <span className="ml-1 text-[9px] px-1.5 py-0.2 rounded-full bg-forest-100 dark:bg-forest-950 text-forest-800 dark:text-cream-200 font-bold">
                 {feedbacks.length}
               </span>
             </button>
@@ -333,13 +333,13 @@ export const FeedbackPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveTab('submit')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 activeTab === 'submit'
                   ? 'bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] shadow-xs'
                   : 'text-slate-600 dark:text-cream-300 hover:text-forest-950 dark:hover:text-cream-50'
               }`}
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-3.5 h-3.5" />
               <span>Post New Feedback</span>
             </button>
           </div>
@@ -349,19 +349,19 @@ export const FeedbackPage: React.FC = () => {
               <button
                 type="button"
                 onClick={fetchFeedbacks}
-                className="p-2.5 rounded-xl bg-white dark:bg-forest-900 border border-cream-200 dark:border-forest-800 text-slate-600 dark:text-cream-300 hover:text-forest-950 dark:hover:text-cream-50 transition cursor-pointer"
+                className="p-2 rounded-lg bg-white dark:bg-forest-900 border border-cream-200 dark:border-forest-800 text-slate-600 dark:text-cream-300 hover:text-forest-950 dark:hover:text-cream-50 transition cursor-pointer"
                 title="Refresh feedbacks"
               >
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
               </button>
 
-              <div className="flex items-center gap-1.5 bg-white dark:bg-forest-900 px-3 py-2 rounded-xl border border-cream-200 dark:border-forest-800 text-xs">
-                <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+              <div className="flex items-center gap-1.5 bg-white dark:bg-forest-900 px-2.5 py-1.5 rounded-lg border border-cream-200 dark:border-forest-800 text-xs">
+                <ArrowUpDown className="w-3 h-3 text-slate-400" />
                 <span className="text-slate-400 hidden sm:inline">Sort:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-transparent font-bold text-forest-950 dark:text-cream-50 outline-hidden cursor-pointer"
+                  className="bg-transparent font-bold text-forest-950 dark:text-cream-50 outline-hidden cursor-pointer text-xs"
                 >
                   <option value="top">Most Upvoted</option>
                   <option value="recent">Newest First</option>
@@ -374,37 +374,37 @@ export const FeedbackPage: React.FC = () => {
 
         {/* TAB 1: COMMUNITY WALL */}
         {activeTab === 'wall' && (
-          <div className="space-y-6">
+          <div className="space-y-5">
             {/* Filter Bar & Search */}
-            <div className="bg-white dark:bg-forest-900 p-4 sm:p-5 rounded-2xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-4">
-              <div className="flex flex-col md:flex-row gap-3">
+            <div className="bg-white dark:bg-forest-900 p-3.5 sm:p-4 rounded-xl border border-cream-200 dark:border-forest-800 shadow-2xs space-y-3">
+              <div className="flex flex-col md:flex-row gap-2.5">
                 {/* Search Input */}
                 <form onSubmit={handleSearchSubmit} className="flex-1 relative">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                  <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by feature, tool keyword, restaurant name, or tags..."
-                    className="w-full pl-10 pr-24 py-2.5 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs sm:text-sm text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
+                    className="w-full pl-9 pr-20 py-2 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs text-forest-950 dark:text-cream-50 font-medium focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-2 px-3 py-1 rounded-lg bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] text-xs font-bold"
+                    className="absolute right-1.5 top-1.5 px-2.5 py-1 rounded-md bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] text-xs font-bold"
                   >
                     Search
                   </button>
                 </form>
 
                 {/* Rating Filter */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 shrink-0">
                   <span className="text-xs font-bold text-slate-500 dark:text-cream-400 shrink-0">
                     Rating:
                   </span>
                   <select
                     value={ratingFilter}
                     onChange={(e) => setRatingFilter(e.target.value)}
-                    className="px-3 py-2.5 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-bold text-forest-950 dark:text-cream-50 outline-hidden cursor-pointer"
+                    className="px-2.5 py-1.5 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-bold text-forest-950 dark:text-cream-50 outline-hidden cursor-pointer"
                   >
                     <option value="all">All Ratings</option>
                     <option value="5">5 Stars Only</option>
@@ -415,7 +415,7 @@ export const FeedbackPage: React.FC = () => {
               </div>
 
               {/* Category Pills */}
-              <div className="flex flex-wrap gap-2 pt-1 border-t border-cream-100 dark:border-forest-850">
+              <div className="flex flex-wrap gap-1.5 pt-1 border-t border-cream-100 dark:border-forest-850">
                 {CATEGORIES.map((cat) => {
                   const isSelected = categoryFilter === cat.id;
                   return (
@@ -423,9 +423,9 @@ export const FeedbackPage: React.FC = () => {
                       key={cat.id}
                       type="button"
                       onClick={() => setCategoryFilter(cat.id)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] shadow-xs'
+                          ? 'bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] shadow-xs font-bold'
                           : 'bg-cream-100 dark:bg-forest-800/60 text-slate-600 dark:text-cream-300 hover:bg-cream-200 dark:hover:bg-forest-800'
                       }`}
                     >
@@ -438,16 +438,16 @@ export const FeedbackPage: React.FC = () => {
 
             {/* FEEDBACK CARDS GRID */}
             {loading ? (
-              <div className="py-20 text-center space-y-3">
-                <RefreshCw className="w-8 h-8 text-[#790D16] dark:text-[#AEC4D4] animate-spin mx-auto" />
-                <p className="text-sm font-semibold text-slate-500 dark:text-cream-400">
+              <div className="py-14 text-center space-y-2.5">
+                <RefreshCw className="w-6 h-6 text-[#790D16] dark:text-[#AEC4D4] animate-spin mx-auto" />
+                <p className="text-xs font-semibold text-slate-500 dark:text-cream-400">
                   Loading community suggestions...
                 </p>
               </div>
             ) : feedbacks.length === 0 ? (
-              <div className="py-16 text-center space-y-3 bg-white dark:bg-forest-900 rounded-3xl border border-cream-200 dark:border-forest-800 p-8">
-                <MessageSquareHeart className="w-12 h-12 text-slate-300 dark:text-forest-700 mx-auto" />
-                <h3 className="text-lg font-bold text-forest-950 dark:text-cream-50">
+              <div className="py-12 text-center space-y-2.5 bg-white dark:bg-forest-900 rounded-2xl border border-cream-200 dark:border-forest-800 p-6">
+                <MessageSquareHeart className="w-10 h-10 text-slate-300 dark:text-forest-700 mx-auto" />
+                <h3 className="text-base font-bold text-forest-950 dark:text-cream-50">
                   No feedback found for this filter
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-cream-400 max-w-md mx-auto">
@@ -456,37 +456,37 @@ export const FeedbackPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('submit')}
-                  className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] font-bold text-xs"
+                  className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] font-bold text-xs"
                 >
                   <Send className="w-3.5 h-3.5" />
                   Post Feedback Now
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {feedbacks.map((fb) => {
                   const hasUpvoted = upvotedMap[fb._id] || false;
                   return (
                     <div
                       key={fb._id}
-                      className="bg-white dark:bg-forest-900 rounded-3xl p-6 border border-cream-200 dark:border-forest-800 shadow-2xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-4"
+                      className="bg-white dark:bg-forest-900 rounded-2xl p-4 sm:p-5 border border-cream-200 dark:border-forest-800 shadow-2xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-3.5"
                     >
-                      <div className="space-y-3">
+                      <div className="space-y-2.5">
                         {/* Top row: Author & Business Type & Stars */}
-                        <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-start justify-between gap-2.5">
                           <div className="space-y-0.5">
                             <div className="flex items-center gap-2">
-                              <span className="font-bold text-sm text-forest-950 dark:text-cream-50">
+                              <span className="font-bold text-xs sm:text-sm text-forest-950 dark:text-cream-50">
                                 {fb.name}
                               </span>
                               {fb.businessType && (
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cream-100 dark:bg-forest-800 text-slate-600 dark:text-cream-300 border border-cream-200 dark:border-forest-700">
+                                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-cream-100 dark:bg-forest-800 text-slate-600 dark:text-cream-300 border border-cream-200 dark:border-forest-700">
                                   {fb.businessType}
                                 </span>
                               )}
                             </div>
                             {fb.restaurantName && (
-                              <p className="text-xs text-slate-500 dark:text-cream-400 font-medium flex items-center gap-1">
+                              <p className="text-[11px] text-slate-500 dark:text-cream-400 font-medium flex items-center gap-1">
                                 <Building2 className="w-3 h-3 text-slate-400" />
                                 {fb.restaurantName}
                               </p>
@@ -494,7 +494,7 @@ export const FeedbackPage: React.FC = () => {
                           </div>
 
                           {/* Star rating */}
-                          <div className="flex items-center gap-0.5 bg-amber-50 dark:bg-amber-950/40 px-2 py-1 rounded-lg border border-amber-200/80 dark:border-amber-900/60 shrink-0">
+                          <div className="flex items-center gap-0.5 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-md border border-amber-200/80 dark:border-amber-900/60 shrink-0">
                             {[1, 2, 3, 4, 5].map((s) => (
                               <Star
                                 key={s}
@@ -505,29 +505,29 @@ export const FeedbackPage: React.FC = () => {
                                 }`}
                               />
                             ))}
-                            <span className="text-[11px] font-black text-amber-700 dark:text-amber-300 ml-1">
+                            <span className="text-[10px] font-black text-amber-700 dark:text-amber-300 ml-1">
                               {fb.rating}.0
                             </span>
                           </div>
                         </div>
 
                         {/* Title */}
-                        <h3 className="text-base sm:text-lg font-display font-extrabold text-forest-950 dark:text-cream-50 leading-snug">
+                        <h3 className="text-sm sm:text-base font-display font-bold text-forest-950 dark:text-cream-50 leading-snug">
                           {fb.title}
                         </h3>
 
                         {/* Message body */}
-                        <p className="text-xs sm:text-sm text-slate-600 dark:text-cream-200 leading-relaxed whitespace-pre-line">
+                        <p className="text-xs text-slate-600 dark:text-cream-200 leading-relaxed whitespace-pre-line">
                           {fb.message}
                         </p>
 
                         {/* Tags */}
                         {fb.tags && fb.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 pt-1">
+                          <div className="flex flex-wrap gap-1 pt-0.5">
                             {fb.tags.map((tag, idx) => (
                               <span
                                 key={idx}
-                                className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-forest-50 dark:bg-forest-950 text-forest-800 dark:text-lime-300 border border-cream-200 dark:border-forest-800"
+                                className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-forest-50 dark:bg-forest-950 text-forest-800 dark:text-lime-300 border border-cream-200 dark:border-forest-800"
                               >
                                 #{tag}
                               </span>
@@ -538,30 +538,30 @@ export const FeedbackPage: React.FC = () => {
 
                       {/* Official Team Response (if present) */}
                       {fb.adminResponse && (
-                        <div className="mt-3 p-3.5 rounded-2xl bg-cream-50 dark:bg-forest-950 border border-forest-200/60 dark:border-forest-800 text-xs space-y-1.5">
+                        <div className="p-3 rounded-xl bg-cream-50 dark:bg-forest-950 border border-forest-200/60 dark:border-forest-800 text-xs space-y-1">
                           <div className="flex items-center gap-1.5 text-forest-900 dark:text-lime-300 font-bold">
                             <ShieldCheck className="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
-                            <span>Scaletrix Engineering Response</span>
+                            <span className="text-[11px]">Scaletrix Engineering Response</span>
                             {fb.status === 'completed' && (
-                              <span className="ml-auto text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                              <span className="ml-auto text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
                                 Shipped
                               </span>
                             )}
                             {fb.status === 'planned' && (
-                              <span className="ml-auto text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
-                                Planned for Q2
+                              <span className="ml-auto text-[10px] uppercase font-black px-1.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+                                Planned
                               </span>
                             )}
                           </div>
-                          <p className="text-slate-600 dark:text-cream-300 italic leading-relaxed">
+                          <p className="text-slate-600 dark:text-cream-300 italic leading-relaxed text-[11px]">
                             "{fb.adminResponse}"
                           </p>
                         </div>
                       )}
 
                       {/* Card Footer: Status & Upvote Button */}
-                      <div className="pt-3 border-t border-cream-100 dark:border-forest-850 flex items-center justify-between">
-                        <span className="text-[11px] text-slate-400 dark:text-cream-400">
+                      <div className="pt-2.5 border-t border-cream-100 dark:border-forest-850 flex items-center justify-between">
+                        <span className="text-[10px] text-slate-400 dark:text-cream-400">
                           {new Date(fb.createdAt).toLocaleDateString('en-IN', {
                             day: 'numeric',
                             month: 'short',
@@ -572,16 +572,16 @@ export const FeedbackPage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleUpvote(fb._id)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                             hasUpvoted
                               ? 'bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] shadow-xs'
                               : 'bg-cream-100 dark:bg-forest-800 text-slate-700 dark:text-cream-200 hover:bg-cream-200 dark:hover:bg-forest-700'
                           }`}
                         >
-                          <ThumbsUp className={`w-3.5 h-3.5 ${hasUpvoted ? 'fill-current' : ''}`} />
-                          <span>{fb.upvotes || 0}</span>
-                          <span className="hidden sm:inline">
-                            {hasUpvoted ? 'Endorsed' : 'I Need This'}
+                          <ThumbsUp className={`w-3 h-3 ${hasUpvoted ? 'fill-current' : ''}`} />
+                          <span className="font-bold">{fb.upvotes || 0}</span>
+                          <span className="hidden sm:inline text-[11px]">
+                            {hasUpvoted ? 'Endorsed' : 'Upvote'}
                           </span>
                         </button>
                       </div>
@@ -595,26 +595,26 @@ export const FeedbackPage: React.FC = () => {
 
         {/* TAB 2: POST FEEDBACK FORM */}
         {activeTab === 'submit' && (
-          <div className="max-w-2xl mx-auto bg-white dark:bg-forest-900 rounded-3xl p-6 sm:p-10 border border-cream-200 dark:border-forest-800 shadow-xl space-y-6">
+          <div className="max-w-xl mx-auto bg-white dark:bg-forest-900 rounded-2xl p-5 sm:p-7 border border-cream-200 dark:border-forest-800 shadow-xl space-y-5">
             <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#790D16] dark:text-[#AEC4D4] uppercase tracking-wider mb-1">
+              <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#790D16] dark:text-[#AEC4D4] uppercase tracking-wider mb-1">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Direct Voice to Founders</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-forest-950 dark:text-cream-50">
+              <h2 className="text-xl sm:text-2xl font-display font-extrabold text-forest-950 dark:text-cream-50">
                 Post Your Valuable Feedback
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-cream-300 mt-1">
+              <p className="text-xs text-slate-600 dark:text-cream-300 mt-1">
                 Have an idea for a recipe cost multiplier? Noticed a bug? Or want to share how Scaletrix helped your bottom line? Let us know below.
               </p>
             </div>
 
             {submittedSuccess ? (
-              <div className="py-12 text-center space-y-3">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center animate-bounce">
-                  <CheckCircle2 className="w-9 h-9" />
+              <div className="py-10 text-center space-y-2.5">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center animate-bounce">
+                  <CheckCircle2 className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-forest-950 dark:text-cream-50">
+                <h3 className="text-lg font-display font-bold text-forest-950 dark:text-cream-50">
                   Feedback Successfully Posted!
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-cream-300 max-w-sm mx-auto">
@@ -622,14 +622,14 @@ export const FeedbackPage: React.FC = () => {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 {/* 1. Rating Selector */}
-                <div className="bg-cream-50 dark:bg-forest-950 p-4.5 rounded-2xl border border-cream-200 dark:border-forest-800 text-center space-y-2">
-                  <span className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-cream-300">
+                <div className="bg-cream-50 dark:bg-forest-950 p-3.5 rounded-xl border border-cream-200 dark:border-forest-800 text-center space-y-1.5">
+                  <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-cream-300">
                     Your Overall Experience Rating *
                   </span>
 
-                  <div className="flex items-center justify-center gap-2 pt-1">
+                  <div className="flex items-center justify-center gap-1.5 pt-0.5">
                     {[1, 2, 3, 4, 5].map((s) => (
                       <button
                         key={s}
@@ -641,7 +641,7 @@ export const FeedbackPage: React.FC = () => {
                         aria-label={`Select ${s} stars`}
                       >
                         <Star
-                          className={`w-8 h-8 ${
+                          className={`w-6 h-6 sm:w-7 sm:h-7 ${
                             s <= activeRating
                               ? 'text-amber-400 fill-amber-400 drop-shadow-xs'
                               : 'text-slate-300 dark:text-forest-800'
@@ -659,10 +659,10 @@ export const FeedbackPage: React.FC = () => {
 
                 {/* 2. Category selection */}
                 <div>
-                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-2">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-1.5">
                     Feedback Category *
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                     {CATEGORIES.filter((c) => c.id !== 'all').map((cat) => {
                       const Icon = cat.icon || Lightbulb;
                       const isSelected = category === cat.id;
@@ -671,14 +671,14 @@ export const FeedbackPage: React.FC = () => {
                           key={cat.id}
                           type="button"
                           onClick={() => setCategory(cat.id)}
-                          className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left cursor-pointer ${
+                          className={`flex items-center gap-1.5 px-2.5 py-2 rounded-lg border text-xs font-semibold transition-all text-left cursor-pointer ${
                             isSelected
-                              ? 'bg-[#790D16] text-white border-[#790D16] dark:bg-[#AEC4D4] dark:text-[#220306] dark:border-[#AEC4D4] shadow-xs'
+                              ? 'bg-[#790D16] text-white border-[#790D16] dark:bg-[#AEC4D4] dark:text-[#220306] dark:border-[#AEC4D4] shadow-xs font-bold'
                               : 'bg-white dark:bg-forest-950 text-slate-700 dark:text-cream-200 border-cream-200 dark:border-forest-700 hover:bg-cream-100 dark:hover:bg-forest-800'
                           }`}
                         >
                           <Icon className="w-3.5 h-3.5 shrink-0" />
-                          <span className="truncate">{cat.label}</span>
+                          <span className="truncate text-xs">{cat.label}</span>
                         </button>
                       );
                     })}
@@ -687,7 +687,7 @@ export const FeedbackPage: React.FC = () => {
 
                 {/* 3. Title */}
                 <div>
-                  <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-1.5">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300 mb-1">
                     Feedback Title / Main Point *
                   </label>
                   <input
@@ -697,14 +697,14 @@ export const FeedbackPage: React.FC = () => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="e.g., Add batch yield costing for marinades and gravies"
-                    className="w-full px-4 py-2.5 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs sm:text-sm font-semibold text-forest-950 dark:text-cream-50 focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
+                    className="w-full px-3 py-2 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-semibold text-forest-950 dark:text-cream-50 focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden"
                   />
                 </div>
 
                 {/* 4. Message */}
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300">
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-cream-300">
                       Detailed Suggestion or Experience *
                     </label>
                     <span className="text-[10px] text-slate-400">
@@ -713,18 +713,18 @@ export const FeedbackPage: React.FC = () => {
                   </div>
                   <textarea
                     required
-                    rows={5}
+                    rows={4}
                     maxLength={2000}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Explain the operational challenge, how your restaurant handles this today, and what feature or improvement would make your work easier..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs sm:text-sm font-medium text-forest-950 dark:text-cream-50 focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden leading-relaxed"
+                    className="w-full px-3 py-2 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-medium text-forest-950 dark:text-cream-50 focus:ring-2 focus:ring-[#790D16] dark:focus:ring-[#AEC4D4] outline-hidden leading-relaxed"
                   />
                 </div>
 
                 {/* 5. Topic Tags */}
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-600 dark:text-cream-300 mb-1.5">
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-cream-400 mb-1">
                     Select Relevant Tags (Optional)
                   </label>
                   <div className="flex flex-wrap gap-1.5">
@@ -735,7 +735,7 @@ export const FeedbackPage: React.FC = () => {
                           key={tag}
                           type="button"
                           onClick={() => toggleTag(tag)}
-                          className={`text-[11px] px-2.5 py-1 rounded-full font-medium transition cursor-pointer ${
+                          className={`text-[10px] px-2 py-0.5 rounded-full font-medium transition cursor-pointer ${
                             isSelected
                               ? 'bg-[#790D16] text-white dark:bg-[#AEC4D4] dark:text-[#220306] font-bold'
                               : 'bg-cream-100 dark:bg-forest-950 text-slate-600 dark:text-cream-300 border border-cream-200 dark:border-forest-700 hover:bg-cream-200'
@@ -750,9 +750,9 @@ export const FeedbackPage: React.FC = () => {
                 </div>
 
                 {/* 6. Kitchen & Business Profile */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-600 dark:text-cream-300 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-cream-400 mb-1">
                       Restaurant Name (Optional)
                     </label>
                     <input
@@ -760,18 +760,18 @@ export const FeedbackPage: React.FC = () => {
                       value={restaurantName}
                       onChange={(e) => setRestaurantName(e.target.value)}
                       placeholder="e.g. Masala Craft Bistro"
-                      className="w-full px-3 py-2 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-medium text-forest-950 dark:text-cream-50 outline-hidden"
+                      className="w-full px-2.5 py-1.5 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-medium text-forest-950 dark:text-cream-50 outline-hidden"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-600 dark:text-cream-300 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-cream-400 mb-1">
                       Business Type
                     </label>
                     <select
                       value={businessType}
                       onChange={(e) => setBusinessType(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-semibold text-forest-950 dark:text-cream-50 outline-hidden"
+                      className="w-full px-2.5 py-1.5 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-semibold text-forest-950 dark:text-cream-50 outline-hidden"
                     >
                       <option value="Cloud Kitchen">Cloud Kitchen</option>
                       <option value="Cafe / Bistro">Cafe / Bistro</option>
@@ -787,35 +787,35 @@ export const FeedbackPage: React.FC = () => {
                 </div>
 
                 {/* 7. Anonymous Toggle & Info */}
-                <div className="space-y-2 pt-1">
+                <div className="space-y-2 pt-0.5">
                   <div className="flex items-center gap-2">
                     <input
                       type="checkbox"
                       id="pageAnonCheck"
                       checked={isAnonymous}
                       onChange={(e) => setIsAnonymous(e.target.checked)}
-                      className="w-4 h-4 rounded text-[#790D16] focus:ring-[#790D16] dark:text-[#AEC4D4] border-cream-300 dark:border-forest-700 cursor-pointer"
+                      className="w-3.5 h-3.5 rounded text-[#790D16] focus:ring-[#790D16] dark:text-[#AEC4D4] border-cream-300 dark:border-forest-700 cursor-pointer"
                     />
-                    <label htmlFor="pageAnonCheck" className="text-xs font-semibold text-slate-600 dark:text-cream-300 cursor-pointer">
+                    <label htmlFor="pageAnonCheck" className="text-xs font-medium text-slate-600 dark:text-cream-300 cursor-pointer">
                       Post as anonymous restaurateur on public wall
                     </label>
                   </div>
 
                   {!isAnonymous && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Your Name (Optional)"
-                        className="w-full px-3 py-2 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-medium text-forest-950 dark:text-cream-50 outline-hidden"
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-medium text-forest-950 dark:text-cream-50 outline-hidden"
                       />
                       <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email (for feature release alerts)"
-                        className="w-full px-3 py-2 rounded-xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-medium text-forest-950 dark:text-cream-50 outline-hidden"
+                        placeholder="Email (for feature alerts)"
+                        className="w-full px-2.5 py-1.5 rounded-lg bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-700 text-xs font-medium text-forest-950 dark:text-cream-50 outline-hidden"
                       />
                     </div>
                   )}
@@ -825,15 +825,15 @@ export const FeedbackPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white dark:bg-[#AEC4D4] dark:hover:bg-[#c3d8e7] dark:text-[#220306] font-extrabold text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#790D16] hover:bg-[#91111c] text-white dark:bg-[#AEC4D4] dark:hover:bg-[#c3d8e7] dark:text-[#220306] font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {submitting ? (
                     <span className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 animate-spin" /> Submitting your feedback...
+                      <Sparkles className="w-3.5 h-3.5 animate-spin" /> Submitting...
                     </span>
                   ) : (
                     <>
-                      <Send className="w-4 h-4" /> Submit Valuable Feedback
+                      <Send className="w-3.5 h-3.5" /> Submit Valuable Feedback
                     </>
                   )}
                 </button>
