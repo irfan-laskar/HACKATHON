@@ -112,7 +112,30 @@ export const FeedbackPage: React.FC = () => {
 
   useEffect(() => {
     fetchFeedbacks();
-  }, [categoryFilter, sortBy, ratingFilter]);
+  }, [categoryFilter, sortBy, ratingFilter, activeTab]);
+
+  // Real-time polling: automatically fetches new feedbacks posted from other phones/laptops
+  useEffect(() => {
+    const timer = setInterval(() => {
+      api
+        .get(
+          `/feedback?category=${categoryFilter}&search=${encodeURIComponent(
+            searchQuery
+          )}&sort=${sortBy}&rating=${ratingFilter}&limit=50`
+        )
+        .then((res) => {
+          if (res.data?.success && Array.isArray(res.data.feedbacks)) {
+            setFeedbacks(res.data.feedbacks);
+            if (res.data.stats) {
+              setStats(res.data.stats);
+            }
+          }
+        })
+        .catch(() => {});
+    }, 12000);
+
+    return () => clearInterval(timer);
+  }, [categoryFilter, searchQuery, sortBy, ratingFilter]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -207,9 +230,15 @@ export const FeedbackPage: React.FC = () => {
           <div className="absolute top-0 right-0 w-80 h-80 bg-lime-400/10 dark:bg-[#AEC4D4]/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-950/70 border border-lime-400/30 text-lime-400 dark:text-[#AEC4D4] text-[11px] font-black uppercase tracking-wider">
-              <Sparkles className="w-3 h-3" />
-              Community Voice & Feedback Hub
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-950/70 border border-lime-400/30 text-lime-400 dark:text-[#AEC4D4] text-[11px] font-black uppercase tracking-wider">
+                <Sparkles className="w-3 h-3" />
+                Community Voice & Feedback Hub
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[11px] font-bold shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Live Cloud Sync Across All Devices
+              </div>
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-display font-black tracking-tight leading-snug text-white">
@@ -348,11 +377,15 @@ export const FeedbackPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={fetchFeedbacks}
-                className="p-2 rounded-lg bg-white dark:bg-forest-900 border border-cream-200 dark:border-forest-800 text-slate-600 dark:text-cream-300 hover:text-forest-950 dark:hover:text-cream-50 transition cursor-pointer"
-                title="Refresh feedbacks"
+                onClick={() => {
+                  fetchFeedbacks();
+                  showToast('Syncing latest feedbacks across all devices...', 'info');
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-forest-900 border border-cream-200 dark:border-forest-800 text-slate-700 dark:text-cream-200 hover:text-crimson-600 dark:hover:text-sand-300 transition cursor-pointer text-xs font-semibold shadow-xs"
+                title="Sync latest community feedbacks from all connected devices"
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-crimson-600' : ''}`} />
+                <span>Sync Live</span>
               </button>
 
               <div className="flex items-center gap-1.5 bg-white dark:bg-forest-900 px-2.5 py-1.5 rounded-lg border border-cream-200 dark:border-forest-800 text-xs">

@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import dotenv from 'dotenv';
-import { connectDB } from './config/db';
+import { connectDB, getDbStatus } from './config/db';
 import authRoutes from './routes/authRoutes';
 import articleRoutes from './routes/articleRoutes';
 import videoRoutes from './routes/videoRoutes';
@@ -66,6 +66,18 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     service: 'Scaletrix Educational Platform API',
   });
+});
+
+// Auto-connect MongoDB on cloud requests if MONGODB_URI is provided
+app.use(async (_req, _res, next) => {
+  if (process.env.MONGODB_URI && !getDbStatus()) {
+    try {
+      await connectDB();
+    } catch {
+      // Continue gracefully with dataStore fallback
+    }
+  }
+  next();
 });
 
 // API Routes

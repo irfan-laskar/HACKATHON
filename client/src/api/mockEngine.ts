@@ -116,7 +116,119 @@ const getYouTubeVideoId = (url: string): string | null => {
   return match && match[2].length === 11 ? match[2] : null;
 };
 
-export const handleMockRequest = (config: any): any => {
+// ==========================================
+// CROSS-DEVICE REAL-TIME CLOUD SYNC LAYER
+// Syncs feedbacks & uploaded videos globally across all physical devices & browsers
+// ==========================================
+export const CLOUD_FEEDBACKS_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a12a27555b3b5a';
+export const CLOUD_VIDEOS_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a12a278ccd3b5b';
+
+const fetchWithTimeout = async (url: string, ms = 2500): Promise<any> => {
+  if (typeof window === 'undefined' || !window.fetch) return null;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(id);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    clearTimeout(id);
+    return null;
+  }
+};
+
+const putCloudData = async (url: string, name: string, dataObj: any, ms = 3500): Promise<boolean> => {
+  if (typeof window === 'undefined' || !window.fetch) return false;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, data: dataObj }),
+      signal: controller.signal,
+    });
+    clearTimeout(id);
+    return res.ok;
+  } catch {
+    clearTimeout(id);
+    return false;
+  }
+};
+
+export const syncStoredFeedbacks = async (): Promise<Feedback[]> => {
+  const localList = getStoredFeedbacks();
+  try {
+    const cloudRes = await fetchWithTimeout(CLOUD_FEEDBACKS_URL, 2200);
+    const cloudFeedbacks: Feedback[] = cloudRes?.data?.feedbacks;
+    if (Array.isArray(cloudFeedbacks)) {
+      const idMap = new Map<string, Feedback>();
+      mockFeedbacks.forEach((fb) => idMap.set(fb._id, fb));
+      cloudFeedbacks.forEach((fb) => idMap.set(fb._id, fb));
+      localList.forEach((fb) => {
+        if (!idMap.has(fb._id)) {
+          idMap.set(fb._id, fb);
+        } else {
+          const cloudItem = idMap.get(fb._id)!;
+          if ((fb.upvotes || 0) > (cloudItem.upvotes || 0)) {
+            idMap.set(fb._id, { ...cloudItem, upvotes: fb.upvotes, upvotedBy: fb.upvotedBy });
+          }
+        }
+      });
+
+      const merged = Array.from(idMap.values());
+      merged.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      saveStoredFeedbacks(merged);
+
+      if (cloudFeedbacks.length < merged.length) {
+        putCloudData(CLOUD_FEEDBACKS_URL, 'scaletrix_feedbacks_hub', { feedbacks: merged }).catch(() => {});
+      }
+
+      return merged;
+    }
+  } catch {}
+  return localList;
+};
+
+export const pushFeedbackToCloud = async (newFeedback: Feedback) => {
+  const current = getStoredFeedbacks();
+  const updated = [newFeedback, ...current.filter((f) => f._id !== newFeedback._id)];
+  saveStoredFeedbacks(updated);
+  await putCloudData(CLOUD_FEEDBACKS_URL, 'scaletrix_feedbacks_hub', { feedbacks: updated }).catch(() => {});
+};
+
+export const syncStoredVideos = async (): Promise<Video[]> => {
+  const localCustom = getCustomVideos();
+  try {
+    const cloudRes = await fetchWithTimeout(CLOUD_VIDEOS_URL, 2200);
+    const cloudVideos: Video[] = cloudRes?.data?.videos;
+    if (Array.isArray(cloudVideos)) {
+      const idMap = new Map<string, Video>();
+      cloudVideos.forEach((v) => idMap.set(v._id, v));
+      localCustom.forEach((v) => {
+        if (!idMap.has(v._id)) idMap.set(v._id, v);
+      });
+      const merged = Array.from(idMap.values());
+      try {
+        localStorage.setItem('ms_uploaded_videos', JSON.stringify(merged));
+      } catch {}
+
+      if (cloudVideos.length < merged.length) {
+        putCloudData(CLOUD_VIDEOS_URL, 'scaletrix_videos_hub', { videos: merged }).catch(() => {});
+      }
+    }
+  } catch {}
+  return getAllVideos();
+};
+
+export const pushVideoToCloud = async (newVideo: Video) => {
+  saveCustomVideo(newVideo);
+  const allCustom = getCustomVideos();
+  await putCloudData(CLOUD_VIDEOS_URL, 'scaletrix_videos_hub', { videos: allCustom }).catch(() => {});
+};
+
+export const handleMockRequest = async (config: any): Promise<any> => {
   const url: string = config.url || '';
   const method: string = (config.method || 'get').toLowerCase();
   let data: any = {};
@@ -328,7 +440,7 @@ export const handleMockRequest = (config: any): any => {
 
   // 8. VIDEOS: CREATOR DASHBOARD
   if (cleanPath.startsWith('/videos/creator/dashboard') && method === 'get') {
-    const allVids = getAllVideos();
+    const allVids = await syncStoredVideos();
     const totalViews = allVids.reduce((acc, v) => acc + (v.viewsCount || 0), 0);
     const totalLikes = allVids.reduce((acc, v) => acc + (v.likesCount || 0), 0);
     const totalComments = allVids.reduce((acc, v) => acc + (v.commentsCount || 0), 0);
@@ -448,7 +560,7 @@ export const handleMockRequest = (config: any): any => {
       createdAt: new Date().toISOString(),
     };
 
-    saveCustomVideo(newVideo);
+    await pushVideoToCloud(newVideo);
 
     return {
       status: 201,
@@ -469,6 +581,8 @@ export const handleMockRequest = (config: any): any => {
     const videoId = match ? match[1] : '';
     if (videoId) {
       removeCustomVideo(videoId);
+      const remaining = getCustomVideos();
+      putCloudData(CLOUD_VIDEOS_URL, 'scaletrix_videos_hub', { videos: remaining }).catch(() => {});
     }
     return {
       status: 200,
@@ -484,7 +598,7 @@ export const handleMockRequest = (config: any): any => {
 
   // 8. VIDEOS: GET SINGLE & GET LIST
   if (cleanPath.startsWith('/videos') && method === 'get') {
-    const allVids = getAllVideos();
+    const allVids = await syncStoredVideos();
     const slugMatch = cleanPath.match(/\/videos\/([a-zA-Z0-9_-]+)/);
 
     if (slugMatch && slugMatch[1] && !cleanPath.includes('?') && slugMatch[1] !== 'creator') {
@@ -795,7 +909,8 @@ export const handleMockRequest = (config: any): any => {
     const page = parseInt(urlParams.get('page') || '1', 10);
     const limit = parseInt(urlParams.get('limit') || '12', 10);
 
-    let list = getStoredFeedbacks().filter((fb) => fb.isPublic !== false);
+    const allStored = await syncStoredFeedbacks();
+    let list = allStored.filter((fb) => fb.isPublic !== false);
 
     if (category && category !== 'all') {
       list = list.filter((fb) => fb.category === category);
@@ -822,7 +937,7 @@ export const handleMockRequest = (config: any): any => {
       list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
 
-    const allPublic = getStoredFeedbacks().filter((fb) => fb.isPublic !== false);
+    const allPublic = allStored.filter((fb) => fb.isPublic !== false);
     const totalCount = list.length;
     const paginated = list.slice((page - 1) * limit, page * limit);
     const sum = allPublic.reduce((acc, curr) => acc + curr.rating, 0);
@@ -860,7 +975,6 @@ export const handleMockRequest = (config: any): any => {
 
   if (cleanPath === '/feedback' && method === 'post') {
     const cur = getCurrentMockUser();
-    const feedbacks = getStoredFeedbacks();
     const newFb: Feedback = {
       _id: `fb_${Date.now()}`,
       user: cur || undefined,
@@ -881,8 +995,7 @@ export const handleMockRequest = (config: any): any => {
       createdAt: new Date().toISOString(),
     };
 
-    feedbacks.unshift(newFb);
-    saveStoredFeedbacks(feedbacks);
+    await pushFeedbackToCloud(newFb);
 
     return {
       status: 201,
@@ -921,6 +1034,7 @@ export const handleMockRequest = (config: any): any => {
       }
       upvotes = fb.upvotes;
       saveStoredFeedbacks(feedbacks);
+      putCloudData(CLOUD_FEEDBACKS_URL, 'scaletrix_feedbacks_hub', { feedbacks }).catch(() => {});
     }
 
     return {
@@ -933,7 +1047,7 @@ export const handleMockRequest = (config: any): any => {
   }
 
   if ((cleanPath === '/feedback/admin/all' || cleanPath.startsWith('/feedback/admin/all?')) && method === 'get') {
-    const list = getStoredFeedbacks();
+    const list = await syncStoredFeedbacks();
     return {
       status: 200,
       statusText: 'OK',
@@ -959,6 +1073,7 @@ export const handleMockRequest = (config: any): any => {
       if (typeof data.isPublic === 'boolean') fb.isPublic = data.isPublic;
       fb.updatedAt = new Date().toISOString();
       saveStoredFeedbacks(feedbacks);
+      putCloudData(CLOUD_FEEDBACKS_URL, 'scaletrix_feedbacks_hub', { feedbacks }).catch(() => {});
     }
     return {
       status: 200,
