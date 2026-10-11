@@ -226,6 +226,49 @@ async function runTests() {
     assert(data.stats.totalUsers > 0);
   });
 
+  // 16. User Feedback Endpoints
+  let createdFeedbackId = '';
+  await test('GET /feedback returns public feedback wall and metrics', async () => {
+    const { status, data } = await request('/feedback');
+    assert.strictEqual(status, 200);
+    assert(Array.isArray(data.feedbacks));
+    assert(data.stats);
+    assert(typeof data.stats.averageRating === 'number');
+  });
+
+  await test('POST /feedback submits new restaurateur feedback', async () => {
+    const { status, data } = await request('/feedback', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Kabir Oberoi',
+        email: 'kabir@biryanibox.in',
+        restaurantName: 'Biryani Box & Co.',
+        businessType: 'Cloud Kitchen',
+        category: 'tool_suggestion',
+        rating: 5,
+        title: 'Include packaging weight tare in recipe cards',
+        message: 'It would be super helpful to automatically include corrugated box tare weights in food cost calculations.',
+        tags: ['Packaging', 'Cloud Kitchen'],
+      }),
+    });
+    assert.strictEqual(status, 201);
+    assert(data.success);
+    assert(data.feedback);
+    assert.strictEqual(data.feedback.title, 'Include packaging weight tare in recipe cards');
+    createdFeedbackId = data.feedback._id;
+  });
+
+  await test('POST /feedback/:id/upvote toggles endorsement upvote', async () => {
+    assert(createdFeedbackId, 'Feedback ID should be defined');
+    const { status, data } = await request(`/feedback/${createdFeedbackId}/upvote`, {
+      method: 'POST',
+      body: JSON.stringify({ voterId: 'test_runner_user' }),
+    });
+    assert.strictEqual(status, 200);
+    assert.strictEqual(data.hasUpvoted, true);
+    assert.strictEqual(data.upvotes, 1);
+  });
+
   console.log(`\n========================================`);
   console.log(`📊 Test Results: ${passed} Passed, ${failed} Failed`);
   console.log(`========================================\n`);

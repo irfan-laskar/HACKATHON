@@ -138,6 +138,27 @@ export interface MemoryReport {
   updatedAt: Date;
 }
 
+export interface MemoryFeedback {
+  _id: string;
+  user?: any;
+  name: string;
+  email?: string;
+  restaurantName?: string;
+  businessType: string;
+  category: 'feature_request' | 'tool_suggestion' | 'bug_report' | 'user_experience' | 'content_idea' | 'general';
+  rating: number;
+  title: string;
+  message: string;
+  tags: string[];
+  status: 'new' | 'reviewed' | 'planned' | 'completed' | 'archived';
+  upvotes: number;
+  upvotedBy: string[];
+  adminResponse?: string;
+  isPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // In-Memory Repository
 class InMemoryStore {
   users: MemoryUser[] = [];
@@ -147,6 +168,7 @@ class InMemoryStore {
   comments: MemoryComment[] = [];
   likes: MemoryLike[] = [];
   reports: MemoryReport[] = [];
+  feedbacks: MemoryFeedback[] = [];
 
   constructor() {
     this.seedDefaultData();
@@ -1522,6 +1544,87 @@ If you only look at Last-Click attribution, you would mistakenly conclude that I
         likesCount: 28,
         createdAt: new Date('2026-02-08'),
         updatedAt: new Date('2026-02-08'),
+      },
+    ];
+
+    // Seed Feedbacks
+    this.feedbacks = [
+      {
+        _id: this.generateId(),
+        user: vikramUser,
+        name: 'Vikram Patel',
+        email: 'vikram.patel@marketsphere.com',
+        restaurantName: 'Spice & Clay Handi Kitchen',
+        businessType: 'Cloud Kitchen',
+        category: 'tool_suggestion',
+        rating: 5,
+        title: 'Batch Cooking & Sub-Recipe Yields in Food-Cost Calculator',
+        message: 'The Food-Cost calculator has been indispensable for calculating our Biryani handi plates. It would be amazing if we could save bulk marinades and mother-gravies as reusable sub-recipes that flow automatically into individual menu dish calculations!',
+        tags: ['Food Cost', 'Batch Yield', 'Sub-recipes', 'Cloud Kitchen'],
+        status: 'planned',
+        upvotes: 34,
+        upvotedBy: [adminId, priyaId],
+        adminResponse: 'Excellent suggestion! Our product team is actively developing a Sub-Recipe & Prep-Yield extension for the Business Tools suite.',
+        isPublic: true,
+        createdAt: new Date('2026-02-28'),
+        updatedAt: new Date('2026-03-01'),
+      },
+      {
+        _id: this.generateId(),
+        name: 'Ananya Deshmukh',
+        email: 'ananya@kafeindore.in',
+        restaurantName: 'Cafe Malwa Roasters',
+        businessType: 'Cafe / Bistro',
+        category: 'user_experience',
+        rating: 5,
+        title: 'Commission Traps Audit saved our cafe ₹35,000 this month!',
+        message: 'Before Scaletrix, we were blindly pouring 24% + GST commissions into aggregator match campaigns without realizing our net plate margin was barely 4%. The 6-Month Growth Planner helped us launch WhatsApp direct ordering for our regular breakfast patrons.',
+        tags: ['Direct Ordering', 'Growth Planner', 'High ROI'],
+        status: 'completed',
+        upvotes: 42,
+        upvotedBy: [vikramId, nehaId],
+        adminResponse: 'Congratulations Ananya! Shifting even 20% of orders to direct delivery changes your bottom line completely.',
+        isPublic: true,
+        createdAt: new Date('2026-03-05'),
+        updatedAt: new Date('2026-03-06'),
+      },
+      {
+        _id: this.generateId(),
+        name: 'Chef Harpreet Singh',
+        email: 'harpreet@dhabastop.com',
+        restaurantName: 'Highway Zaika Express',
+        businessType: 'QSR / Street Food',
+        category: 'content_idea',
+        rating: 5,
+        title: 'FSSAI Oil Discard & Kitchen SOPs are pure gold',
+        message: 'Most online resources only give generic US/UK advice that does not match Indian regulatory realities. The specific 25% Total Polar Compound (TPC) frying oil discard standards and hygiene audits in the Learning Hub saved us during our official inspection last week.',
+        tags: ['FSSAI', 'Hygiene SOP', 'Oil Discard'],
+        status: 'reviewed',
+        upvotes: 28,
+        upvotedBy: [vikramId],
+        adminResponse: 'Strict adherence to food safety is the highest competitive advantage. Glad our checklists helped!',
+        isPublic: true,
+        createdAt: new Date('2026-03-12'),
+        updatedAt: new Date('2026-03-12'),
+      },
+      {
+        _id: this.generateId(),
+        name: 'Meera Nambiar',
+        email: 'meera.bakes@gmail.com',
+        restaurantName: 'Crumbs & Crust Artisan Bakes',
+        businessType: 'Bakery / Dessert',
+        category: 'feature_request',
+        rating: 4,
+        title: 'Export Recipe Costing Cards as Printable PDF',
+        message: 'Would love an option to generate a printable, formatted recipe card with grams and costs to laminate and hang over each preparation workstation for our baking assistants.',
+        tags: ['Export PDF', 'Recipe Card', 'Bakery'],
+        status: 'planned',
+        upvotes: 31,
+        upvotedBy: [],
+        adminResponse: 'Printable laminated SOP cards and PDF export are on our current release roadmap!',
+        isPublic: true,
+        createdAt: new Date('2026-03-18'),
+        updatedAt: new Date('2026-03-19'),
       },
     ];
   }

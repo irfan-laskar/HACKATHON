@@ -15,6 +15,7 @@ import { GrowthPlanner } from './pages/GrowthPlanner';
 import { Dashboard } from './pages/Dashboard';
 import { LearningHub } from './pages/LearningHub';
 import { AboutContact } from './pages/AboutContact';
+import { FeedbackPage } from './pages/Feedback';
 
 // Complementary Community & Academy Pages
 import { KnowledgeHub } from './pages/KnowledgeHub';
@@ -52,6 +53,7 @@ export const App: React.FC = () => {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="learning-hub" element={<LearningHub />} />
                 <Route path="about" element={<AboutContact />} />
+                <Route path="feedback" element={<FeedbackPage />} />
 
                 {/* Additional Merged Features & Resources */}
                 <Route path="knowledge-hub" element={<KnowledgeHub />} />

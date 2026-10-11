@@ -5,39 +5,48 @@ import {
   AlertTriangle,
   CheckCircle2,
   Lock,
+  MessageSquareHeart,
+  Star,
+  Send,
+  Clock,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import api from '../api/axios';
-import { User, Report } from '../types';
+import { User, Report, Feedback } from '../types';
 
 export const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
 
-  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'moderation'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'moderation' | 'feedback'>('overview');
   const [stats, setStats] = useState<any>(null);
   const [usersList, setUsersList] = useState<User[]>([]);
   const [reports, setReports] = useState<Report[]>([]);
+  const [feedbacksList, setFeedbacksList] = useState<Feedback[]>([]);
+  const [feedbackReplyDrafts, setFeedbackReplyDrafts] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
 
-  // Filter state for users
+  // Filter state for users & feedback
   const [userRoleFilter, setUserRoleFilter] = useState('all');
   const [userSearch, setUserSearch] = useState('');
+  const [feedbackFilter, setFeedbackFilter] = useState('all');
 
   const fetchAdminData = async () => {
     if (!user || user.role !== 'admin') return;
     setLoading(true);
     try {
-      const [statsRes, usersRes, reportsRes] = await Promise.all([
+      const [statsRes, usersRes, reportsRes, feedbacksRes] = await Promise.all([
         api.get('/admin/stats'),
         api.get(`/admin/users?role=${userRoleFilter}&search=${encodeURIComponent(userSearch)}`),
         api.get('/admin/reports?status=pending'),
+        api.get('/feedback/admin/all'),
       ]);
 
       if (statsRes.data.success) setStats(statsRes.data.stats);
       if (usersRes.data.success) setUsersList(usersRes.data.users);
       if (reportsRes.data.success) setReports(reportsRes.data.reports);
+      if (feedbacksRes.data.success) setFeedbacksList(feedbacksRes.data.feedbacks || []);
     } catch (err: any) {
       showToast(err.response?.data?.message || 'Failed to load admin portal data.', 'error');
     } finally {
@@ -104,6 +113,29 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
+  const handleUpdateFeedback = async (feedbackId: string, newStatus: string) => {
+    try {
+      const reply = feedbackReplyDrafts[feedbackId];
+      const res = await api.put(`/feedback/admin/${feedbackId}`, {
+        status: newStatus,
+        adminResponse: reply,
+      });
+
+      if (res.data.success) {
+        showToast(`Feedback updated to ${newStatus}`, 'success');
+        setFeedbacksList((prev) =>
+          prev.map((f) =>
+            f._id === feedbackId
+              ? { ...f, status: newStatus as any, adminResponse: reply !== undefined ? reply : f.adminResponse }
+              : f
+          )
+        );
+      }
+    } catch {
+      showToast('Failed to update feedback.', 'error');
+    }
+  };
+
   if (!user || user.role !== 'admin') {
     return (
       <div className="max-w-md mx-auto my-24 p-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 text-center space-y-4">
@@ -161,6 +193,20 @@ export const AdminDashboard: React.FC = () => {
             {reports.length > 0 && (
               <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-rose-500 text-white font-bold">
                 {reports.length}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => setActiveTab('feedback')}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+              activeTab === 'feedback' ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs' : 'text-slate-600 dark:text-slate-300'
+            }`}
+          >
+            <MessageSquareHeart className="w-3.5 h-3.5 text-[#790D16] dark:text-[#AEC4D4]" />
+            <span>User Feedback</span>
+            {feedbacksList.length > 0 && (
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-[#790D16] dark:bg-[#AEC4D4] text-white dark:text-[#220306] font-bold">
+                {feedbacksList.length}
               </span>
             )}
           </button>
@@ -379,6 +425,133 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 4: USER FEEDBACK & REQUESTS */}
+      {activeTab === 'feedback' && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">
+                User Feedback & Feature Submissions
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Review community suggestions, triage roadmap items, and post official replies to the public wall.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">Status:</span>
+              <select
+                value={feedbackFilter}
+                onChange={(e) => setFeedbackFilter(e.target.value)}
+                className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white outline-hidden cursor-pointer"
+              >
+                <option value="all">All Feedback ({feedbacksList.length})</option>
+                <option value="new">New ({feedbacksList.filter((f) => f.status === 'new').length})</option>
+                <option value="reviewed">Reviewed</option>
+                <option value="planned">Planned</option>
+                <option value="completed">Completed / Shipped</option>
+              </select>
+            </div>
+          </div>
+
+          {feedbacksList.length === 0 ? (
+            <div className="p-12 text-center bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800">
+              <MessageSquareHeart className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-2" />
+              <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">No feedback submissions found.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {feedbacksList
+                .filter((fb) => (feedbackFilter === 'all' ? true : fb.status === feedbackFilter))
+                .map((fb) => (
+                  <div
+                    key={fb._id}
+                    className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xs space-y-4"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-bold text-sm text-slate-900 dark:text-white">{fb.name}</span>
+                          {fb.email && <span className="text-xs text-slate-400">({fb.email})</span>}
+                          {fb.restaurantName && (
+                            <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                              {fb.restaurantName}
+                            </span>
+                          )}
+                          <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+                            {fb.businessType}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-0.5 text-amber-400">
+                            {[1, 2, 3, 4, 5].map((s) => (
+                              <Star
+                                key={s}
+                                className={`w-3 h-3 ${s <= fb.rating ? 'fill-current' : 'text-slate-200 dark:text-slate-700'}`}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-xs text-slate-400">• {new Date(fb.createdAt).toLocaleDateString()}</span>
+                          <span className="text-xs text-slate-400">• Category: <strong className="capitalize">{fb.category.replace('_', ' ')}</strong></span>
+                          <span className="text-xs text-slate-400">• Upvotes: <strong>{fb.upvotes || 0}</strong></span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-xs font-semibold text-slate-500">Status:</span>
+                        <select
+                          value={fb.status}
+                          onChange={(e) => handleUpdateFeedback(fb._id, e.target.value)}
+                          className="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white cursor-pointer"
+                        >
+                          <option value="new">New</option>
+                          <option value="reviewed">Reviewed</option>
+                          <option value="planned">Planned for Release</option>
+                          <option value="completed">Completed / Shipped</option>
+                          <option value="archived">Archived</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-100 dark:border-slate-850 space-y-1">
+                      <h4 className="font-bold text-sm text-slate-900 dark:text-white">{fb.title}</h4>
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed">
+                        {fb.message}
+                      </p>
+                    </div>
+
+                    {/* Official Response Editor */}
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                        Official Scaletrix Response (Visible on Public Feedback Wall):
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          defaultValue={fb.adminResponse || ''}
+                          onChange={(e) =>
+                            setFeedbackReplyDrafts((prev) => ({ ...prev, [fb._id]: e.target.value }))
+                          }
+                          placeholder="e.g. Great idea! We have scheduled this for our Q2 roadmap..."
+                          className="flex-1 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white outline-hidden"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleUpdateFeedback(fb._id, fb.status)}
+                          className="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition flex items-center gap-1 cursor-pointer shrink-0"
+                        >
+                          <Send className="w-3 h-3" />
+                          <span>Save Reply</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
           )}
         </div>

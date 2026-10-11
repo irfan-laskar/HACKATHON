@@ -13,6 +13,7 @@ import categoryRoutes from './routes/categoryRoutes';
 import interactionRoutes from './routes/interactionRoutes';
 import adminRoutes from './routes/adminRoutes';
 import searchRoutes from './routes/searchRoutes';
+import feedbackRoutes from './routes/feedbackRoutes';
 import { errorHandler, notFoundHandler } from './middleware/error';
 import { seedInitialData } from './seeds/seedData';
 
@@ -75,6 +76,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/interactions', interactionRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 // Production Static Serving for React SPA
 const clientDistPath = path.resolve(__dirname, '../../client/dist');

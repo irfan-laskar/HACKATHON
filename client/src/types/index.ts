@@ -125,3 +125,32 @@ export interface KnowledgeBrief {
   keyTakeaways: string[];
 }
 
+export interface Feedback {
+  _id: string;
+  user?: User;
+  name: string;
+  email?: string;
+  restaurantName?: string;
+  businessType: string;
+  category: 'feature_request' | 'tool_suggestion' | 'bug_report' | 'user_experience' | 'content_idea' | 'general';
+  rating: number; // 1 to 5
+  title: string;
+  message: string;
+  tags: string[];
+  status: 'new' | 'reviewed' | 'planned' | 'completed' | 'archived';
+  upvotes: number;
+  upvotedBy?: string[];
+  adminResponse?: string;
+  isPublic: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface FeedbackStats {
+  averageRating: number;
+  totalFeedbacks: number;
+  categoryCounts: Record<string, number>;
+  statusCounts: Record<string, number>;
+}
+
+

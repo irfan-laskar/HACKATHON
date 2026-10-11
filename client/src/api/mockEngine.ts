@@ -1,5 +1,23 @@
-import { mockUsers, mockCategories, mockArticles, mockVideos, mockReports } from './mockData';
-import { User, Article, Video, Comment } from '../types';
+import { mockUsers, mockCategories, mockArticles, mockVideos, mockReports, mockFeedbacks } from './mockData';
+import { User, Article, Video, Comment, Feedback } from '../types';
+
+// Helper to retrieve and persist feedbacks
+const getStoredFeedbacks = (): Feedback[] => {
+  try {
+    const raw = localStorage.getItem('ms_user_feedbacks');
+    if (raw) return JSON.parse(raw);
+    localStorage.setItem('ms_user_feedbacks', JSON.stringify(mockFeedbacks));
+    return [...mockFeedbacks];
+  } catch {
+    return [...mockFeedbacks];
+  }
+};
+
+const saveStoredFeedbacks = (feedbacks: Feedback[]) => {
+  try {
+    localStorage.setItem('ms_user_feedbacks', JSON.stringify(feedbacks));
+  } catch {}
+};
 
 // Helper to retrieve registered users from local storage
 const getRegisteredUsers = (): (User & { password?: string })[] => {
@@ -527,6 +545,190 @@ export const handleMockRequest = (config: any): any => {
       headers: { 'content-type': 'application/json' },
       config,
       data: { success: true, message: 'Report submitted to moderation queue.' },
+    };
+  }
+
+  // 12. FEEDBACK ENDPOINTS
+  if ((cleanPath === '/feedback' || cleanPath.startsWith('/feedback?')) && method === 'get') {
+    const urlParams = new URLSearchParams(cleanPath.includes('?') ? cleanPath.split('?')[1] : '');
+    const category = urlParams.get('category');
+    const rating = urlParams.get('rating');
+    const search = urlParams.get('search');
+    const sort = urlParams.get('sort') || 'recent';
+    const page = parseInt(urlParams.get('page') || '1', 10);
+    const limit = parseInt(urlParams.get('limit') || '12', 10);
+
+    let list = getStoredFeedbacks().filter((fb) => fb.isPublic !== false);
+
+    if (category && category !== 'all') {
+      list = list.filter((fb) => fb.category === category);
+    }
+    if (rating && rating !== 'all') {
+      list = list.filter((fb) => fb.rating === Number(rating));
+    }
+    if (search && search.trim()) {
+      const term = search.trim().toLowerCase();
+      list = list.filter(
+        (fb) =>
+          fb.title.toLowerCase().includes(term) ||
+          fb.message.toLowerCase().includes(term) ||
+          fb.restaurantName?.toLowerCase().includes(term) ||
+          fb.tags?.some((t) => t.toLowerCase().includes(term))
+      );
+    }
+
+    if (sort === 'top') {
+      list.sort((a, b) => b.upvotes - a.upvotes || new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else if (sort === 'rating') {
+      list.sort((a, b) => b.rating - a.rating || new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else {
+      list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+
+    const allPublic = getStoredFeedbacks().filter((fb) => fb.isPublic !== false);
+    const totalCount = list.length;
+    const paginated = list.slice((page - 1) * limit, page * limit);
+    const sum = allPublic.reduce((acc, curr) => acc + curr.rating, 0);
+    const averageRating = allPublic.length > 0 ? Number((sum / allPublic.length).toFixed(1)) : 5.0;
+
+    const categoryCounts: Record<string, number> = {};
+    const statusCounts: Record<string, number> = { new: 0, reviewed: 0, planned: 0, completed: 0 };
+    allPublic.forEach((fb) => {
+      categoryCounts[fb.category] = (categoryCounts[fb.category] || 0) + 1;
+      if (fb.status in statusCounts) {
+        statusCounts[fb.status] = (statusCounts[fb.status] || 0) + 1;
+      }
+    });
+
+    return {
+      status: 200,
+      statusText: 'OK',
+      headers: { 'content-type': 'application/json' },
+      config,
+      data: {
+        success: true,
+        feedbacks: paginated,
+        page,
+        totalPages: Math.ceil(totalCount / limit),
+        totalCount,
+        stats: {
+          averageRating,
+          totalFeedbacks: allPublic.length,
+          categoryCounts,
+          statusCounts,
+        },
+      },
+    };
+  }
+
+  if (cleanPath === '/feedback' && method === 'post') {
+    const cur = getCurrentMockUser();
+    const feedbacks = getStoredFeedbacks();
+    const newFb: Feedback = {
+      _id: `fb_${Date.now()}`,
+      user: cur || undefined,
+      name: data.name?.trim() || cur?.name || 'Anonymous Restaurateur',
+      email: data.email?.trim() || cur?.email || '',
+      restaurantName: data.restaurantName?.trim() || '',
+      businessType: data.businessType || 'Casual Dine-in',
+      category: data.category || 'general',
+      rating: Math.max(1, Math.min(5, Number(data.rating) || 5)),
+      title: data.title?.trim() || 'Valuable Feedback',
+      message: data.message?.trim() || '',
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      status: 'new',
+      upvotes: 0,
+      upvotedBy: [],
+      adminResponse: '',
+      isPublic: data.isPublic !== false,
+      createdAt: new Date().toISOString(),
+    };
+
+    feedbacks.unshift(newFb);
+    saveStoredFeedbacks(feedbacks);
+
+    return {
+      status: 201,
+      statusText: 'Created',
+      headers: { 'content-type': 'application/json' },
+      config,
+      data: {
+        success: true,
+        message: 'Thank you for your valuable feedback! It has been received.',
+        feedback: newFb,
+      },
+    };
+  }
+
+  if (cleanPath.includes('/feedback/') && cleanPath.endsWith('/upvote') && method === 'post') {
+    const id = cleanPath.split('/feedback/')[1].replace('/upvote', '');
+    const feedbacks = getStoredFeedbacks();
+    const fb = feedbacks.find((f) => f._id === id);
+    let upvotes = 0;
+    let hasUpvoted = false;
+
+    if (fb) {
+      const cur = getCurrentMockUser();
+      const voterId = cur?._id || 'anon_voter';
+      if (!fb.upvotedBy) fb.upvotedBy = [];
+
+      const idx = fb.upvotedBy.indexOf(voterId);
+      if (idx > -1) {
+        fb.upvotedBy.splice(idx, 1);
+        fb.upvotes = Math.max(0, (fb.upvotes || 0) - 1);
+        hasUpvoted = false;
+      } else {
+        fb.upvotedBy.push(voterId);
+        fb.upvotes = (fb.upvotes || 0) + 1;
+        hasUpvoted = true;
+      }
+      upvotes = fb.upvotes;
+      saveStoredFeedbacks(feedbacks);
+    }
+
+    return {
+      status: 200,
+      statusText: 'OK',
+      headers: { 'content-type': 'application/json' },
+      config,
+      data: { success: true, upvotes, hasUpvoted },
+    };
+  }
+
+  if ((cleanPath === '/feedback/admin/all' || cleanPath.startsWith('/feedback/admin/all?')) && method === 'get') {
+    const list = getStoredFeedbacks();
+    return {
+      status: 200,
+      statusText: 'OK',
+      headers: { 'content-type': 'application/json' },
+      config,
+      data: {
+        success: true,
+        feedbacks: list,
+        page: 1,
+        totalPages: 1,
+        totalCount: list.length,
+      },
+    };
+  }
+
+  if (cleanPath.startsWith('/feedback/admin/') && method === 'put') {
+    const id = cleanPath.split('/feedback/admin/')[1];
+    const feedbacks = getStoredFeedbacks();
+    const fb = feedbacks.find((f) => f._id === id);
+    if (fb) {
+      if (data.status) fb.status = data.status;
+      if (typeof data.adminResponse === 'string') fb.adminResponse = data.adminResponse;
+      if (typeof data.isPublic === 'boolean') fb.isPublic = data.isPublic;
+      fb.updatedAt = new Date().toISOString();
+      saveStoredFeedbacks(feedbacks);
+    }
+    return {
+      status: 200,
+      statusText: 'OK',
+      headers: { 'content-type': 'application/json' },
+      config,
+      data: { success: true, message: 'Feedback updated successfully.', feedback: fb },
     };
   }
 

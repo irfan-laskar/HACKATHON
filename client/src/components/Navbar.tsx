@@ -15,6 +15,7 @@ import {
   Sun,
   Moon,
   Sparkles,
+  MessageSquareHeart,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
@@ -39,6 +40,7 @@ export const Navbar: React.FC = () => {
     { name: 'Growth Planner', path: '/growth-planner', icon: CalendarCheck2 },
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Learning Hub', path: '/learning-hub', icon: BookOpen },
+    { name: 'Feedback', path: '/feedback', icon: MessageSquareHeart, badge: 'Voice' },
     { name: 'About', path: '/about', icon: Info },
   ];
 
@@ -101,6 +103,16 @@ export const Navbar: React.FC = () => {
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-forest-700" />}
               </button>
+
+              {/* Quick Feedback Shortcut */}
+              <Link
+                to="/feedback"
+                aria-label="Give feedback"
+                className="hidden md:flex w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cream-100 dark:bg-forest-900 hover:bg-cream-200 dark:hover:bg-forest-800 text-forest-800 dark:text-lime-300 items-center justify-center transition border border-cream-200 dark:border-forest-700 cursor-pointer group"
+                title="Share your valuable feedback"
+              >
+                <MessageSquareHeart className="w-4 h-4 text-[#790D16] dark:text-[#AEC4D4] group-hover:scale-115 transition-transform" />
+              </Link>
 
               {/* Primary Assessment CTA */}
               <button

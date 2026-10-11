@@ -10,6 +10,7 @@ import {
   Lightbulb,
   CalendarCheck2,
   BookOpen,
+  MessageSquareHeart,
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -141,6 +142,12 @@ export const Footer: React.FC = () => {
               <li>
                 <Link to="/about#contact" className="hover:text-cream-50 transition">
                   Contact & Mentorship
+                </Link>
+              </li>
+              <li>
+                <Link to="/feedback" className="hover:text-white transition flex items-center gap-1.5 text-lime-400 font-bold">
+                  <MessageSquareHeart className="w-3.5 h-3.5" />
+                  <span>Give Platform Feedback</span>
                 </Link>
               </li>
             </ul>

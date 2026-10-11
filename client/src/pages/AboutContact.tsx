@@ -15,6 +15,7 @@ import {
   UtensilsCrossed,
   Heart,
   TrendingUp,
+  MessageSquareHeart,
 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
@@ -231,6 +232,22 @@ export const AboutContact: React.FC = () => {
 
               <div className="p-4 rounded-2xl bg-cream-50 dark:bg-forest-950 border border-cream-200 dark:border-forest-850 text-xs text-slate-600 dark:text-cream-300">
                 🔒 We respect your privacy. Your contact details are never shared with aggregator salespeople or external third parties.
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#790D16]/10 dark:bg-[#AEC4D4]/10 border border-[#790D16]/20 dark:border-[#AEC4D4]/20 space-y-2">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#790D16] dark:text-[#AEC4D4]">
+                  <MessageSquareHeart className="w-4 h-4" />
+                  <span>Have a Tool Idea or Platform Feedback?</span>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-cream-300">
+                  Post directly on our open roadmap wall, vote on features with fellow restaurateurs, or submit ideas.
+                </p>
+                <Link
+                  to="/feedback"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#790D16] dark:text-[#AEC4D4] hover:underline pt-0.5"
+                >
+                  Explore Community Feedback Wall →
+                </Link>
               </div>
             </div>
           </div>
